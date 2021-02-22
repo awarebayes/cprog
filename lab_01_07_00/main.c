@@ -23,7 +23,7 @@ int main()
     ///< relative error with respect to std_exp
     float rel_err; 
 
-    printf("Input x, eps\n");
+    // printf("Input x, eps\n");
     if (scanf("%f %f", &x, &eps) != 2)
     {
         printf("Input Error\n");

@@ -20,7 +20,8 @@ int main()
 
     while (1) 
     {
-        if (scanf("%f", &cur) != 1){
+        if (scanf("%f", &cur) != 1)
+        {
             printf("Input Error");
             return 1;
         }

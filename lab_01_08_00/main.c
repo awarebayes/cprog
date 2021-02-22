@@ -31,8 +31,10 @@ int main()
     }
     else
     {
-        n *= -1;
-        a = shift_left(a, n);
+        //n *= -1;
+        //a = shift_left(a, n);
+        printf("Input Error");
+        return 1;
     }
 
     print_bin(a, 32);

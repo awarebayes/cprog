@@ -24,6 +24,7 @@ int main()
         printf("0\n");
         return 0;
     }
-    printf("%d\n", cop / 25);
+    cop -= 45;
+    printf("%d\n", cop / 25 + 1);
     return 0;
 }

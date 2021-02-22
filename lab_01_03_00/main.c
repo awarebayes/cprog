@@ -15,6 +15,7 @@ int main()
     float height, chest, mass;
     float weight_normal, bmi;
 
+
     printf("Input height, chest diameter, mass: \n");
     if (scanf("%f %f %f", &height, &chest, &mass) != 3 ||
         height <= 0 || chest <= 0 || mass <= 0)
@@ -23,7 +24,8 @@ int main()
         return 1;
     }
 
-    weight_normal = height * chest / 240;
+    weight_normal = height * chest / 240.0;
+    height /= 100.0;
     bmi = mass / (height * height);
 
     printf("%f\n", weight_normal);
