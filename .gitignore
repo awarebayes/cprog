@@ -2,4 +2,9 @@
 *.out
 *.o
 *.pch
+*.gcda
+*.gcno
 *.gch
+.vscode/
+bin/
+/lab*/main
