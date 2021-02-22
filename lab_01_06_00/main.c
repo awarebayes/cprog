@@ -4,7 +4,7 @@
  * Принять с клавиатуры координаты 𝑥𝑎, 𝑦𝑎, . . . , 𝑦𝑐 треугольника 𝑎𝑏𝑐 на плоскости.
  * Определить тип треугольника и вывести на экран целое число в зависимости от
  * ответа: 0 — остроугольный, 1 — прямоугольный, 2 — тупоугольный
- * gcc -std=c99 -Werror -Wall -lm ./lab_01_06_24/main.c -o ./bin/lab6 && ./bin/lab6
+ * gcc -std=c99 -Werror -Wall -lm ./lab_01_06_00/main.c -o ./bin/lab6 && ./bin/lab6
  */
 
 #include <stdio.h>
@@ -15,9 +15,8 @@
 #define DEG_90 M_PI/2.0
 
 float vec_len(float a_x, float a_y);
-float vec_angle(float a_x, float a_y,
-                float b_x, float b_y,
-                float c_x, float c_y);
+float vec_angle(float a_x, float a_y, float b_x, float b_y,
+float c_x, float c_y);
 bool is_close(const float x, const float target);
 
 // float to_deg(float rad){ return rad * 180 / M_PI; }   
@@ -45,15 +44,15 @@ int main()
 
     //printf("a %f b %f c %f", to_deg(angle_a), to_deg(angle_b), to_deg(angle_c));    
 
-    if(is_close(angle_a, DEG_90) ||
-       is_close(angle_b, DEG_90) ||
-       is_close(angle_c, DEG_90))
+    if (is_close(angle_a, DEG_90) ||
+        is_close(angle_b, DEG_90) ||
+        is_close(angle_c, DEG_90))
     {
         printf("1\n");
     } 
-    else if(angle_a < DEG_90 &&
-            angle_b < DEG_90 &&
-            angle_c < DEG_90)
+    else if (angle_a < DEG_90 &&
+             angle_b < DEG_90 &&
+             angle_c < DEG_90)
     {
         printf("0\n");
     }
@@ -89,9 +88,7 @@ float vec_len(const float a_x, const float a_y)
  * @param *_* - vector's x/y component
  * @return Angle between two vectors: ab and bc
  */
-float vec_angle(float a_x, float a_y,
-                float b_x, float b_y,
-                float c_x, float c_y)
+float vec_angle(float a_x, float a_y, float b_x, float b_y, float c_x, float c_y)
 {
     float ba_x, ba_y, bc_x, bc_y; /**< vectors ab, bc */
     float len_ba, len_bc; ///< lengths of vectors

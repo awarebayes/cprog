@@ -4,7 +4,8 @@
  * Вводятся беззнаковое целое число длиной 4 байта 𝑎 и целое число 𝑛.
  * Числа вводятся в десятичной системе счисления. Необходимо циклически сдвинуть значение
  * переменной 𝑎 на 𝑛 позиций вправо. Результат вывести в двоичной системе счисления.
- * gcc -std=c99 -Werror -Wall -lm ./lab_01_08_24/main.c -o ./bin/lab8 && ./bin/lab8
+ * gcc -std=c99 -Werror -Wall -Wfloat-equal -Wfloat-conversion \
+   -lm ./lab_01_08_00/main.c -o ./bin/lab8 && ./bin/lab8
  */
 
 #include <stdio.h>
@@ -19,13 +20,13 @@ int main()
     int n; ///< positions to shift
 
     printf("Input a and n\n");
-    if(scanf("%lu %u", &a, &n) != 2)
+    if (scanf("%lu %u", &a, &n) != 2)
     {
         printf("Input Error\n");
         return 1;
     }
 
-    if(n>=0)
+    if (n>=0)
     {
         a = shift_right(a, n);
     }
@@ -40,7 +41,6 @@ int main()
 
 }
 
-
 /*
  * Print a binary number
  * @param number number to print
@@ -48,9 +48,9 @@ int main()
  */
 void print_bin(unsigned long number, int remaining)
 {
-    if(remaining == 0)
+    if (remaining == 0)
         return;
-    print_bin(number >> 1, remaining-1);
+    print_bin(number >> 1, remaining - 1);
     putc((number & 1) ? '1' : '0', stdout);
 }
 

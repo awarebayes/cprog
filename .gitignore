@@ -5,6 +5,7 @@
 *.gcda
 *.gcno
 *.gch
+temp.py
 .vscode/
 bin/
 /lab*/main

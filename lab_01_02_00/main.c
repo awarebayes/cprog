@@ -12,14 +12,19 @@
 int main(void)
 {
     float a, b, h;
+
     printf("Input a, b, h\n");
-    if(scanf("%f %f %f", &a, &b, &h) != 3)
+
+    if (scanf("%f %f %f", &a, &b, &h) != 3)
     {
         printf("Input Error\n");
         return 1;
     }
+
     float j = fabs(a-b)/2;
     float p = 2 * sqrt(j*j+h*h) +  a + b;
-    printf("S=%f\n", p);
+
+    printf("%f\n", p);
+
     return 0;
 }

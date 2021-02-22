@@ -14,16 +14,16 @@ int main()
 {
     int cop;
     printf("Enter number of copecks: ");
-    if(scanf("%d", &cop) != 1)
+    if (scanf("%d", &cop) != 1)
     {
         printf("Input Error");
         return 1;
     }
-    if(cop < 45)
+    if (cop < 45)
     {
         printf("0\n");
         return 0;
     }
-    printf("%d\n", cop/25);
+    printf("%d\n", cop / 25);
     return 0;
 }

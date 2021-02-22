@@ -5,7 +5,7 @@
  * приближённое значение 𝑠(𝑥) и точное значение 𝑓(𝑥) функции 𝑓,
  * абсолютную ∆ и относительную 𝛿 погрешности:
  * Мой вариант: exp(x)
- * gcc -std=c99 -Werror -Wall -lm ./lab_01_07_24/main.c -o ./bin/lab7 && ./bin/lab7
+ * gcc -std=c99 -Werror -Wall  -lm ./lab_01_07_24/main.c -o ./bin/lab7 && ./bin/lab7
  */
 
 #include <stdio.h>
@@ -24,12 +24,12 @@ int main()
     float rel_err; 
 
     printf("Input x, eps\n");
-    if(scanf("%f %f", &x, &eps) != 2)
+    if (scanf("%f %f", &x, &eps) != 2)
     {
         printf("Input Error\n");
         return 1;
     }
-    if(eps <= 0)
+    if (eps <= 0)
     {
         printf("Eps should be positive\n");
         return 1;
@@ -37,7 +37,7 @@ int main()
 
     std_exp = exp(x);
     my_exp = my_exp_func(x, eps);
-    abs_err = fabs(std_exp-my_exp);
+    abs_err = fabs(std_exp - my_exp);
     rel_err = abs_err / std_exp;
 
     printf("std exp: %f\n", std_exp);

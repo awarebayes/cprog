@@ -12,10 +12,12 @@ int powi(int a, int n);
 
 int main(void)
 {
-    int a;
-    int n;
+    int a; ///< number
+    int n; ///< power
+
     printf("Enter two numbers: \n");
-    if(scanf("%u %u", &a, &n) != 2)
+
+    if (scanf("%u %u", &a, &n) != 2)
     {
         printf("Input Error\n");
         return 1;
