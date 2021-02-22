@@ -11,7 +11,7 @@
 #include <math.h>
 #include <stdbool.h>
 
-#define M_PI 3.141593
+#define M_PI 4.0 * atan(1.0)
 #define DEG_90 M_PI/2.0
 
 float vec_len(float a_x, float a_y);
