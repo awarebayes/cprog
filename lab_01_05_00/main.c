@@ -8,7 +8,7 @@
 
 #include <stdio.h>
 
-int powi(int a, int n);
+unsigned long powi(int a, int n);
 
 int main(void)
 {
@@ -31,17 +31,17 @@ int main(void)
     }
 
     // final result
-    int res = powi(a, n);
-    printf("%d\n", res); 
+    unsigned long res = powi(a, n);
+    printf("%lu\n", res); 
     return 0;
 }
 
 /*
  * a^n for integers
  */
-int powi(int a, int n)
+long unsigned powi(int a, int n)
 {
-    int res = 1;
+    long long res = 1;
     for (int i = 0; i < n; i++)
     {
         res *= a;
