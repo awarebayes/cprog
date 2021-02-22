@@ -1,0 +1,4 @@
+std exp: 7.389056
+my exp: 7.387302
+error absolute: 0.001754
+error relative: 0.000237

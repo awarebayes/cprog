@@ -16,7 +16,10 @@ int main(void)
     int n;
     printf("Enter two numbers: \n");
     if(scanf("%u %u", &a, &n) != 2)
+    {
+        printf("Input Error\n");
         return 1;
+    }
 
     // sanity check
     if (n < 0){

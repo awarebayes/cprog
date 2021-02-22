@@ -5,7 +5,7 @@
  * и на полученные деньги опять покупается вода. По введённому с клавиатуры количеству копеек
  * найти и вывести на экран наибольшее возможное количество бутылок воды, которые
  * можно купить. Циклов не использовать
- * gcc -std=c99 -Werror -Wall -lm ./lab01_04_24/main.c -o ./bin/lab4 && ./bin/lab4
+ * gcc -std=c99 -Werror -Wall -lm ./lab_01_04_24/main.c -o ./bin/lab4 && ./bin/lab4
  */
 
 #include <stdio.h>
@@ -14,7 +14,11 @@ int main()
 {
     int cop;
     printf("Enter number of copecks: ");
-    scanf("%d", &cop);
+    if(scanf("%d", &cop) != 1)
+    {
+        printf("Input Error");
+        return 1;
+    }
     if(cop < 45)
     {
         printf("0\n");

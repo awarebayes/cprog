@@ -4,7 +4,7 @@
  * Принять с клавиатуры координаты 𝑥𝑎, 𝑦𝑎, . . . , 𝑦𝑐 треугольника 𝑎𝑏𝑐 на плоскости.
  * Определить тип треугольника и вывести на экран целое число в зависимости от
  * ответа: 0 — остроугольный, 1 — прямоугольный, 2 — тупоугольный
- * gcc -std=c99 -Werror -Wall -lm ./lab01_06_24/main.c -o ./bin/lab6 && ./bin/lab6
+ * gcc -std=c99 -Werror -Wall -lm ./lab_01_06_24/main.c -o ./bin/lab6 && ./bin/lab6
  */
 
 #include <stdio.h>
@@ -20,30 +20,40 @@ float vec_angle(float a_x, float a_y,
                 float c_x, float c_y);
 bool is_close(const float x, const float target);
 
+// float to_deg(float rad){ return rad * 180 / M_PI; }   
+
 int main()
 {
-    float ax, ay; // points
+    ///< Points
+    float ax, ay; 
     float bx, by;
     float cx, cy;
+    float angle_a, angle_b, angle_c;
 
     printf("ax, ay:\n");
-    if (scanf("%f %f", &ax, &ay) != 2)
+    if (scanf("%f %f", &ax, &ay) != 2 ||
+        scanf("%f %f", &bx, &by) != 2 ||
+        scanf("%f %f", &cx, &cy) != 2)
+    {
+        printf("Input Error\n");
         return 1;
-    if (scanf("%f %f", &bx, &by) != 2)
-        return 1;
-    if (scanf("%f %f", &cx, &cy) != 2)
-        return 1;
+    }
 
-    float angle_a, angle_b, angle_c;
     angle_a = vec_angle(bx, by, ax, ay, cx, cy);
     angle_b = vec_angle(ax, ay, bx, by, cx, cy);
     angle_c = vec_angle(ax, ay, cx, cy, bx, by);
 
-    if(is_close(angle_a, DEG_90) || is_close(angle_b, DEG_90) || is_close(angle_c, DEG_90))
+    //printf("a %f b %f c %f", to_deg(angle_a), to_deg(angle_b), to_deg(angle_c));    
+
+    if(is_close(angle_a, DEG_90) ||
+       is_close(angle_b, DEG_90) ||
+       is_close(angle_c, DEG_90))
     {
         printf("1\n");
     } 
-    else if(angle_a < DEG_90 && angle_b < DEG_90 && angle_c < DEG_90)
+    else if(angle_a < DEG_90 &&
+            angle_b < DEG_90 &&
+            angle_c < DEG_90)
     {
         printf("0\n");
     }
@@ -85,6 +95,7 @@ float vec_angle(float a_x, float a_y,
 {
     float ba_x, ba_y, bc_x, bc_y; /**< vectors ab, bc */
     float len_ba, len_bc; ///< lengths of vectors
+    float dot; ///< dot product
     ba_x = a_x - b_x;
     ba_y = a_y - b_y; 
     bc_x = c_x - b_x;
@@ -99,6 +110,6 @@ float vec_angle(float a_x, float a_y,
         return 0;
     }
 
-    float dot = (ba_x * bc_x) + (ba_y * bc_y); ///< dot product
+    dot = (ba_x * bc_x) + (ba_y * bc_y); 
     return acos(dot / (len_ba * len_bc));
 }

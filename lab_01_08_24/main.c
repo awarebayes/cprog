@@ -4,7 +4,7 @@
  * Вводятся беззнаковое целое число длиной 4 байта 𝑎 и целое число 𝑛.
  * Числа вводятся в десятичной системе счисления. Необходимо циклически сдвинуть значение
  * переменной 𝑎 на 𝑛 позиций вправо. Результат вывести в двоичной системе счисления.
- * gcc -std=c99 -Werror -Wall -lm ./lab01_08_24/main.c -o ./bin/lab8 && ./bin/lab8
+ * gcc -std=c99 -Werror -Wall -lm ./lab_01_08_24/main.c -o ./bin/lab8 && ./bin/lab8
  */
 
 #include <stdio.h>
@@ -15,17 +15,15 @@ unsigned long shift_right(unsigned long number, int n);
 
 int main()
 {
-    unsigned long int a = 32423423423;
-    int n = -1;
-    //printf("Input a and n\n");
-    //scanf("%lu %u", &a, &n);
+    unsigned long int a; ///< number to shift
+    int n; ///< positions to shift
 
-
-    printf("n: %d\n", n);
-    
-    printf("init: ");
-    print_bin(a, 32);
-    printf("\n");
+    printf("Input a and n\n");
+    if(scanf("%lu %u", &a, &n) != 2)
+    {
+        printf("Input Error\n");
+        return 1;
+    }
 
     if(n>=0)
     {
@@ -37,7 +35,6 @@ int main()
         a = shift_left(a, n);
     }
 
-    printf("aftr: ");
     print_bin(a, 32);
     printf("\n");
 

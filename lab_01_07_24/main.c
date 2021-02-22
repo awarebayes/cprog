@@ -5,7 +5,7 @@
  * приближённое значение 𝑠(𝑥) и точное значение 𝑓(𝑥) функции 𝑓,
  * абсолютную ∆ и относительную 𝛿 погрешности:
  * Мой вариант: exp(x)
- * gcc -std=c99 -Werror -Wall -lm ./lab01_07_24/main.c -o ./bin/lab7 && ./bin/lab7
+ * gcc -std=c99 -Werror -Wall -lm ./lab_01_07_24/main.c -o ./bin/lab7 && ./bin/lab7
  */
 
 #include <stdio.h>
@@ -17,19 +17,33 @@ float my_exp_func(float x, float eps);
 int main()
 {
     float x, eps;
+    float std_exp; ///< standard lirary exponent
+    float my_exp; ///< my exponent
+    float abs_err; ///< absolute error between two
+    ///< relative error with respect to std_exp
+    float rel_err; 
+
     printf("Input x, eps\n");
-    if (scanf("%f %f", &x, &eps) != 2){
+    if(scanf("%f %f", &x, &eps) != 2)
+    {
+        printf("Input Error\n");
         return 1;
     }
-    float std_exp = exp(x);
-    float my_exp = my_exp_func(x, eps);
-    float abs_err = fabs(std_exp-my_exp);
-    float rel_err = abs_err / std_exp;
+    if(eps <= 0)
+    {
+        printf("Eps should be positive\n");
+        return 1;
+    }
 
-    printf("%f\n", std_exp);
-    printf("%f\n", my_exp);
-    printf("%f\n", abs_err);
-    printf("%f\n", rel_err);
+    std_exp = exp(x);
+    my_exp = my_exp_func(x, eps);
+    abs_err = fabs(std_exp-my_exp);
+    rel_err = abs_err / std_exp;
+
+    printf("std exp: %f\n", std_exp);
+    printf("my exp: %f\n", my_exp);
+    printf("error absolute: %f\n", abs_err);
+    printf("error relative: %f\n", rel_err);
 }
 
 /*
@@ -42,7 +56,7 @@ float my_exp_func(float x, float eps)
 {
     float n = 1; ///< current number of sequence
     float x_n = 1; ///< x to the power of n
-    float result = x_n;
+    float result = x_n; ///< result
 
     while (x_n >= eps)
     {
