@@ -51,8 +51,8 @@ int main()
         printf("1\n");
     } 
     else if (angle_a < DEG_90 &&
-             angle_b < DEG_90 &&
-             angle_c < DEG_90)
+        angle_b < DEG_90 &&
+        angle_c < DEG_90)
     {
         printf("0\n");
     }
@@ -80,7 +80,7 @@ bool is_close(const float x, const float target)
  */
 float vec_len(const float a_x, const float a_y)
 {
-    return sqrt(a_x*a_x + a_y*a_y);
+    return sqrt(a_x * a_x + a_y * a_y);
 }
 
 /*

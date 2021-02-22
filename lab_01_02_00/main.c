@@ -21,8 +21,8 @@ int main(void)
         return 1;
     }
 
-    float j = fabs(a-b)/2;
-    float p = 2 * sqrt(j*j+h*h) +  a + b;
+    float j = fabs(a - b) / 2;
+    float p = 2 * sqrt(j * j + h * h) +  a + b;
 
     printf("%f\n", p);
 

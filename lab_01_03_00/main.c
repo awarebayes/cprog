@@ -16,10 +16,8 @@ int main()
     float weight_normal, bmi;
 
     printf("Input height, chest diameter, mass: \n");
-    if (
-        scanf("%f %f %f", &height, &chest, &mass) != 3 ||
-        height <= 0 || chest <= 0 || mass <= 0
-    )
+    if (scanf("%f %f %f", &height, &chest, &mass) != 3 ||
+        height <= 0 || chest <= 0 || mass <= 0)
     {
         printf("Input Error");
         return 1;

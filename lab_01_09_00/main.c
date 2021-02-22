@@ -18,16 +18,19 @@ int main()
     float sum = 0; 
     float res;
 
-    do 
+    while (1) 
     {
         if (scanf("%f", &cur) != 1){
             printf("Input Error");
             return 1;
         }
+
+        if (cur < 0)
+            break;   
+        
         sum += cur / counter;
-        counter++;
+        counter += 1;
     }
-    while (cur > 0);
     res = sqrt(sum);
     printf("%f\n", res);
 }
