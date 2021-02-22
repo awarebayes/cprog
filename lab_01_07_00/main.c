@@ -35,9 +35,9 @@ int main()
         return 1;
     }
 
-    std_exp = exp(x);
+    std_exp = expf(x);
     my_exp = my_exp_func(x, eps);
-    abs_err = fabs(std_exp - my_exp);
+    abs_err = fabsf(std_exp - my_exp);
     rel_err = abs_err / std_exp;
 
     printf("std exp: %f\n", std_exp);

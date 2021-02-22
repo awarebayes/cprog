@@ -11,8 +11,8 @@
 #include <math.h>
 #include <stdbool.h>
 
-#define M_PI 4.0 * atan(1.0)
-#define DEG_90 M_PI/2.0
+#define M_PI 4.0 * atanf(1.0)
+#define DEG_90 M_PI / 2.0f
 
 float vec_len(float a_x, float a_y);
 float vec_angle(float a_x, float a_y, float b_x, float b_y,
@@ -80,7 +80,7 @@ bool is_close(const float x, const float target)
  */
 float vec_len(const float a_x, const float a_y)
 {
-    return sqrt(a_x * a_x + a_y * a_y);
+    return sqrtf(a_x * a_x + a_y * a_y);
 }
 
 /*
@@ -108,5 +108,5 @@ float vec_angle(float a_x, float a_y, float b_x, float b_y, float c_x, float c_y
     }
 
     dot = (ba_x * bc_x) + (ba_y * bc_y); 
-    return acos(dot / (len_ba * len_bc));
+    return acosf(dot / (len_ba * len_bc));
 }
