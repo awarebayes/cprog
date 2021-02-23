@@ -15,7 +15,7 @@
 #define DEG_90 M_PI / 2.0f
 
 float vec_len(float a_x, float a_y);
-float vec_cos_sign(float a_x, float a_y, float b_x, float b_y,
+float vec_dot(float a_x, float a_y, float b_x, float b_y,
 float c_x, float c_y);
 bool is_close(const float x, const float target);
 int sign(float f);
@@ -29,8 +29,8 @@ int main()
     float bx, by;
     float cx, cy;
     ///< Angles
-    float angle_a, angle_b, angle_c;
-    float min_angle;
+    float dot_a, dot_b, dot_c;
+    float min_dot;
 
     if (scanf("%f %f", &ax, &ay) != 2 ||
         scanf("%f %f", &bx, &by) != 2 ||
@@ -40,18 +40,18 @@ int main()
         return 1;
     }
 
-    angle_a = vec_cos_sign(bx, by, ax, ay, cx, cy);
-    angle_b = vec_cos_sign(ax, ay, bx, by, cx, cy);
-    angle_c = vec_cos_sign(ax, ay, cx, cy, bx, by);
-    min_angle = min(angle_a, min(angle_b, angle_c));
+    dot_a = vec_dot(bx, by, ax, ay, cx, cy);
+    dot_b = vec_dot(ax, ay, bx, by, cx, cy);
+    dot_c = vec_dot(ax, ay, cx, cy, bx, by);
+    min_dot = min(dot_a, min(dot_b, dot_c));
 
 
-    //printf("a %f b %f c %f\n", angle_a, angle_b, angle_c);    
-    if (min_angle > 0) 
+    //printf("a %f b %f c %f\n", dot_a, angle_b, angle_c);    
+    if (min_dot > 0) 
     {
         printf("0\n");
     }
-    else if (min_angle < 0) 
+    else if (min_dot < 0) 
     {
         printf("2\n");
     }
@@ -99,8 +99,7 @@ int sign(float f)
  * @return Angle between two vectors: ab and bc
  */
 
-/*
-int vec_cos_sign(float a_x, float a_y, float b_x,
+float vec_dot(float a_x, float a_y, float b_x,
 float b_y, float c_x, float c_y)
 {
     float ba_x, ba_y, bc_x, bc_y; 
@@ -111,21 +110,7 @@ float b_y, float c_x, float c_y)
     bc_y = c_y - b_y;
 
     dot = (ba_x * bc_x) + (ba_y * bc_y); 
-    return sign(dot);
-}
-*/
-
-float vec_cos_sign(float xa, float ya, float xb, float yb,
-float xc, float yc)
-{
-    float vxa, vya;
-    float vxb, vyb;
- 
-    vxa = xb - xa;
-    vya = yb - ya;
-    vxb = xc - xa;
-    vyb = yc - ya;
- 
-    float result = roundf((vxa * vxb + vya * vyb) * 10000000000) / 10000000000;
-    return result;
+    if (is_close(dot, 0))
+        return 0;
+    return dot;
 }
