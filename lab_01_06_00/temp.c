@@ -7,20 +7,6 @@ int input_two_float(float *a, float *b)
     return (scanf("%f %f", a, b) != 2);
 }
 
-int check_if_equal(float xa, float ya, float xb, float yb)
-{
-    if (fabs(xa - xb) < 1e-8 && fabs(ya - yb) < 1e-8)
-        return 1;
-    return 0;
-}
-
-int check_if_on_line(float xa, float ya, float xb, float yb,
-                     float xc, float yc)
-{
-    if (fabs((xc - xa) * (yb - ya) - (xb - xa) * (yc - ya)) < 1e-8)
-        return 1;
-    return 0;
-}
 
 /*
  * is value x close to target
@@ -61,47 +47,14 @@ int main(void)
     float xc, yc;
     float type;
 
-    int input_result;
+    if (scanf("%f %f", &xa, &ya) != 2 ||
+        scanf("%f %f", &xb, &yb) != 2 ||
+        scanf("%f %f", &xc, &yc) != 2)
+    {
+        printf("Input Error\n");
+        return 1;
+    }
 
-    if ((input_result = input_two_float(&xa, &ya)) != 0)
-    {
-        printf("You have to enter two numbers");
-        return 1;
-    }
-    if ((input_result = input_two_float(&xb, &yb)) != 0)
-    {
-        printf("You have to enter two numbers");
-        return 1;
-    }
-    input_result = check_if_equal(xa, ya, xb, yb);
-    if (input_result != 0)
-    {
-        printf("There must be three different points");
-        return 1;
-    }
-    if ((input_result = input_two_float(&xc, &yc)) != 0)
-    {
-        printf("You have to enter two numbers");
-        return 1;
-    }
-    input_result = check_if_equal(xa, ya, xc, yc);
-    if (input_result != 0)
-    {
-        printf("There must be three different points");
-        return 1;
-    }
-    input_result = check_if_equal(xc, yc, xb, yb);
-    if (input_result != 0)
-    {
-        printf("There must be three different points");
-        return 1;
-    }
-    input_result = check_if_on_line(xb, yb, xa, ya, xc, yc);
-    if (input_result != 0)
-    {
-        printf("The points must not be on the same line");
-        return 1;
-    }
 
     type = vec_dot(xa, ya, xb, yb, xc, yc);
     type = min_float(type, vec_dot(xb, yb, xa, ya, xc, yc));
