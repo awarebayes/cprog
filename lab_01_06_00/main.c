@@ -15,7 +15,7 @@
 #define DEG_90 M_PI / 2.0f
 
 float vec_len(float a_x, float a_y);
-float vec_angle(float a_x, float a_y, float b_x, float b_y,
+int vec_cos_sign(float a_x, float a_y, float b_x, float b_y,
 float c_x, float c_y);
 bool is_close(const float x, const float target);
 
@@ -38,23 +38,20 @@ int main()
         return 1;
     }
 
-    angle_a = vec_angle(bx, by, ax, ay, cx, cy);
-    angle_b = vec_angle(ax, ay, bx, by, cx, cy);
-    angle_c = vec_angle(ax, ay, cx, cy, bx, by);
+    angle_a = vec_cos_sign(bx, by, ax, ay, cx, cy);
+    angle_b = vec_cos_sign(ax, ay, bx, by, cx, cy);
+    angle_c = vec_cos_sign(ax, ay, cx, cy, bx, by);
 
     //printf("a %f b %f c %f", to_deg(angle_a), to_deg(angle_b), to_deg(angle_c));    
-
-    if (is_close(angle_a, DEG_90) ||
-        is_close(angle_b, DEG_90) ||
-        is_close(angle_c, DEG_90))
-    {
-        printf("1\n");
-    } 
-    else if (angle_a < DEG_90 &&
-        angle_b < DEG_90 &&
-        angle_c < DEG_90)
+    if (angle_a > 0 && angle_b > 0 && angle_c > 0)
     {
         printf("0\n");
+    }
+    else if (is_close(angle_a, 0) || 
+             is_close(angle_b, 0) ||
+             is_close(angle_c, 0))
+    {
+        printf("1\n");
     }
     else
     {
@@ -73,40 +70,32 @@ bool is_close(const float x, const float target)
 }
 
 /*
- * Length of vector
- * @param a_x x component
- * @param a_y y component
- * @return vector length 
+ * Sign of Float
+ * if close to 0 = 0
+ * else = 
  */
-float vec_len(const float a_x, const float a_y)
+int sign(float f)
 {
-    return sqrtf(a_x * a_x + a_y * a_y);
+    if(is_close(f, 0))
+        return 0;
+    return (f > 0) ? 1 : -1;
 }
 
 /*
- * angle between vectors on points
+ * sign of cosine between two vectors of points
  * @param *_* - vector's x/y component
  * @return Angle between two vectors: ab and bc
  */
-float vec_angle(float a_x, float a_y, float b_x, float b_y, float c_x, float c_y)
+int vec_cos_sign(float a_x, float a_y, float b_x,
+float b_y, float c_x, float c_y)
 {
     float ba_x, ba_y, bc_x, bc_y; /**< vectors ab, bc */
-    float len_ba, len_bc; ///< lengths of vectors
     float dot; ///< dot product
     ba_x = a_x - b_x;
     ba_y = a_y - b_y; 
     bc_x = c_x - b_x;
     bc_y = c_y - b_y;
 
-    len_ba = vec_len(ba_x, ba_y);
-    len_bc = vec_len(bc_x, bc_y);
-
-    ///< by defenition angle between _ and 0 is 0
-    if (is_close(len_ba, 0) || is_close(len_bc, 0))
-    {
-        return 0;
-    }
-
     dot = (ba_x * bc_x) + (ba_y * bc_y); 
-    return acosf(dot / (len_ba * len_bc));
+    return sign(dot);
 }
