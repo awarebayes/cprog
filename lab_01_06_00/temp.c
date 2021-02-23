@@ -20,19 +20,15 @@ int main(void)
     float min_dot;
 
     if (!input_two_floats(&xa, &ya) ||
-        !input_two_floats(&xb, &yb) ||
-        !input_two_floats(&xc, &yc))
-        {
-            printf("Input Error");
-            return 1;
-        }
-    if (same_points(xa, ya, xb, yb) ||
-        same_points(xa, ya, xc, yc) ||
+        !input_two_floats(&xb, &yb))
+        goto input_error;
+    if (same_points(xa, ya, xb, yb))
+        goto same_points_error;
+    if (!input_two_floats(&xc, &yc))
+        goto input_error;
+    if (same_points(xa, ya, xc, yc) ||
         same_points(xc, yc, xb, yb))
-        {
-            printf("Should be 2 distinct points");
-            return 1;
-        }
+        goto same_points_error;
     if (check_line(xb, yb, xa, ya, xc, yc))
     {
         printf("Points are on the same line");
@@ -50,6 +46,13 @@ int main(void)
     else
         printf("1\n");
     return 0;
+
+    same_points_error:
+        printf("Should be 2 distinct points");
+        return 1;
+    input_error:
+        printf("Input Error");
+        return 1;
 }
 
 /*
