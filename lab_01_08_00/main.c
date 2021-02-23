@@ -32,10 +32,10 @@ int main()
     }
     else
     {
-        n *= -1;
-        a = shift_left(a, n);
-        //printf("Input Error");
-        //return 1;
+        //n *= -1;
+        //a = shift_left(a, n);
+        printf("Error: n should be non negative");
+        return 1;
     }
 
     printf("Result: ");
