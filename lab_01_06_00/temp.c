@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <stdbool.h>
 
 int input_two_float(float *a, float *b)
 {
@@ -19,6 +20,14 @@ int check_if_on_line(float xa, float ya, float xb, float yb,
     if (fabs((xc - xa) * (yb - ya) - (xb - xa) * (yc - ya)) < 1e-8)
         return 1;
     return 0;
+}
+
+/*
+ * is value x close to target
+ */
+bool is_close(const float x, const float target)
+{
+    return fabs(x - target) < 10e-5;
 }
 
 float vec_dot(float a_x, float a_y, float b_x,
