@@ -17,46 +17,55 @@ int main(void)
     float xa, ya;
     float xb, yb;
     float xc, yc;
-    float min_dot;
+    float type;
 
-    if (!input_two_floats(&xa, &ya))
-        goto input_error;
-    if (!input_two_floats(&xb, &yb))
-        goto input_error;
+    if (input_two_floats(&xa, &ya))
+    {
+        printf("You have to enter two numbers");
+        return 1;
+    }
+    if (input_two_floats(&xb, &yb))
+    {
+        printf("You have to enter two numbers");
+        return 1;
+    }
     if (same_points(xa, ya, xb, yb))
-        goto same_points_error;
-    if (!input_two_floats(&xc, &yc))
-        goto input_error;
+    {
+        printf("There must be three different points");
+        return 1;
+    }
+    if (input_two_floats(&xc, &yc))
+    {
+        printf("You have to enter two numbers");
+        return 1;
+    }
     if (same_points(xa, ya, xc, yc))
-        goto same_points_error;
+    {
+        printf("There must be three different points");
+        return 1;
+    }
     if (same_points(xc, yc, xb, yb))
-        goto same_points_error;
+    {
+        printf("There must be three different points");
+        return 1;
+    }
     if (check_line(xb, yb, xa, ya, xc, yc))
     {
         printf("The points must not be on the same line");
         return 1;
     }
 
-    min_dot = vec_dot(xa, ya, xb, yb, xc, yc);
-    min_dot = min_float(min_dot, vec_dot(xb, yb, xa, ya, xc, yc));
-    min_dot = min_float(min_dot, vec_dot(xc, yc, xa, ya, xb, yb));
+    type = vec_dot(xa, ya, xb, yb, xc, yc);
+    type = min_float(type, vec_dot(xb, yb, xa, ya, xc, yc));
+    type = min_float(type, vec_dot(xc, yc, xa, ya, xb, yb));
 
-    if (min_dot > 0)
+    if (type > 0)
         printf("0\n");
-    else if (min_dot < 0)
+    else if (type < 0)
         printf("2\n");
     else
         printf("1\n");
-    
     return 0;
-
-    input_error:
-    printf("Input Error");
-    return 1;
-
-    same_points_error:
-    printf("Should be 2 distinct points");
-    return 1;
 }
 
 /*
@@ -115,5 +124,5 @@ bool is_close(const float x, const float target)
 
 bool input_two_floats(float *a, float *b)
 {
-    return scanf("%f %f", a, b) == 2;
+    return scanf("%f %f", a, b) != 2;
 }
