@@ -3,13 +3,14 @@
 #include <stdbool.h>
 
 bool same_points(float xa, float ya, float xb, float yb);
-bool is_line(float xa, float ya, float xb, float yb,
-            float xc, float yc);
+bool check_line(float xa, float ya, float xb, float yb,
+               float xc, float yc);
 
-bool is_close(const float x, const float target);
 float min_float(float num1, float num2);
 float vec_dot(float a_x, float a_y, float b_x,
               float b_y, float c_x, float c_y);
+bool is_close(const float x, const float target);
+bool input_two_floats(float *a, float *b);
 
 int main(void)
 {
@@ -18,37 +19,43 @@ int main(void)
     float xc, yc;
     float type;
 
-    if (scanf("%f %f", &xa, &ya) != 2)
+    int input_result;
+
+    if (input_two_floats(&xa, &ya))
     {
         printf("You have to enter two numbers");
         return 1;
     }
-    if (scanf("%f %f", &xb, &yb) != 2)
+    if (input_two_floats(&xb, &yb))
     {
         printf("You have to enter two numbers");
         return 1;
     }
-    if (same_points(xa, ya, xb, yb));
+    input_result = same_points(xa, ya, xb, yb);
+    if (input_result != 0)
     {
         printf("There must be three different points");
         return 1;
     }
-    if (scanf("%f %f", &xc, &yc) != 2)
+    if (input_two_floats(&xc, &yc))
     {
         printf("You have to enter two numbers");
         return 1;
     }
-    if (same_points(xa, ya, xc, yc));
+    input_result = same_points(xa, ya, xc, yc);
+    if (input_result != 0)
     {
         printf("There must be three different points");
         return 1;
     }
-    if (same_points(xc, yc, xb, yb));
+    input_result = same_points(xc, yc, xb, yb);
+    if (input_result != 0)
     {
         printf("There must be three different points");
         return 1;
     }
-    if (is_line(xb, yb, xa, ya, xc, yc))
+    input_result = check_line(xb, yb, xa, ya, xc, yc);
+    if (input_result != 0)
     {
         printf("The points must not be on the same line");
         return 1;
@@ -71,10 +78,11 @@ bool same_points(float xa, float ya, float xb, float yb)
 {
     return (is_close(xa, xb) && is_close(ya, yb));
 }
-bool is_line(float xa, float ya, float xb, float yb,
-float xc, float yc)
+
+bool check_line(float xa, float ya, float xb, float yb,
+               float xc, float yc)
 {
-    return is_close((xc - xa) * (yb - ya) - (xb - xa) * (yc - ya), 0);
+    return is_close(((xc - xa) * (yb - ya) - (xb - xa) * (yc - ya)), 0);
 }
 
 float min_float(float num1, float num2)
@@ -106,11 +114,15 @@ float vec_dot(float a_x, float a_y, float b_x,
         return 0;
     return dot;
 }
-
 /*
  * is value x close to target
  */
 bool is_close(const float x, const float target)
 {
     return fabs(x - target) < 10e-5;
+}
+
+bool input_two_floats(float *a, float *b)
+{
+    return scanf("%f %f", a, b) != 2;
 }
