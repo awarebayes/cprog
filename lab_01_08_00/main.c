@@ -11,8 +11,7 @@
 #include <stdint.h>
 
 void print_bin(unsigned long number, int remaining);
-unsigned long shift_left(unsigned long number, int n);
-unsigned long shift_right(unsigned long number, int n);
+unsigned long shift_right(uint32_t number, int n);
 
 int main()
 {
@@ -32,8 +31,6 @@ int main()
     }
     else
     {
-        //n *= -1;
-        //a = shift_left(a, n);
         printf("Error: n should be non negative");
         return 1;
     }
@@ -62,7 +59,7 @@ void print_bin(unsigned long number, int remaining)
  * @param n times to shift shift right 
  * @return shifted number
  */
-unsigned long shift_right(unsigned long number, int n)
+unsigned long shift_right(uint32_t number, int n)
 {
     n = n % 32;
     for (int i = 0; i < n; i++)
@@ -73,21 +70,3 @@ unsigned long shift_right(unsigned long number, int n)
     }
     return number;
 }
-
-/*
- * Cyclically shift number n times
- * @param number to shift
- * @param n times to shift shift right 
- * @return shifted number
- */
-unsigned long shift_left(unsigned long number, int n)
-{
-    n = n % 32;
-    for (int i = 0; i < n; i++)
-    {
-        uint32_t last_bit = number >> 31;
-        number = (number << 1) | last_bit;
-    }
-    return number;
-}
-

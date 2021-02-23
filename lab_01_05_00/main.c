@@ -42,9 +42,10 @@ int main(void)
 long unsigned powi(int a, int n)
 {
     long long res = 1;
-    for (int i = 0; i < n; i++)
+    while(n > 0)
     {
         res *= a;
+        n--;
     }
     return res;
 }
