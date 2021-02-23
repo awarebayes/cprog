@@ -21,19 +21,20 @@ int check_if_on_line(float xa, float ya, float xb, float yb,
     return 0;
 }
 
-float find_cos_sign(float xa, float ya, float xb, float yb,
-                    float xc, float yc)
+float vec_dot(float a_x, float a_y, float b_x,
+              float b_y, float c_x, float c_y)
 {
-    float vxa, vya;
-    float vxb, vyb;
+    float ba_x, ba_y, bc_x, bc_y;
+    float dot; ///< dot product
+    ba_x = a_x - b_x;
+    ba_y = a_y - b_y;
+    bc_x = c_x - b_x;
+    bc_y = c_y - b_y;
 
-    vxa = xb - xa;
-    vya = yb - ya;
-    vxb = xc - xa;
-    vyb = yc - ya;
-
-    float result = roundf((vxa * vxb + vya * vyb) * 10000000000) / 10000000000;
-    return result;
+    dot = (ba_x * bc_x) + (ba_y * bc_y);
+    if (is_close(dot, 0))
+        return 0;
+    return dot;
 }
 
 float min_float(float num1, float num2)
@@ -53,13 +54,11 @@ int main(void)
 
     int input_result;
 
-    printf("Input coordintaes of the first point: ");
     if ((input_result = input_two_float(&xa, &ya)) != 0)
     {
         printf("You have to enter two numbers");
         return 1;
     }
-    printf("Input coordintaes of the second point: ");
     if ((input_result = input_two_float(&xb, &yb)) != 0)
     {
         printf("You have to enter two numbers");
@@ -71,7 +70,6 @@ int main(void)
         printf("There must be three different points");
         return 1;
     }
-    printf("Input coordintaes of the third point: ");
     if ((input_result = input_two_float(&xc, &yc)) != 0)
     {
         printf("You have to enter two numbers");
@@ -96,9 +94,9 @@ int main(void)
         return 1;
     }
 
-    type = find_cos_sign(xa, ya, xb, yb, xc, yc);
-    type = min_float(type, find_cos_sign(xb, yb, xa, ya, xc, yc));
-    type = min_float(type, find_cos_sign(xc, yc, xa, ya, xb, yb));
+    type = vec_dot(xa, ya, xb, yb, xc, yc);
+    type = min_float(type, vec_dot(xb, yb, xa, ya, xc, yc));
+    type = min_float(type, vec_dot(xc, yc, xa, ya, xb, yb));
 
     if (type > 0)
         printf("0\n");
