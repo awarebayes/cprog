@@ -8,6 +8,7 @@
  */
 
 #include <stdio.h>
+#include <stdint.h>
 
 void print_bin(unsigned long number, int remaining);
 unsigned long shift_left(unsigned long number, int n);
@@ -15,11 +16,11 @@ unsigned long shift_right(unsigned long number, int n);
 
 int main()
 {
-    unsigned long int a; ///< number to shift
+    uint32_t a; ///< number to shift
     int n; ///< positions to shift
 
     printf("Input a and n\n");
-    if (scanf("%lu %u", &a, &n) != 2)
+    if (scanf("%u %d", &a, &n) != 2)
     {
         printf("Error: Input was wrong\n");
         return 1;
@@ -64,9 +65,9 @@ void print_bin(unsigned long number, int remaining)
 unsigned long shift_right(unsigned long number, int n)
 {
     n = n % 32;
-    for (size_t i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
-        unsigned long first_bit = number & 1;
+        uint32_t first_bit = number & 1;
         number = number >> 1;
         number = number | (first_bit << 31);
     }
@@ -82,9 +83,9 @@ unsigned long shift_right(unsigned long number, int n)
 unsigned long shift_left(unsigned long number, int n)
 {
     n = n % 32;
-    for (size_t i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
-        unsigned long last_bit = number >> 31;
+        uint32_t last_bit = number >> 31;
         number = (number << 1) | last_bit;
     }
     return number;

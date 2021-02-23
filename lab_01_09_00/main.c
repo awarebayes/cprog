@@ -32,6 +32,6 @@ int main()
         sum += cur / counter;
         counter += 1;
     }
-    res = sqrt(sum);
+    res = sqrtf(sum);
     printf("%f\n", res);
 }
