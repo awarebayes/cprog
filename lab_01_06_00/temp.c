@@ -4,11 +4,11 @@
 
 bool same_points(float xa, float ya, float xb, float yb);
 bool check_line(float xa, float ya, float xb, float yb,
-               float xc, float yc);
+float xc, float yc);
 
 float min_float(float num1, float num2);
 float vec_dot(float a_x, float a_y, float b_x,
-              float b_y, float c_x, float c_y);
+float b_y, float c_x, float c_y);
 bool is_close(const float x, const float target);
 bool input_two_floats(float *a, float *b);
 
@@ -17,64 +17,54 @@ int main(void)
     float xa, ya;
     float xb, yb;
     float xc, yc;
-    float type;
+    float min_dot;
 
-    if (input_two_floats(&xa, &ya))
-    {
-        printf("You have to enter two numbers");
-        return 1;
-    }
-    if (input_two_floats(&xb, &yb))
-    {
-        printf("You have to enter two numbers");
-        return 1;
-    }
-    if (same_points(xa, ya, xb, yb))
-    {
-        printf("There must be three different points");
-        return 1;
-    }
-    if (input_two_floats(&xc, &yc))
-    {
-        printf("You have to enter two numbers");
-        return 1;
-    }
-    if (same_points(xa, ya, xc, yc))
-    {
-        printf("There must be three different points");
-        return 1;
-    }
-    if (same_points(xc, yc, xb, yb))
-    {
-        printf("There must be three different points");
-        return 1;
-    }
+    if (!input_two_floats(&xa, &ya) ||
+        !input_two_floats(&xb, &yb) ||
+        !input_two_floats(&xc, &yc))
+        {
+            printf("Input Error");
+            return 1;
+        }
+    if (same_points(xa, ya, xb, yb) ||
+        same_points(xa, ya, xc, yc) ||
+        same_points(xc, yc, xb, yb))
+        {
+            printf("Should be 2 distinct points");
+            return 1;
+        }
     if (check_line(xb, yb, xa, ya, xc, yc))
     {
-        printf("The points must not be on the same line");
+        printf("Points are on the same line");
         return 1;
     }
 
-    type = vec_dot(xa, ya, xb, yb, xc, yc);
-    type = min_float(type, vec_dot(xb, yb, xa, ya, xc, yc));
-    type = min_float(type, vec_dot(xc, yc, xa, ya, xb, yb));
+    min_dot = vec_dot(xa, ya, xb, yb, xc, yc);
+    min_dot = min_float(min_dot, vec_dot(xb, yb, xa, ya, xc, yc));
+    min_dot = min_float(min_dot, vec_dot(xc, yc, xa, ya, xb, yb));
 
-    if (type > 0)
+    if (min_dot > 0)
         printf("0\n");
-    else if (type < 0)
+    else if (min_dot < 0)
         printf("2\n");
     else
         printf("1\n");
     return 0;
 }
 
+/*
+ * Check whether points are the same
+ */
 bool same_points(float xa, float ya, float xb, float yb)
 {
     return (is_close(xa, xb) && is_close(ya, yb));
 }
 
+/*
+ * Check whether 3 points are on the same line 
+ */
 bool check_line(float xa, float ya, float xb, float yb,
-               float xc, float yc)
+float xc, float yc)
 {
     return is_close(((xc - xa) * (yb - ya) - (xb - xa) * (yc - ya)), 0);
 }
@@ -94,7 +84,7 @@ float min_float(float num1, float num2)
  */
 
 float vec_dot(float a_x, float a_y, float b_x,
-              float b_y, float c_x, float c_y)
+float b_y, float c_x, float c_y)
 {
     float ba_x, ba_y, bc_x, bc_y;
     float dot; ///< dot product
@@ -118,5 +108,5 @@ bool is_close(const float x, const float target)
 
 bool input_two_floats(float *a, float *b)
 {
-    return scanf("%f %f", a, b) != 2;
+    return scanf("%f %f", a, b) == 2;
 }
