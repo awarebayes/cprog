@@ -18,8 +18,9 @@ float vec_len(float a_x, float a_y);
 int vec_cos_sign(float a_x, float a_y, float b_x, float b_y,
 float c_x, float c_y);
 bool is_close(const float x, const float target);
+int sign(float f);
+int min(int a, int b);
 
-// float to_deg(float rad){ return rad * 180 / M_PI; }   
 
 int main()
 {
@@ -27,7 +28,8 @@ int main()
     float ax, ay; 
     float bx, by;
     float cx, cy;
-    float angle_a, angle_b, angle_c;
+    int angle_a, angle_b, angle_c;
+    int min_angle;
 
     printf("ax, ay:\n");
     if (scanf("%f %f", &ax, &ay) != 2 ||
@@ -41,24 +43,34 @@ int main()
     angle_a = vec_cos_sign(bx, by, ax, ay, cx, cy);
     angle_b = vec_cos_sign(ax, ay, bx, by, cx, cy);
     angle_c = vec_cos_sign(ax, ay, cx, cy, bx, by);
+    min_angle = min(angle_a, min(angle_b, angle_c));
+
 
     //printf("a %f b %f c %f", to_deg(angle_a), to_deg(angle_b), to_deg(angle_c));    
-    if (angle_a > 0 && angle_b > 0 && angle_c > 0)
+    if (min_angle > 0) 
     {
         printf("0\n");
     }
-    else if (is_close(angle_a, 0) || 
-             is_close(angle_b, 0) ||
-             is_close(angle_c, 0))
-    {
-        printf("1\n");
-    }
-    else
+    else if (min_angle < 0) 
     {
         printf("2\n");
     }
+    else
+    {
+        printf("1\n");
+    }
 
     return 0;
+}
+
+/*
+ * min of 2 integers
+ */
+int min(int a, int b)
+{
+    if (a > b)
+        return b;
+    return a;
 }
 
 /*
