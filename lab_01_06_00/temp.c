@@ -19,8 +19,6 @@ int main(void)
     float xc, yc;
     float type;
 
-    int input_result;
-
     if (input_two_floats(&xa, &ya))
     {
         printf("You have to enter two numbers");
@@ -31,8 +29,7 @@ int main(void)
         printf("You have to enter two numbers");
         return 1;
     }
-    input_result = same_points(xa, ya, xb, yb);
-    if (input_result != 0)
+    if (same_points(xa, ya, xb, yb))
     {
         printf("There must be three different points");
         return 1;
@@ -42,20 +39,17 @@ int main(void)
         printf("You have to enter two numbers");
         return 1;
     }
-    input_result = same_points(xa, ya, xc, yc);
-    if (input_result != 0)
+    if (same_points(xa, ya, xc, yc))
     {
         printf("There must be three different points");
         return 1;
     }
-    input_result = same_points(xc, yc, xb, yb);
-    if (input_result != 0)
+    if (same_points(xc, yc, xb, yb))
     {
         printf("There must be three different points");
         return 1;
     }
-    input_result = check_line(xb, yb, xa, ya, xc, yc);
-    if (input_result != 0)
+    if (check_line(xb, yb, xa, ya, xc, yc))
     {
         printf("The points must not be on the same line");
         return 1;
