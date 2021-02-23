@@ -15,11 +15,11 @@
 #define DEG_90 M_PI / 2.0f
 
 float vec_len(float a_x, float a_y);
-int vec_cos_sign(float a_x, float a_y, float b_x, float b_y,
+float vec_cos_sign(float a_x, float a_y, float b_x, float b_y,
 float c_x, float c_y);
 bool is_close(const float x, const float target);
 int sign(float f);
-int min(int a, int b);
+float min(float a, float b);
 
 
 int main()
@@ -28,10 +28,10 @@ int main()
     float ax, ay; 
     float bx, by;
     float cx, cy;
-    int angle_a, angle_b, angle_c;
-    int min_angle;
+    ///< Angles
+    float angle_a, angle_b, angle_c;
+    float min_angle;
 
-    printf("ax, ay:\n");
     if (scanf("%f %f", &ax, &ay) != 2 ||
         scanf("%f %f", &bx, &by) != 2 ||
         scanf("%f %f", &cx, &cy) != 2)
@@ -46,7 +46,7 @@ int main()
     min_angle = min(angle_a, min(angle_b, angle_c));
 
 
-    //printf("a %f b %f c %f", to_deg(angle_a), to_deg(angle_b), to_deg(angle_c));    
+    //printf("a %f b %f c %f\n", angle_a, angle_b, angle_c);    
     if (min_angle > 0) 
     {
         printf("0\n");
@@ -66,7 +66,7 @@ int main()
 /*
  * min of 2 integers
  */
-int min(int a, int b)
+float min(float a, float b)
 {
     if (a > b)
         return b;
@@ -98,10 +98,12 @@ int sign(float f)
  * @param *_* - vector's x/y component
  * @return Angle between two vectors: ab and bc
  */
+
+/*
 int vec_cos_sign(float a_x, float a_y, float b_x,
 float b_y, float c_x, float c_y)
 {
-    float ba_x, ba_y, bc_x, bc_y; /**< vectors ab, bc */
+    float ba_x, ba_y, bc_x, bc_y; 
     float dot; ///< dot product
     ba_x = a_x - b_x;
     ba_y = a_y - b_y; 
@@ -110,4 +112,20 @@ float b_y, float c_x, float c_y)
 
     dot = (ba_x * bc_x) + (ba_y * bc_y); 
     return sign(dot);
+}
+*/
+
+float vec_cos_sign(float xa, float ya, float xb, float yb,
+float xc, float yc)
+{
+    float vxa, vya;
+    float vxb, vyb;
+ 
+    vxa = xb - xa;
+    vya = yb - ya;
+    vxb = xc - xa;
+    vyb = yc - ya;
+ 
+    float result = roundf((vxa * vxb + vya * vyb) * 10000000000) / 10000000000;
+    return result;
 }
