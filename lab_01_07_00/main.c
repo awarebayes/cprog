@@ -72,6 +72,7 @@ void eval_results(float std_exp, float my_exp)
 {
     float abs_err = fabsf(std_exp - my_exp);
     float rel_err = abs_err / std_exp;
+
     printf("std exp: %f\n", std_exp);
     printf("my exp: %f\n", my_exp);
     printf("error absolute: %f\n", abs_err);

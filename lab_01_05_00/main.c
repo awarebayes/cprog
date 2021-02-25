@@ -8,7 +8,7 @@
 
 #include <stdio.h>
 
-long powi(int a, int n);
+int powi(int a, int n);
 
 int main(void)
 {
@@ -23,7 +23,6 @@ int main(void)
         printf("Input Error\n");
         error_flag = 1;
     }
-
     // sanity check
     else if (n <= 0)
     {
@@ -33,7 +32,7 @@ int main(void)
     else
     {
         // final result
-        long res = powi(a, n);
+        int res = powi(a, n);
         printf("%d\n", res); 
     }
     return error_flag;
@@ -42,9 +41,9 @@ int main(void)
 /*
  * a^n for integers
  */
-long powi(int a, int n)
+int powi(int a, int n)
 {
-    long res = 1;
+    int res = 1;
     while (n > 0)
     {
         res *= a;

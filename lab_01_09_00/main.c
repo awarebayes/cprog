@@ -23,7 +23,7 @@ int main()
     {
         if (scanf("%f", &cur) != 1)
         {
-            error_flag  = 1;
+            error_flag = 1;
             break;
         }
         else if (cur < 0)
