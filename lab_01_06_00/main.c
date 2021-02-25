@@ -72,7 +72,6 @@ int main(void)
             break;
     }
     return error_flag;
-
 }
 
 /*
