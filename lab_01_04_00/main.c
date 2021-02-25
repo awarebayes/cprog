@@ -17,14 +17,18 @@ int main()
     if (scanf("%d", &cop) != 1)
     {
         printf("Input Error");
-        return 1;
     }
-    if (cop < 45)
+    else
     {
-        printf("0\n");
-        return 0;
+        if (cop < 45)
+        {
+            printf("0\n");
+        }
+        else
+        {
+            cop -= 45;
+            printf("%d\n", cop / 25 + 1);
+        }
     }
-    cop -= 45;
-    printf("%d\n", cop / 25 + 1);
     return 0;
 }

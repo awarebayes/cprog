@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <math.h>
 
+float perimiter_trapezoid(float a, float b, float h);
+
 int main(void)
 {
     float a, b, h;
@@ -21,10 +23,17 @@ int main(void)
         return 1;
     }
 
-    float j = fabs(a - b) / 2;
-    float p = 2 * sqrt(j * j + h * h) + a + b;
-
-    printf("%f\n", p);
-
+    float perimeter = perimiter_trapezoid(a, b, h);
+    printf("%f\n", perimeter);
     return 0;
+}
+
+/*
+ * Perimeter of a trapezoid
+ */
+float perimiter_trapezoid(float a, float b, float h)
+{
+    float j = fabs(a - b) / 2;
+    float perimeter = 2 * sqrt(j * j + h * h) + a + b;
+    return perimeter;
 }
