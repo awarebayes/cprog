@@ -26,9 +26,7 @@ int main()
     }
 
     if (n >= 0)
-    {
         a = shift_right(a, n);
-    }
     else
     {
         printf("Error: n should be non negative");

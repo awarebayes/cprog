@@ -24,7 +24,7 @@ int main(void)
     }
 
     // sanity check
-    if (n < 0)
+    if (n <= 0)
     {
         printf("Power should be non negative\n");
         return 1;
