@@ -34,12 +34,20 @@ int main()
             counter += 1;
         }
     }
-    if (error_flag)
-        printf("Error: Input Error\n");
-    else
-    {
+    if (!error_flag)
         res = sqrtf(sum);
-        printf("%f\n", res);
-    }
+    print_error(error_flag);
     return error_flag;
+}
+
+void print_error(int error_flag)
+{
+    switch (error_flag)
+    {
+        case 1:
+            printf("Input Error\n");
+            break;
+        default:
+            break;
+    }
 }

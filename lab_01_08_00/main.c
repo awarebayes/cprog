@@ -11,7 +11,8 @@
 #include <stdint.h>
 
 void print_bin(unsigned long number, int remaining);
-unsigned long shift_right(uint32_t number, int n);
+uint32_t shift_right(uint32_t number, int n);
+void print_error(int error_flag);
 
 int main()
 {
@@ -35,17 +36,7 @@ int main()
         print_bin(a, 32);
         printf("\n");
     }
-    switch (error_flag)
-    {
-        case 1:
-            printf("Error: Input Error\n");
-            break;
-        case 2:
-            printf("Error: n should be non negative\n");
-            break;
-        default:
-            break;
-    }
+
     return error_flag;
 }
 
@@ -68,7 +59,7 @@ void print_bin(unsigned long number, int remaining)
  * @param n times to shift shift right 
  * @return shifted number
  */
-unsigned long shift_right(uint32_t number, int n)
+uint32_t shift_right(uint32_t number, int n)
 {
     n = n % 32;
     for (int i = 0; i < n; i++)
@@ -78,4 +69,19 @@ unsigned long shift_right(uint32_t number, int n)
         number = number | (first_bit << 31);
     }
     return number;
+}
+
+void print_error(int error_flag)
+{
+    switch (error_flag)
+    {
+        case 1:
+            printf("Error: Input Error\n");
+            break;
+        case 2:
+            printf("Error: n should be positive\n");
+            break;
+        default:
+            break;
+    }
 }

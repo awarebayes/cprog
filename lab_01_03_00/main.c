@@ -10,19 +10,18 @@
 
 #include <stdio.h>
 
+void print_error(int error_flag);
+
 int main()
 {
     float height, chest, mass;
     float weight_normal, bmi;
-
+    int error_flag = 0;
 
     printf("Input height, chest diameter, mass: \n");
     if (scanf("%f %f %f", &height, &chest, &mass) != 3 ||
         height <= 0 || chest <= 0 || mass <= 0)
-    {
-        printf("Input Error");
-        return 1;
-    }
+        error_flag = 1;
 
     weight_normal = height * chest / 240.0;
     height /= 100.0;
@@ -31,5 +30,18 @@ int main()
     printf("%f\n", weight_normal);
     printf("%f\n", bmi);
 
-    return 0;
+    print_error(error_flag);
+    return error_flag;
+}
+
+void print_error(int error_flag)
+{
+    switch (error_flag)
+    {
+        case 1:
+            printf("Input Error\n");
+            break;
+        default:
+            break;
+    }
 }

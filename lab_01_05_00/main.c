@@ -9,6 +9,7 @@
 #include <stdio.h>
 
 int powi(int a, int n);
+void print_error(int error_flag);
 
 int main(void)
 {
@@ -19,22 +20,17 @@ int main(void)
     printf("Enter two numbers: \n");
 
     if (scanf("%d %d", &a, &n) != 2)
-    {
-        printf("Input Error\n");
         error_flag = 1;
-    }
     // sanity check
     else if (n <= 0)
-    {
-        printf("Power should be non negative\n");
-        error_flag = 1;
-    }
+        error_flag = 2;
     else
     {
         // final result
         int res = powi(a, n);
         printf("%d\n", res); 
     }
+    print_error(error_flag);
     return error_flag;
 }
 
@@ -52,3 +48,17 @@ int powi(int a, int n)
     return res;
 }
 
+void print_error(int error_flag)
+{
+    switch (error_flag)
+    {
+        case 1:
+            printf("Input Error\n");
+            break;
+        case 2:
+            printf("N should be positive\n");
+            break;
+        default:
+            break;
+    }
+}

@@ -13,13 +13,15 @@
 
 
 float my_exp_func(float x, float eps);
-void eval_results(float std_exp, float my_exp);
+void print_results(float std_exp, float my_exp, float abs_err, float rel_err);
+void print_error(int error_flag);
 
 int main()
 {
     float x, eps;
     float std_exp; ///< standard lirary exponent
     float my_exp; ///< my exponent
+    float abs_err, rel_err; ///< errors
     int error_flag = 0;
 
     // printf("Input x, eps\n");
@@ -31,19 +33,12 @@ int main()
     {
         std_exp = expf(x);
         my_exp = my_exp_func(x, eps);
-        eval_results(std_exp, my_exp);
+        abs_err = fabsf(std_exp - my_exp);
+        rel_err = abs_err / std_exp;
+
+        print_results(std_exp, my_exp, abs_err, rel_err);
     }
-    switch (error_flag)
-    {
-        case 1:
-            printf("Input Error");
-            break;
-        case 2:
-            printf("Eps should be in (0, 1)\n");
-            break;
-        default:
-            break;
-    }
+    print_error(error_flag);
     return error_flag;
 }
 
@@ -68,13 +63,25 @@ float my_exp_func(float x, float eps)
     return result;
 }
 
-void eval_results(float std_exp, float my_exp)
+void print_results(float std_exp, float my_exp, float abs_err, float rel_err)
 {
-    float abs_err = fabsf(std_exp - my_exp);
-    float rel_err = abs_err / std_exp;
+    printf("%f\n", std_exp);
+    printf("%f\n", my_exp);
+    printf("%f\n", abs_err);
+    printf("%f\n", rel_err);
+}
 
-    printf("std exp: %f\n", std_exp);
-    printf("my exp: %f\n", my_exp);
-    printf("error absolute: %f\n", abs_err);
-    printf("error relative: %f\n", rel_err);
+void print_error(int error_flag)
+{
+    switch (error_flag)
+    {
+        case 1:
+            printf("Input Error");
+            break;
+        case 2:
+            printf("Eps should be in (0, 1)\n");
+            break;
+        default:
+            break;
+    }
 }

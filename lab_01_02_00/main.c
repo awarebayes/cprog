@@ -10,22 +10,23 @@
 #include <math.h>
 
 float perimiter_trapezoid(float a, float b, float h);
+void print_error(int error_flag);
 
 int main(void)
 {
     float a, b, h;
-
+    int error_flag = 0;
     printf("Input a, b, h\n");
 
     if (scanf("%f %f %f", &a, &b, &h) != 3)
+        error_flag = 1;
+    else
     {
-        printf("Input Error\n");
-        return 1;
+        float perimeter = perimiter_trapezoid(a, b, h);
+        printf("%f\n", perimeter);
     }
-
-    float perimeter = perimiter_trapezoid(a, b, h);
-    printf("%f\n", perimeter);
-    return 0;
+    print_error(error_flag);
+    return error_flag;
 }
 
 /*
@@ -36,4 +37,16 @@ float perimiter_trapezoid(float a, float b, float h)
     float j = fabs(a - b) / 2;
     float perimeter = 2 * sqrt(j * j + h * h) + a + b;
     return perimeter;
+}
+
+void print_error(int error_flag)
+{
+    switch (error_flag)
+    {
+        case 1:
+            printf("Input Error\n");
+            break;
+        default:
+            break;
+    }
 }
