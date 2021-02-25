@@ -22,13 +22,9 @@ int main()
 
     printf("Input a and n\n");
     if (scanf("%u %d", &a, &n) != 2)
-    {
         error_flag = 1;
-    }
     else if (n < 0)
-    {
         error_flag = 2;
-    }
     else
     {
         a = shift_right(a, n);
@@ -36,7 +32,7 @@ int main()
         print_bin(a, 32);
         printf("\n");
     }
-
+    print_error(error_flag);
     return error_flag;
 }
 

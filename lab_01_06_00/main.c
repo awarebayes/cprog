@@ -21,7 +21,7 @@ float vec_dot(float a_x, float a_y, float b_x,
 float b_y, float c_x, float c_y);
 bool is_close(const float x, const float target);
 bool input_two_floats(float *a, float *b);
-int input(int* xa, int* ya, int* xb, int* yb, int* xc, int* yc);
+int input(float *xa, float *ya, float *xb, float *yb, float *xc, float *yc);
 void print_error(int error_flag);
 
 int main(void)
@@ -128,7 +128,7 @@ void print_error(int error_flag)
     }
 }
 
-int input(int* xa, int* ya, int* xb, int* yb, int* xc, int* yc)
+int input(float *xa, float *ya, float *xb, float *yb, float *xc, float *yc)
 {
     int error_flag = 0;
     if (!input_two_floats(xa, ya))

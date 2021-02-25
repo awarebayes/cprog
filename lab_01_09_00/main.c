@@ -11,13 +11,15 @@
 #include <stdio.h>
 #include <math.h>
 
+void print_error(int error_flag);
+
 int main()
 {
     float cur = 0;
     int counter = 1;
     float sum = 0; 
-    float res;
     int error_flag = 0;
+    float res;
 
     while (1) 
     {
@@ -35,7 +37,10 @@ int main()
         }
     }
     if (!error_flag)
+    {
         res = sqrtf(sum);
+        printf("%f", res);
+    }
     print_error(error_flag);
     return error_flag;
 }
