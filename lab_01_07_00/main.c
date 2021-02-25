@@ -29,9 +29,9 @@ int main()
         printf("Input Error\n");
         return 1;
     }
-    if (eps <= 0)
+    if (eps <= 0 || eps >= 1)
     {
-        printf("Eps should be positive\n");
+        printf("Eps should be in (0, 1)\n");
         return 1;
     }
 

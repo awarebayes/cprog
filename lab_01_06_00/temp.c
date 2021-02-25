@@ -47,13 +47,15 @@ int main(void)
     else
         printf("1\n");
     return 0;
+
+    // Errors
     
     same_points_error:
-        printf("Same points");
-        return 1;
+    printf("Same points");
+    return 1;
     input_error:
-        printf("Input Error");
-        return 1;
+    printf("Input Error");
+    return 1;
 }
 
 /*
