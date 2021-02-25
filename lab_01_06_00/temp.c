@@ -19,39 +19,20 @@ int main(void)
     float xc, yc;
     float type;
 
-    if (input_two_floats(&xa, &ya))
-    {
-        printf("You have to enter two numbers");
-        return 1;
-    }
-    if (input_two_floats(&xb, &yb))
-    {
-        printf("You have to enter two numbers");
-        return 1;
-    }
+    if (!input_two_floats(&xa, &ya))
+        goto input_error;
+    if (!input_two_floats(&xb, &yb))
+        goto input_error;
     if (same_points(xa, ya, xb, yb))
-    {
-        printf("There must be three different points");
-        return 1;
-    }
-    if (input_two_floats(&xc, &yc))
-    {
-        printf("You have to enter two numbers");
-        return 1;
-    }
-    if (same_points(xa, ya, xc, yc))
-    {
-        printf("There must be three different points");
-        return 1;
-    }
-    if (same_points(xc, yc, xb, yb))
-    {
-        printf("There must be three different points");
-        return 1;
-    }
+        goto same_points_error;
+    if (!input_two_floats(&xc, &yc))
+        goto input_error;
+    if (same_points(xa, ya, xc, yc) ||
+        same_points(xc, yc, xb, yb))
+        goto same_points_error;
     if (check_line(xb, yb, xa, ya, xc, yc))
     {
-        printf("The points must not be on the same line");
+        printf("This is a line");
         return 1;
     }
 
@@ -66,6 +47,13 @@ int main(void)
     else
         printf("1\n");
     return 0;
+    
+    same_points_error:
+        printf("Same points");
+        return 1;
+    input_error:
+        printf("Input Error");
+        return 1;
 }
 
 /*
@@ -124,5 +112,5 @@ bool is_close(const float x, const float target)
 
 bool input_two_floats(float *a, float *b)
 {
-    return scanf("%f %f", a, b) != 2;
+    return scanf("%f %f", a, b) == 2;
 }
