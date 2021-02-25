@@ -17,25 +17,36 @@ int main()
 {
     uint32_t a; ///< number to shift
     int n; ///< positions to shift
+    int error_flag = 0;
 
     printf("Input a and n\n");
     if (scanf("%u %d", &a, &n) != 2)
     {
-        printf("Error: Input was wrong\n");
-        return 1;
+        error_flag = 1;
     }
-
-    if (n >= 0)
-        a = shift_right(a, n);
+    else if (n < 0)
+    {
+        error_flag = 2;
+    }
     else
     {
-        printf("Error: n should be non negative");
-        return 1;
+        a = shift_right(a, n);
+        printf("Result: ");
+        print_bin(a, 32);
+        printf("\n");
     }
-
-    printf("Result: ");
-    print_bin(a, 32);
-    printf("\n");
+    switch (error_flag)
+    {
+        case 1:
+            printf("Error: Input Error\n");
+            break;
+        case 2:
+            printf("Error: n should be non negative\n");
+            break;
+        default:
+            break;
+    }
+    return error_flag;
 }
 
 /*

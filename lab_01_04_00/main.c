@@ -13,10 +13,12 @@
 int main()
 {
     int cop;
+    int error_flag = 0;
     printf("Enter number of copecks: ");
     if (scanf("%d", &cop) != 1)
     {
         printf("Input Error");
+        error_flag = 1;
     }
     else
     {
@@ -30,5 +32,5 @@ int main()
             printf("%d\n", cop / 25 + 1);
         }
     }
-    return 0;
+    return error_flag;
 }

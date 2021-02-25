@@ -1,3 +1,13 @@
+/*
+ * Написал Щербина Михаил ИУ7-15Б.
+ * Задача 6 лабораторной 1.
+ * Принять с клавиатуры координаты 𝑥𝑎, 𝑦𝑎, . . . , 𝑦𝑐 треугольника 𝑎𝑏𝑐 на плоскости.
+ * Определить тип треугольника и вывести на экран целое число в зависимости от
+ * ответа: 0 — остроугольный, 1 — прямоугольный, 2 — тупоугольный
+ * gcc -std=c99 -Werror -Wall -lm ./lab_01_06_00/main.c -o ./bin/lab6 && ./bin/lab6
+ */
+
+
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
@@ -18,44 +28,51 @@ int main(void)
     float xb, yb;
     float xc, yc;
     float type;
+    int error_flag = 0;
 
     if (!input_two_floats(&xa, &ya))
-        goto input_error;
-    if (!input_two_floats(&xb, &yb))
-        goto input_error;
-    if (same_points(xa, ya, xb, yb))
-        goto same_points_error;
-    if (!input_two_floats(&xc, &yc))
-        goto input_error;
-    if (same_points(xa, ya, xc, yc) ||
+        error_flag = 1;
+    else if (!input_two_floats(&xb, &yb))
+        error_flag = 1;
+    else if (same_points(xa, ya, xb, yb))
+        error_flag = 2;
+    else if (!input_two_floats(&xc, &yc))
+        error_flag = 1;
+    else if (same_points(xa, ya, xc, yc) ||
         same_points(xc, yc, xb, yb))
-        goto same_points_error;
-    if (check_line(xb, yb, xa, ya, xc, yc))
+        error_flag = 2;
+    else if (check_line(xb, yb, xa, ya, xc, yc))
+        error_flag = 3;
+    else
     {
-        printf("This is a line");
-        return 1;
+        type = vec_dot(xa, ya, xb, yb, xc, yc);
+        type = min_float(type, vec_dot(xb, yb, xa, ya, xc, yc));
+        type = min_float(type, vec_dot(xc, yc, xa, ya, xb, yb));
+
+        if (type > 0)
+            printf("0\n");
+        else if (type < 0)
+            printf("2\n");
+        else
+            printf("1\n");
     }
 
-    type = vec_dot(xa, ya, xb, yb, xc, yc);
-    type = min_float(type, vec_dot(xb, yb, xa, ya, xc, yc));
-    type = min_float(type, vec_dot(xc, yc, xa, ya, xb, yb));
+    switch (error_flag)
+    {
+        case 1:
+            printf("Input Error\n");
+            break;
+        case 2:
+            printf("Same Points\n");
+            break;
+        case 3:
+            printf("On line\n");
+            break;
+        default:
+            break;
+    }
+    return error_flag;
 
-    if (type > 0)
-        printf("0\n");
-    else if (type < 0)
-        printf("2\n");
-    else
-        printf("1\n");
-    return 0;
-
-    // Errors
-    
-    same_points_error:
-        printf("Same points");
-    return 1;
-    input_error:
-        printf("Input Error");
-    return 1;
 }
 
 /*

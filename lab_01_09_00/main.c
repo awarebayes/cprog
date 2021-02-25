@@ -5,7 +5,7 @@
  *  элементы непустой последовательности неотрицательных чисел 𝑥,
  *  вычислить и вывести на экран значение 𝑔.
  * g = sqrt(a_1 + a_2/2 + a_3/3 + ...)
- * gcc -std=c99 -Werror -Wall -lm ./lab_01_09_24/main.c -o ./bin/lab9 && ./bin/lab9
+ * gcc -std=c99 -Werror -Wall -lm ./lab_01_09_00/main.c -o ./bin/lab9 && ./bin/lab9
  */
 
 #include <stdio.h>
@@ -17,21 +17,29 @@ int main()
     int counter = 1;
     float sum = 0; 
     float res;
+    int error_flag = 0;
 
     while (1) 
     {
         if (scanf("%f", &cur) != 1)
         {
-            printf("Input Error");
-            return 1;
+            error_flag  = 1;
+            break;
         }
-
-        if (cur < 0)
+        else if (cur < 0)
             break;   
-        
-        sum += cur / counter;
-        counter += 1;
+        else
+        {
+            sum += cur / counter;
+            counter += 1;
+        }
     }
-    res = sqrtf(sum);
-    printf("%f\n", res);
+    if (error_flag)
+        printf("Error: Input Error\n");
+    else
+    {
+        res = sqrtf(sum);
+        printf("%f\n", res);
+    }
+    return error_flag;
 }

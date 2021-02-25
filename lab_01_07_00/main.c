@@ -5,7 +5,7 @@
  * приближённое значение 𝑠(𝑥) и точное значение 𝑓(𝑥) функции 𝑓,
  * абсолютную ∆ и относительную 𝛿 погрешности:
  * Мой вариант: exp(x)
- * gcc -std=c99 -Werror -Wall  -lm ./lab_01_07_24/main.c -o ./bin/lab7 && ./bin/lab7
+ * gcc -std=c99 -Werror -Wall  -lm ./lab_01_07_00/main.c -o ./bin/lab7 && ./bin/lab7
  */
 
 #include <stdio.h>
@@ -13,37 +13,38 @@
 
 
 float my_exp_func(float x, float eps);
+void eval_results(float std_exp, float my_exp);
 
 int main()
 {
     float x, eps;
     float std_exp; ///< standard lirary exponent
     float my_exp; ///< my exponent
-    float abs_err; ///< absolute error between two
-    ///< relative error with respect to std_exp
-    float rel_err; 
+    int error_flag = 0;
 
     // printf("Input x, eps\n");
     if (scanf("%f %f", &x, &eps) != 2)
+        error_flag = 1;
+    else if (eps <= 0 || eps >= 1)
+        error_flag = 2;
+    else
     {
-        printf("Input Error\n");
-        return 1;
+        std_exp = expf(x);
+        my_exp = my_exp_func(x, eps);
+        eval_results(std_exp, my_exp);
     }
-    if (eps <= 0 || eps >= 1)
+    switch (error_flag)
     {
-        printf("Eps should be in (0, 1)\n");
-        return 1;
+        case 1:
+            printf("Input Error");
+            break;
+        case 2:
+            printf("Eps should be in (0, 1)\n");
+            break;
+        default:
+            break;
     }
-
-    std_exp = expf(x);
-    my_exp = my_exp_func(x, eps);
-    abs_err = fabsf(std_exp - my_exp);
-    rel_err = abs_err / std_exp;
-
-    printf("std exp: %f\n", std_exp);
-    printf("my exp: %f\n", my_exp);
-    printf("error absolute: %f\n", abs_err);
-    printf("error relative: %f\n", rel_err);
+    return error_flag;
 }
 
 /*
@@ -65,4 +66,14 @@ float my_exp_func(float x, float eps)
         result += x_n;
     }
     return result;
+}
+
+void eval_results(float std_exp, float my_exp)
+{
+    float abs_err = fabsf(std_exp - my_exp);
+    float rel_err = abs_err / std_exp;
+    printf("std exp: %f\n", std_exp);
+    printf("my exp: %f\n", my_exp);
+    printf("error absolute: %f\n", abs_err);
+    printf("error relative: %f\n", rel_err);
 }
