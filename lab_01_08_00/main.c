@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
-void print_bin(unsigned long number, int remaining);
+void print_bin(uint32_t number, int remaining);
 uint32_t shift_right(uint32_t number, int n);
 void print_error(int error_flag);
 
@@ -41,12 +41,12 @@ int main()
  * @param number number to print
  * @param remaining number of BITS remaining to print
  */
-void print_bin(unsigned long number, int remaining)
+void print_bin(uint32_t number, int remaining)
 {
-    while (remaining > 0){
-        putc((number & 1) ? '1' : '0', stdout);
-        remaining--;
-        number = number >> 1;
+    uint32_t mask = 1 << (remaining-1);
+    while (mask > 0){
+        putc((number & mask) ? '1' : '0', stdout);
+        mask = mask >> 1;
     }
 }
 
