@@ -44,7 +44,8 @@ int main()
 void print_bin(uint32_t number, int remaining)
 {
     uint32_t mask = 1 << (remaining - 1);
-    while (mask > 0){
+    while (mask > 0)
+    {
         putc((number & mask) ? '1' : '0', stdout);
         mask = mask >> 1;
     }
