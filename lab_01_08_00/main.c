@@ -43,7 +43,7 @@ int main()
  */
 void print_bin(unsigned long number, int remaining)
 {
-    while(remaining > 0){
+    while (remaining > 0){
         putc((number & 1) ? '1' : '0', stdout);
         remaining--;
         number = number >> 1;
