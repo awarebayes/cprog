@@ -54,7 +54,7 @@ float my_exp_func(float x, float eps)
     float x_n = 1; ///< x to the power of n
     float result = x_n; ///< result
 
-    while (x_n >= eps)
+    while (fabsf(x_n) >= eps)
     {
         x_n *= x / n;
         n += 1;

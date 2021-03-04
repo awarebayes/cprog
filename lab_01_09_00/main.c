@@ -20,16 +20,17 @@ int main()
     float sum = 0; 
     int error_flag = 0;
     float res;
+    
+    int broken = 0;
 
-    while (1) 
+    while (!broken && !error_flag) 
     {
         if (scanf("%f", &cur) != 1)
         {
             error_flag = 1;
-            break;
         }
         else if (cur < 0)
-            break;   
+            broken = 1;  
         else
         {
             sum += cur / counter;
@@ -39,7 +40,7 @@ int main()
     if (!error_flag)
     {
         res = sqrtf(sum);
-        printf("%f", res);
+        printf("%f\n", res);
     }
     print_error(error_flag);
     return error_flag;
