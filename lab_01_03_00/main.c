@@ -11,6 +11,8 @@
 #include <stdio.h>
 
 void print_error(int error_flag);
+void calculate(float height, float chest, float mass,
+float *weight_normal, float *bmi);
 
 int main()
 {
@@ -23,15 +25,21 @@ int main()
         height <= 0 || chest <= 0 || mass <= 0)
         error_flag = 1;
 
-    weight_normal = height * chest / 240.0;
-    height /= 100.0;
-    bmi = mass / (height * height);
-
     printf("%f\n", weight_normal);
     printf("%f\n", bmi);
 
+    calculate(height, chest, mass, &weight_normal, &bmi);
+
     print_error(error_flag);
     return error_flag;
+}
+
+void calculate(float height, float chest, float mass,
+float *weight_normal, float *bmi)
+{
+    *weight_normal = height * chest / 240.0;
+    height /= 100.0;
+    *bmi = mass / (height * height);
 }
 
 void print_error(int error_flag)
