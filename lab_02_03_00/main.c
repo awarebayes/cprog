@@ -11,16 +11,18 @@
 #include <stdio.h>
 #define N 10
 
-enum error_code 
-{ 
+enum error_code
+{
     ok,
-    input_error
+    input_error,
+    empty_arr
 };
 
 int cin_arr(int *arr, int *len);
 void print_arr(int *arr, int len);
 void print_error(int ec);
 void arr_filter_palindrome(int *arr, int len, int *new_len);
+int is_palindrome(int num);
 
 int main()
 {
@@ -32,8 +34,11 @@ int main()
     {
         int new_len;
         arr_filter_palindrome(arr, arr_len, &new_len);
-        print_arr(arr, new_len);
+        ec = (new_len != 0) ? ok : empty_arr;
+        if (!ec)
+            print_arr(arr, new_len);
     }
+
     print_error(ec);
     return ec;
 }
@@ -68,10 +73,13 @@ void print_error(int ec)
         case input_error:
             printf("Input error\n");
             break;
+        case empty_arr:
+            printf("New array is empty\n");
+            break;
     }
 }
 
-int nth_right_digit(int num, int pos)
+int nth_left_digit(int num, int pos)
 {
     if (pos < 0)
     {
@@ -79,7 +87,7 @@ int nth_right_digit(int num, int pos)
         return 0;
     }
     for (int i = 0; i < pos; i++)
-        num %= 10;
+        num /= 10;
     return num % 10;
 }
 
@@ -96,11 +104,16 @@ int n_digits(int num)
 
 int is_palindrome(int num)
 {
+    if (num < 0)
+        return 0;
+    
     int n_d = n_digits(num);
     int res = 1;
     for (int i = 0; i < n_d; i++)
     {
-        if (nth_right_digit(num, i) != nth_right_digit(num, n_d - i))
+        int d_1 = nth_left_digit(num, i);
+        int d_2 = nth_left_digit(num, n_d - i - 1);
+        if (d_1 != d_2)
             res = 0;
         if (!res)
             break;
