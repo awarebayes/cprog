@@ -18,21 +18,21 @@ enum error_code
     empty_arr
 };
 
-int cin_arr(int *arr, int *len);
-void print_arr(int *arr, int len);
+int cin_arr(int *arr, size_t *len);
+void print_arr(int *arr, size_t len);
 void print_error(int ec);
-void arr_filter_palindrome(int *arr, int len, int *new_len);
+void arr_filter_palindrome(int *arr, size_t len, size_t *new_len);
 int is_palindrome(int num);
 
 int main()
 {
-    int arr_len = 0;
+    size_t arr_len = 0;
     int arr[N];
 
     int ec = cin_arr(arr, &arr_len);
     if (!ec)
     {
-        int new_len;
+        size_t new_len;
         arr_filter_palindrome(arr, arr_len, &new_len);
         ec = (new_len != 0) ? ok : empty_arr;
         if (!ec)
@@ -43,23 +43,27 @@ int main()
     return ec;
 }
 
-int cin_arr(int *arr, int *len)
+int cin_arr(int *arr, size_t *len)
 {
     int ec = ok;
-    scanf("%d", len);
-    if (*len > N || *len < 0)
+    scanf("%zu", len);
+    if (*len > N)
         ec = input_error;
     else
     {
-        for (int i = 0; i < *len; i++)
-            scanf("%d", arr + i);
+        for (size_t i = 0; i < *len; i++)
+            if (scanf("%d", arr + i) != 1)
+            {
+                ec = input_error;
+                break;
+            }
     }
     return ec;
 }
 
-void print_arr(int *arr, int len)
+void print_arr(int *arr, size_t len)
 {
-    for (int i = 0; i < len; i++)
+    for (size_t i = 0; i < len; i++)
         printf("%d ", arr[i]);
     printf("\n");
 }
@@ -68,25 +72,20 @@ void print_error(int ec)
 {
     switch (ec)
     {
-        case ok:
-            break;
-        case input_error:
-            printf("Input error\n");
-            break;
-        case empty_arr:
-            printf("New array is empty\n");
-            break;
+    case ok:
+        break;
+    case input_error:
+        printf("Input error\n");
+        break;
+    case empty_arr:
+        printf("New array is empty\n");
+        break;
     }
 }
 
-int nth_left_digit(int num, int pos)
+int nth_left_digit(int num, size_t pos)
 {
-    if (pos < 0)
-    {
-        printf("Something went wrong, got pos %d\n", pos);
-        return 0;
-    }
-    for (int i = 0; i < pos; i++)
+    for (size_t i = 0; i < pos; i++)
         num /= 10;
     return num % 10;
 }
@@ -106,10 +105,13 @@ int is_palindrome(int num)
 {
     if (num < 0)
         return 0;
+
+    size_t n_d = n_digits(num);
+    if (n_d == 1)
+        return 1;
     
-    int n_d = n_digits(num);
     int res = 1;
-    for (int i = 0; i < n_d; i++)
+    for (size_t i = 0; i < n_d; i++)
     {
         int d_1 = nth_left_digit(num, i);
         int d_2 = nth_left_digit(num, n_d - i - 1);
@@ -121,10 +123,10 @@ int is_palindrome(int num)
     return res;
 }
 
-void arr_filter_palindrome(int *arr, int len, int *new_len)
+void arr_filter_palindrome(int *arr, size_t len, size_t *new_len)
 {
     int cur = 0;
-    for (int i = 0; i < len; i++)
+    for (size_t i = 0; i < len; i++)
     {
         if (!is_palindrome(arr[i]))
         {
