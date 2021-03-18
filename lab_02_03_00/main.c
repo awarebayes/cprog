@@ -1,7 +1,7 @@
 
 /*
  * Написал Щербина Михаил ИУ7-25Б
- * Задача 2 
+ * Задача 3 
  * 0. Удалить из исходного массива все элементы,
  *  которые являются числами-палиндромами.
  * gcc -std=c99 -Werror -Wall -Wfloat-equal -Wfloat-conversion \
@@ -46,8 +46,7 @@ int main()
 int cin_arr(int *arr, size_t *len)
 {
     int ec = ok;
-    scanf("%zu", len);
-    if (*len > N)
+    if (scanf("%zu", len) != 1 || *len > N || *len == 0)
         ec = input_error;
     else
     {
@@ -72,14 +71,14 @@ void print_error(int ec)
 {
     switch (ec)
     {
-    case ok:
-        break;
-    case input_error:
-        printf("Input error\n");
-        break;
-    case empty_arr:
-        printf("New array is empty\n");
-        break;
+        case ok:
+            break;
+        case input_error:
+            printf("Input error\n");
+            break;
+        case empty_arr:
+            printf("New array is empty\n");
+            break;
     }
 }
 
