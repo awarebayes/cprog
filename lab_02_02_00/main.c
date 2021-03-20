@@ -88,10 +88,10 @@ void print_error(int ec)
 
 float find_mean(int *arr, size_t len)
 {
-    int sum = 0;
+    float sum = 0;
     for (size_t i = 0; i < len; i++)
         sum += arr[i];
-    return ((float)sum) / len;
+    return sum / len;
 }
 
 size_t arr_copy_more_than(int *from, int *to, size_t from_len, float cmp)
