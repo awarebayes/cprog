@@ -27,7 +27,7 @@ enum error_code
 
 int cin_arr(int *begin, int **end);
 void print_arr(const int *begin, const int *end);
-void print_error(int ec);
+void print_error(const int ec);
 int n_unique(const int *begin, const int *end);
 
 int main()
@@ -35,7 +35,7 @@ int main()
     int arr[N];
 
     int *begin = arr;
-    int *end = NULL;
+    int *end = 0;
 
     int ec = cin_arr(begin, &end);
     if (!ec)
@@ -74,15 +74,15 @@ void print_arr(const int *begin, const int *end)
     printf("\n");
 }
 
-void print_error(int ec)
+void print_error(const int ec)
 {
     switch (ec)
     {
-    case ok:
-        break;
-    case input_error:
-        printf("Input error\n");
-        break;
+        case ok:
+            break;
+        case input_error:
+            printf("Input error\n");
+            break;
     }
 }
 
