@@ -19,10 +19,10 @@ enum error_code
 };
 
 int cin_arr(int *arr, size_t *len);
-void print_arr(int *arr, size_t len);
-void print_error(int ec);
-void arr_filter_palindrome(int *arr, size_t len, size_t *new_len);
-int is_palindrome(int num);
+void print_arr(const int *arr, const size_t len);
+void print_error(const int ec);
+void arr_filter_palindrome(int *arr, const size_t len, size_t *new_len);
+int is_palindrome(const int num);
 
 int main()
 {
@@ -60,14 +60,14 @@ int cin_arr(int *arr, size_t *len)
     return ec;
 }
 
-void print_arr(int *arr, size_t len)
+void print_arr(const int *arr, const size_t len)
 {
     for (size_t i = 0; i < len; i++)
         printf("%d ", arr[i]);
     printf("\n");
 }
 
-void print_error(int ec)
+void print_error(const int ec)
 {
     switch (ec)
     {
@@ -82,7 +82,7 @@ void print_error(int ec)
     }
 }
 
-int nth_left_digit(int num, size_t pos)
+int nth_left_digit(int num, const size_t pos)
 {
     for (size_t i = 0; i < pos; i++)
         num /= 10;
@@ -100,7 +100,7 @@ int n_digits(int num)
     return n;
 }
 
-int is_palindrome(int num)
+int is_palindrome(const int num)
 {
     if (num < 0)
         return 0;

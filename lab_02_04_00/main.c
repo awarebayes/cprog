@@ -31,8 +31,8 @@ enum error_code
 };
 
 int cin_arr_ring(int *arr, int *ec);
-void print_arr(int *arr, size_t len);
-void print_error(int ec);
+void print_arr(const int *arr, const size_t len);
+void print_error(const int ec);
 void bubble_sort(int *arr, size_t len);
 
 int main()
@@ -75,14 +75,14 @@ int cin_arr_ring(int *arr, int *ec)
     return len;
 }
 
-void print_arr(int *arr, size_t len)
+void print_arr(const int *arr, const size_t len)
 {
     for (size_t i = 0; i < len; i++)
         printf("%d ", arr[i]);
     printf("\n");
 }
 
-void print_error(int ec)
+void print_error(const int ec)
 {
     switch (ec)
     {

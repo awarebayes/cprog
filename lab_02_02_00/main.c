@@ -20,10 +20,10 @@ enum error_code
 };
 
 int cin_arr(int *arr, size_t *len);
-void print_arr(int *arr, size_t len);
-void print_error(int ec);
-size_t arr_copy_more_than(int *from, int *to, size_t from_len, float cmp);
-float find_mean(int *arr, size_t len);
+void print_arr(const int *arr, const size_t len);
+void print_error(const int ec);
+size_t arr_copy_more_than(const int *from, int *to, const size_t from_len, float cmp);
+float find_mean(const int *arr, const size_t len);
 
 int main()
 {
@@ -64,14 +64,14 @@ int cin_arr(int *arr, size_t *len)
     return ec;
 }
 
-void print_arr(int *arr, size_t len)
+void print_arr(const int *arr, const size_t len)
 {
     for (size_t i = 0; i < len; i++)
         printf("%d ", arr[i]);
     printf("\n");
 }
 
-void print_error(int ec)
+void print_error(const int ec)
 {
     switch (ec)
     {
@@ -86,7 +86,7 @@ void print_error(int ec)
     }
 }
 
-float find_mean(int *arr, size_t len)
+float find_mean(const int *arr, const size_t len)
 {
     float sum = 0;
     for (size_t i = 0; i < len; i++)
@@ -94,7 +94,7 @@ float find_mean(int *arr, size_t len)
     return sum / len;
 }
 
-size_t arr_copy_more_than(int *from, int *to, size_t from_len, float cmp)
+size_t arr_copy_more_than(const int *from, int *to, const size_t from_len, float cmp)
 {
     int to_cur = 0; // current to index
     for (size_t i = 0; i < from_len; i++)
