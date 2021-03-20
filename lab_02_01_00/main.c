@@ -13,8 +13,7 @@
 enum error_code
 {
     ok,
-    input_error,
-    zero_sum
+    input_error
 };
 
 int cin_arr(int *arr, size_t *len);
@@ -30,10 +29,7 @@ int main()
     else
     {
         int sum = find_even_sum(arr, len);
-        if (sum == 0)
-            ec = zero_sum;
-        else
-            printf("%d\n", sum);
+        printf("%d\n", sum);
     }
     return ec;
 }
