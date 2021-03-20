@@ -11,60 +11,67 @@
 #include <stdio.h>
 #define N 10
 
-enum error_code 
-{ 
+enum error_code
+{
     ok,
-    input_error
+    input_error,
+    empty_arr,
+    equal_arr,
 };
 
-int cin_arr(int *arr, int *len);
-void print_arr(int *arr, int len);
-void print_error(int ec);
-void arr_copy_more_than(int *from, int *to, int from_len, int *to_len, float cmp);
-float find_mean(int *arr, int len);
+int cin_arr(int *arr, size_t *len);
+void print_arr(const int *arr, const size_t len);
+void print_error(const int ec);
+size_t arr_copy_more_than(const int *from, int *to, const size_t from_len, float cmp);
+float find_mean(const int *arr, const size_t len);
 
 int main()
 {
-    int arr_len = 0;
+    size_t arr_len = 0;
     int arr[N];
 
     int ec = cin_arr(arr, &arr_len);
     if (!ec)
     {
-        float mean = find_mean(arr, arr_len); 
+        float mean = find_mean(arr, arr_len);
 
         int arr_copy[N];
-        int arr_copy_len = 0;
+        size_t arr_copy_len = 0;
 
-        arr_copy_more_than(arr, arr_copy, arr_len, &arr_copy_len, mean);
-        print_arr(arr_copy, arr_copy_len);
+        arr_copy_len = arr_copy_more_than(arr, arr_copy, arr_len, mean);
+        ec = (arr_copy_len != 0) ? ok : equal_arr;
+        if (!ec)
+            print_arr(arr_copy, arr_copy_len);
     }
     print_error(ec);
     return ec;
 }
 
-int cin_arr(int *arr, int *len)
+int cin_arr(int *arr, size_t *len)
 {
     int ec = ok;
-    scanf("%d", len);
-    if (*len > N || *len < 0)
+    if (scanf("%zu", len) != 1 || *len > N || *len == 0)
         ec = input_error;
     else
     {
-        for (int i = 0; i < *len; i++)
-            scanf("%d", arr + i);
+        for (size_t i = 0; i < *len; i++)
+            if (scanf("%d", arr + i) != 1)
+            {
+                ec = input_error;
+                break;
+            }
     }
     return ec;
 }
 
-void print_arr(int *arr, int len)
+void print_arr(const int *arr, const size_t len)
 {
-    for (int i = 0; i < len; i++)
+    for (size_t i = 0; i < len; i++)
         printf("%d ", arr[i]);
     printf("\n");
 }
 
-void print_error(int ec)
+void print_error(const int ec)
 {
     switch (ec)
     {
@@ -73,21 +80,24 @@ void print_error(int ec)
         case input_error:
             printf("Input error\n");
             break;
+        case equal_arr:
+            printf("Array of equals\n");
+            break;
     }
 }
 
-float find_mean(int *arr, int len)
+float find_mean(const int *arr, const size_t len)
 {
     float sum = 0;
-    for (int i = 0; i < len; i++)
+    for (size_t i = 0; i < len; i++)
         sum += arr[i];
     return sum / len;
 }
 
-void arr_copy_more_than(int *from, int *to, int from_len, int *to_len, float cmp)
+size_t arr_copy_more_than(const int *from, int *to, const size_t from_len, float cmp)
 {
     int to_cur = 0; // current to index
-    for (int i = 0; i < from_len; i++)
+    for (size_t i = 0; i < from_len; i++)
     {
         if (from[i] > cmp)
         {
@@ -95,6 +105,5 @@ void arr_copy_more_than(int *from, int *to, int from_len, int *to_len, float cmp
             to_cur += 1;
         }
     }
-    *to_len = to_cur;
+    return to_cur;
 }
-

@@ -17,7 +17,7 @@ void print_error(int error_flag);
 int main()
 {
     uint32_t a; ///< number to shift
-    int n; ///< positions to shift
+    int n;      ///< positions to shift
     int error_flag = 0;
 
     printf("Input a and n\n");
@@ -60,7 +60,7 @@ void print_bin(uint32_t number, int remaining)
 uint32_t shift_right(uint32_t number, int n)
 {
     n = n % 32;
-    for (int i = 0; i < n; i++)
+    for (size_t i = 0; i < n; i++)
     {
         uint32_t first_bit = number & 1;
         number = number >> 1;
