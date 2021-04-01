@@ -61,10 +61,10 @@ int cin_arr_ring(int *arr, int *ec)
         {
             if (len < N)
                 arr[len] = temp;
+            len++;
         }
         else    
             flag = 0;
-        len++;
     }
     if (len == 0)
         *ec = input_error;
