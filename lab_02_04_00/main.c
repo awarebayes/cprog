@@ -62,7 +62,7 @@ int cin_arr_ring(int *arr, int *ec)
             if (len < N)
                 arr[len] = temp;
         }
-        else
+        else    
             flag = 0;
         len++;
     }
