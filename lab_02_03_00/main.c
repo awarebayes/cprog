@@ -50,12 +50,9 @@ int cin_arr(int *arr, size_t *len)
         ec = input_error;
     else
     {
-        for (size_t i = 0; i < *len; i++)
+        for (size_t i = 0; i < *len && !ec; i++)
             if (scanf("%d", arr + i) != 1)
-            {
                 ec = input_error;
-                break;
-            }
     }
     return ec;
 }
@@ -110,14 +107,12 @@ int is_palindrome(const int num)
         return 1;
     
     int res = 1;
-    for (size_t i = 0; i < n_d; i++)
+    for (size_t i = 0; i < n_d && res; i++)
     {
         int d_1 = nth_left_digit(num, i);
         int d_2 = nth_left_digit(num, n_d - i - 1);
         if (d_1 != d_2)
             res = 0;
-        if (!res)
-            break;
     }
     return res;
 }
