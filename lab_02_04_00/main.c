@@ -54,15 +54,16 @@ int cin_arr_ring(int *arr, int *ec)
 {
     size_t len = 0;
     int temp;
-    while (1)
+    int flag = 1;
+    while (flag)
     {
         if (scanf("%d", &temp) == 1)
         {
             if (len < N)
                 arr[len] = temp;
         }
-        else    
-            break;
+        else
+            flag = 0;
         len++;
     }
     if (len == 0)

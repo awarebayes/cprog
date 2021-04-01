@@ -40,7 +40,8 @@ int main()
     int ec = cin_arr(begin, &end);
     if (!ec)
     {
-        printf("%d\n", n_unique(begin, end));
+        int n_unq = n_unique(begin, end);
+        printf("%d\n", n_unq);
     }
 
     print_error(ec);
@@ -57,11 +58,10 @@ int cin_arr(int *begin, int **end)
     {
 
         *end = begin + len;
-        for (int *i = begin; i < *end; i++)
+        for (int *i = begin; i < *end && !ec; i++)
             if (scanf("%d", i) != 1)
             {
                 ec = input_error;
-                break;
             }
     }
     return ec;

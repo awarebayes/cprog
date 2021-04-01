@@ -54,11 +54,10 @@ int cin_arr(int *arr, size_t *len)
         ec = input_error;
     else
     {
-        for (size_t i = 0; i < *len; i++)
+        for (size_t i = 0; i < *len && !ec; i++)
             if (scanf("%d", arr + i) != 1)
             {
                 ec = input_error;
-                break;
             }
     }
     return ec;
