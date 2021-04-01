@@ -96,19 +96,18 @@ void print_error(const int ec)
     }
 }
 
-void bubble_sort(int *arr, size_t len)
+void swap(int *a, int *b)
 {
     int temp;
+    temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void bubble_sort(int *arr, size_t len)
+{
     for (size_t i = 0; i < len; i++)
-    {   
         for (size_t j = i; j < len; j++)
-        {
             if (arr[j] < arr[i])
-            {
-                temp = arr[j];
-                arr[j] = arr[i];
-                arr[i] = temp;
-            }
-        }
-    }
+                swap(&arr[j], &arr[i]);
 }
