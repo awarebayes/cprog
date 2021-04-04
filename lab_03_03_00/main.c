@@ -16,52 +16,33 @@ enum error_code
     input_error,
 };
 
-typedef struct
-{
-    int value;
-    int index;
-} indexed_sum;
-
 int validate_dim(size_t dim);
 int input_mat(size_t *n, size_t *m, int (*mat)[N]);
 void print_mat(size_t n, size_t m, int (*mat)[N]);
 void print_error(int ec);
-void apply_cols(size_t n, size_t m, int (*mat)[N], int *out);
 void print_arr(size_t n, int *arr);
-void bubble_sort(size_t len, indexed_sum values[N]);
+void bubble_sort(size_t len, int values[N]);
 int row_sum(size_t row, size_t m, int (*mat)[N]);
-void reorder_by_indices(size_t n, size_t m, int (*mat)[N], size_t *row_indices);
-void swap_rows(size_t n, int (*a)[N], int (*b)[N]);
-
-
+void copy_rows(size_t n, int (*from)[N], int (*to)[N]);
+void reorder(size_t n, size_t m, int (*mat)[N], int *row_sums, int (*sorted_mat)[N]);
 
 int main()
 {
-    int mat[N][N] = {
-        {61, 21, 52, 50},
-        {74, 89, 45, 35},
-        {89, 79, 60, 25},
-        {22, 36, 30, 54},
-    };
-    size_t m = 4, n = 4;
+    int mat[N][N];
+    int sorted_mat[N][N];
+    size_t m, n;
 
-    indexed_sum row_sums[N] = {0};
-    size_t row_indices[N];
+    int row_sums[N] = {0};
 
     int ec = ok;
-    // ec = input_mat(&n, &m, mat);
+    ec = input_mat(&n, &m, mat);
     if (!ec)
     {
         for (size_t i = 0; i < n; i++)
-        {
-            row_sums[i].value = row_sum(i, m, mat);
-            row_sums[i].index = i;
-        }
+            row_sums[i] = row_sum(i, m, mat);
         bubble_sort(n, row_sums);
-        for (size_t i = 0; i < n; i++)
-            row_indices[i] = row_sums[i].index;
-        reorder_by_indices(n, m, mat, row_indices);
-        print_mat(n, m, mat);
+        reorder(n, m, mat, row_sums, sorted_mat);
+        print_mat(n, m, sorted_mat);
     }
     print_error(ec);
     return ec;
@@ -118,41 +99,29 @@ void print_error(const int ec)
     }
 }
 
-void swap_sums(indexed_sum *a, indexed_sum *b)
+void swap(int *a, int *b)
 {
-    indexed_sum temp;
+    int temp;
     temp = *a;
     *a = *b;
     *b = temp;
 }
 
-void swap_size_t(size_t *a, size_t *b)
+void copy_rows(size_t n, int (*from)[N], int (*to)[N])
 {
-    size_t temp;
-    temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
-void swap_rows(size_t n, int (*a)[N], int (*b)[N])
-{
-    int buf[N];
     for (size_t i = 0; i < n; i++)
     {
-        buf[i] = (*a)[i];
-        (*a)[i] = (*b)[i];
+        (*to)[i] = (*from)[i];
     }
-    for (size_t i = 0; i < n; i++)
-        (*b)[i] = buf[i];
 }
 
-void bubble_sort(size_t len, indexed_sum values[N])
+void bubble_sort(size_t len, int values[N])
 {
     size_t i, j;
     for (i = 0; i < len - 1; i++)
         for (j = 0; j < len - i - 1; j++)
-            if (values[j].value > values[j + 1].value)
-                swap_sums(&values[j], &values[j + 1]);
+            if (values[j] > values[j + 1])
+                swap(&values[j], &values[j + 1]);
 }
 
 int row_sum(size_t row, size_t m, int (*mat)[N])
@@ -165,16 +134,18 @@ int row_sum(size_t row, size_t m, int (*mat)[N])
     return res;
 }
 
-void reorder_by_indices(size_t n, size_t m, int (*mat)[N], size_t *row_indices)
+void reorder(size_t n, size_t m, int (*mat)[N], int *row_sums, int (*sorted_mat)[N])
 {
+    size_t last = 0;
     for (size_t i = 0; i < n; i++)
     {
-        size_t idx = row_indices[i];
-        while (i != idx)
+        for (size_t j = 0; j < n; j++)
         {
-            swap_rows(m, &mat[i], &mat[idx]);
-            swap_size_t(&row_indices[i], &row_indices[idx]);
-            idx = row_indices[i];
+            if (row_sums[last] == row_sum(j, m, mat) && last < n)
+            {
+                copy_rows(m, &mat[j], &sorted_mat[last]);
+                last++;
+            }
         }
     }
 }
