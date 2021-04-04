@@ -16,16 +16,24 @@ enum error_code
     input_error,
 };
 
+typedef struct
+{
+    int value;
+    int index;
+} indexed_sum;
+
 int validate_dim(size_t dim);
 int input_mat(size_t *n, size_t *m, int (*mat)[N]);
 void print_mat(size_t n, size_t m, int (*mat)[N]);
 void print_error(int ec);
 void apply_cols(size_t n, size_t m, int (*mat)[N], int *out);
 void print_arr(size_t n, int *arr);
-void bubble_sort_index(size_t len, int *values, size_t (*index)[N]);
+void bubble_sort(size_t len, indexed_sum values[N]);
 int row_sum(size_t row, size_t m, int (*mat)[N]);
 void reorder_by_indices(size_t n, size_t m, int (*mat)[N], size_t *row_indices);
 void swap_rows(size_t n, int (*a)[N], int (*b)[N]);
+
+
 
 int main()
 {
@@ -37,7 +45,7 @@ int main()
     };
     size_t m = 4, n = 4;
 
-    int row_sums[N];
+    indexed_sum row_sums[N] = {0};
     size_t row_indices[N];
 
     int ec = ok;
@@ -46,10 +54,12 @@ int main()
     {
         for (size_t i = 0; i < n; i++)
         {
-            row_sums[i] = row_sum(i, m, mat);
-            row_indices[i] = i;
+            row_sums[i].value = row_sum(i, m, mat);
+            row_sums[i].index = i;
         }
-        bubble_sort_index(n, row_sums, &row_indices);
+        bubble_sort(n, row_sums);
+        for (size_t i = 0; i < n; i++)
+            row_indices[i] = row_sums[i].index;
         reorder_by_indices(n, m, mat, row_indices);
         print_mat(n, m, mat);
     }
@@ -108,9 +118,9 @@ void print_error(const int ec)
     }
 }
 
-void swap(int *a, int *b)
+void swap_sums(indexed_sum *a, indexed_sum *b)
 {
-    int temp;
+    indexed_sum temp;
     temp = *a;
     *a = *b;
     *b = temp;
@@ -136,19 +146,13 @@ void swap_rows(size_t n, int (*a)[N], int (*b)[N])
         (*b)[i] = buf[i];
 }
 
-void bubble_sort_index(size_t len, int *values, size_t (*index)[N])
+void bubble_sort(size_t len, indexed_sum values[N])
 {
     size_t i, j;
-    int tmp;
     for (i = 0; i < len - 1; i++)
         for (j = 0; j < len - i - 1; j++)
-            if (values[j] > values[j + 1])
-            {
-                swap(&values[j], &values[j + 1]);
-                tmp = (*index)[j];
-                (*index)[j] = (*index)[j + 1];
-                (*index)[j + 1] = tmp;
-            }
+            if (values[j].value > values[j + 1].value)
+                swap_sums(&values[j], &values[j + 1]);
 }
 
 int row_sum(size_t row, size_t m, int (*mat)[N])

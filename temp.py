@@ -6,19 +6,21 @@ mat = [
 ]
 
 sums = list(map(sum, mat))
-indices = [1, 2, 3, 0]
+indices = [3, 0, 1, 2]
 
-print("\n".join(map(str, mat)))
+#print("\n".join(map(str, mat)))
 print(sums)
 
 for i in range(4):
     idx = indices[i]
     while idx != i:
         print("swapping", i, idx) 
-        mat[i], mat[idx] = mat[idx], mat[i]
+        # mat[i], mat[idx] = mat[idx], mat[i]
         indices[i], indices[idx] = indices[idx], indices[i]
+        sums[i], sums[idx] = sums[idx], sums[i]
         idx = indices[i]
 
-print("\n".join(map(str, mat)))
+#print("\n".join(map(str, mat)))
 
 print(indices)
+print(sums)
