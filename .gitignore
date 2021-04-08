@@ -2,6 +2,8 @@
 *.out
 *.o
 *.pch
+*.gcda
+*.gcno
 *.gch
 temp.py
 .vscode/
