@@ -109,6 +109,8 @@ void sort_arr(int n, int (*arr)[N])
 				int t = (*arr)[j];
 				(*arr)[j] = (*arr)[j+1];
 				(*arr)[j+1] = t;
+				// Запутался с указателями((((0(
+				// swap(arr[j], arr[j+1]);
 			}
 		}
 	}
