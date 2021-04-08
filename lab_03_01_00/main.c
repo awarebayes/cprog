@@ -27,7 +27,7 @@ void print_arr(size_t n, int *arr);
 
 int main()
 {
-    int mat[N][N];
+    int mat[N][N]; 
     int res[N];
     size_t m, n;
     int ec = ok;
@@ -52,7 +52,7 @@ int input_mat(size_t *n, size_t *m, int (*mat)[N])
     // printf("Input n and m:\n");
     if (scanf("%zu %zu", n, m) != 2)
         return input_error;
-    if (!validate_dim(*n) || !validate_dim(*m))
+    if (!validate_dim(*n) || *m == 1 || !validate_dim(*m))
         return input_error;
 
     // printf("Start inputting matrix\n");
@@ -96,7 +96,7 @@ int elements_descending(size_t n, size_t idx, int (*mat)[N])
 {
     int flag = 1;
     for (size_t i = 0; i < (n-1) && flag; i++)
-        if (mat[i][idx] > mat[i+1][idx])
+        if (mat[i+1][idx] > mat[i][idx])
             flag = 0;
     return flag;
 }

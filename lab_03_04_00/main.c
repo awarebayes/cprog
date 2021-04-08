@@ -17,6 +17,7 @@ enum error_code
 {
     ok,
     input_error,
+    no_min
 };
 
 int validate_dim(size_t dim);
@@ -31,6 +32,7 @@ int main()
     int mat[N][N];
     size_t n;
     int min = INT_MAX;
+    int has_min = 0;
 
     int ec = ok;
     ec = input_mat(&n, mat);
@@ -39,8 +41,14 @@ int main()
         for (size_t i = 0; i < n; i++)
             for (size_t j = 0; j < n; j++)
                 if (i > j && mat[i][j] < min && mat[i][j] % 2)
+                {
                     min = mat[i][j];
-        printf("%d\n", min);
+                    has_min = 1;
+                }
+        if (has_min)
+            printf("%d\n", min);
+        else
+            ec = no_min;
     }
     print_error(ec);
     return ec;
@@ -93,6 +101,9 @@ void print_error(const int ec)
         break;
     case input_error:
         printf("Input error\n");
+        break;
+    case no_min:
+        printf("No min\n");
         break;
     }
 }

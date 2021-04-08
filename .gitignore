@@ -4,3 +4,7 @@
 *.pch
 *.gch
 temp.py
+.vscode/
+bin/
+.mypy_cache/
+/lab*/main

@@ -6,14 +6,25 @@ touch readme.md
 
 for i in $(seq 1 $2)
 do
-    echo $i
-    touch "pos_$(printf "%02d" "$i")_in.txt"
-    touch "pos_$(printf "%02d" "$i")_out.txt"
+    if ! [ -f "pos_$(printf "%02d" "$i")_in.txt" ]
+    then
+        touch "pos_$(printf "%02d" "$i")_in.txt"
+    fi
+    if ! [ -f "pos_$(printf "%02d" "$i")_out.txt" ]
+    then
+
+        touch "pos_$(printf "%02d" "$i")_out.txt"
+    fi
 done;
 
 for i in $(seq 1 $3)
 do
-    echo $i
-    touch "neg_$(printf "%02d" "$i")_in.txt"
-    touch "neg_$(printf "%02d" "$i")_out.txt"
+    if ! [ -f "neg_$(printf "%02d" "$i")_in.txt" ]
+    then
+        touch "neg_$(printf "%02d" "$i")_in.txt"
+    fi
+    if ! [ -f  "neg_$(printf "%02d" "$i")_out.txt" ]
+    then
+        touch "neg_$(printf "%02d" "$i")_out.txt"
+    fi
 done;
