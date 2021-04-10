@@ -1,4 +1,3 @@
-cd ..
 for dir in $(ls | grep lab_)
 do
     cd $dir

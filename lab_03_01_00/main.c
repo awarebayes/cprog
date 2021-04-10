@@ -11,6 +11,7 @@
 #include <stdio.h>
 
 #define N 10
+#define M 10
 
 enum error_code
 {
@@ -19,26 +20,35 @@ enum error_code
 };
 
 int validate_dim(size_t dim);
-int input_mat(size_t *n, size_t *m, int (*mat)[N]);
-void print_mat(size_t n, size_t m, int (*mat)[N]);
+int input_mat(size_t *n, size_t *m, int **pa);
+void print_mat(size_t n, size_t m, int **pa);
 void print_error(int ec);
-void apply_cols(size_t n, size_t m, int (*mat)[N], int *out);
+void apply_cols(size_t n, size_t m, int **pa, int *out);
 void print_arr(size_t n, int *arr);
+void transform(size_t n, size_t m, int *mat, int **ptr);
 
 int main()
 {
-    int mat[N][N]; 
+    int mat[N][N];
+    int *pa[N];
     int res[N];
     size_t m, n;
     int ec = ok;
-    ec = input_mat(&n, &m, mat);
+    transform(N, M, *mat, pa);
+    ec = input_mat(&n, &m, pa);
     if (!ec)
     {
-        apply_cols(n, m, mat, res);
+        apply_cols(n, m, pa, res);
         print_arr(m, res);
     }
     print_error(ec);
     return ec;
+}
+
+void transform(size_t n, size_t m, int *mat, int **ptr)
+{
+    for (size_t i = 0; i < n; i++)
+        ptr[i] = mat + i * m;
 }
 
 int validate_dim(size_t dim)
@@ -46,9 +56,8 @@ int validate_dim(size_t dim)
     return (dim > 0) && (dim <= N);
 }
 
-int input_mat(size_t *n, size_t *m, int (*mat)[N])
+int input_mat(size_t *n, size_t *m, int **pa)
 {
-
     // printf("Input n and m:\n");
     if (scanf("%zu %zu", n, m) != 2)
         return input_error;
@@ -58,17 +67,17 @@ int input_mat(size_t *n, size_t *m, int (*mat)[N])
     // printf("Start inputting matrix\n");
     for (size_t i = 0; i < *n; i++)
         for (size_t j = 0; j < *m; j++)
-            if (scanf("%d", &mat[i][j]) != 1)
+            if (scanf("%d", &pa[i][j]) != 1)
                 return input_error;
     return ok;
 }
 
-void print_mat(size_t n, size_t m, int (*mat)[N])
+void print_mat(size_t n, size_t m, int **pa)
 {
     for (size_t i = 0; i < n; i++)
     {
         for (size_t j = 0; j < m; j++)
-            printf("%d ", mat[i][j]);
+            printf("%d ", pa[i][j]);
         printf("\n");
     }
 }
@@ -92,17 +101,17 @@ void print_error(const int ec)
     }
 }
 
-int elements_descending(size_t n, size_t idx, int (*mat)[N])
+int elements_descending(size_t n, size_t idx, int **pa)
 {
     int flag = 1;
-    for (size_t i = 0; i < (n-1) && flag; i++)
-        if (mat[i+1][idx] > mat[i][idx])
+    for (size_t i = 0; i < (n - 1) && flag; i++)
+        if (pa[i + 1][idx] > pa[i][idx])
             flag = 0;
     return flag;
 }
 
-void apply_cols(size_t n, size_t m, int (*mat)[N], int *out)
+void apply_cols(size_t n, size_t m, int **pa, int *out)
 {
-    for (size_t i=0; i<m; i++)
-        out[i] = elements_descending(n, i, mat);
+    for (size_t i = 0; i < m; i++)
+        out[i] = elements_descending(n, i, pa);
 }

@@ -65,7 +65,8 @@
             "label": "Style check all",
             "type": "shell",
             "command": "./scripts/style_check.sh",
-            "problemmatcher": []
+            "problemmatcher": [],
+            "problemMatcher": []
         },
         {
             "label": "Test all",

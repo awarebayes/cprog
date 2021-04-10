@@ -26,42 +26,29 @@ void apply_cols(size_t n, size_t m, int **pa, int *out);
 void print_arr(size_t n, int *arr);
 int starts_with(int n, size_t digit);
 int ends_with(int n, size_t digit);
-int gen_append_after(size_t n, size_t m, int **pa, int(*append_after), size_t digit);
-void append_after_mat(size_t m, size_t n, size_t n_appended, int **pa,
-                      int (*extended_mat)[N], int append_after[N]);
+int gen_append_after(size_t n, size_t m, int **pa, int *append_after, size_t digit);
 int input_digit(size_t *digit);
 void transform(size_t n, size_t m, int *mat, int **ptr);
-void shift_pointer_arr_right(size_t from, size_t n, int **pa);
+void rshift_row(size_t n, size_t m, size_t from, int **pa);
+void insert_hundreds(int n_appended, size_t n, size_t m, int *append_after, int **pa);
 
 int main()
 {
-    int mat[N][N] = {
-        {1, 22, 12, 31},
-        {8, -2, 4, 2},
-        {1, 1 , 1, 1},
-        {8, 2 , 4, 5},
-    };
-    int hundreds[N][N]; // where hundreds are
+    int mat[N][N];
     int *pa[N * 2];
     int append_after[N];
     size_t m, n;
-    m = n = 4;
-    size_t digit = 1;
+    size_t digit;
     int ec = ok;
+
     transform(N, M, *mat, pa);
-    // ec = input_mat(&n, &m, pa);
-    // ec = input_digit(&digit);
-    printf("\n");
+    ec = input_mat(&n, &m, pa);
+    ec = input_digit(&digit);
+
     if (!ec)
     {
         int n_appended = gen_append_after(n, m, pa, append_after, digit);
-        // append_after_mat(m, n, n_appended, pa, source_mat, append_after);
-        for (int i = 0; i < n_appended; i++)
-        {
-            for (size_t j = 0; j < m; j++)
-                hundreds[i][j] = 100;
-            shift_pointer_arr_right(append_after[i], N*2, pa);
-        }
+        insert_hundreds(n_appended, n, m, append_after, pa);
         print_mat(n + n_appended, m, pa);
     }
     print_error(ec);
@@ -71,7 +58,7 @@ int main()
 void transform(size_t n, size_t m, int *mat, int **ptr)
 {
     for (size_t i = 0; i < n; i++)
-        ptr[i] = mat + i * m; 
+        ptr[i] = mat + i * m;
 }
 
 int validate_dim(size_t dim)
@@ -81,7 +68,6 @@ int validate_dim(size_t dim)
 
 int input_mat(size_t *n, size_t *m, int **pa)
 {
-
     // printf("Input n and m:\n");
     if (scanf("%zu %zu", n, m) != 2)
         return input_error;
@@ -126,11 +112,11 @@ void print_error(const int ec)
 {
     switch (ec)
     {
-    case ok:
-        break;
-    case input_error:
-        printf("Input error\n");
-        break;
+        case ok:
+            break;
+        case input_error:
+            printf("Input error\n");
+            break;
     }
 }
 
@@ -182,32 +168,21 @@ int gen_append_after(size_t n, size_t m, int **pa, int(*append_after), size_t di
     return current;
 }
 
-void append_after_mat(size_t m, size_t n, size_t n_appended, int **pa,
-                      int (*extended_mat)[N], int append_after[N])
-{
-    size_t next_append = 0;
-    size_t mat_idx = 0;
-    for (size_t i = 0; i < n + n_appended; i++)
-    {
-        if (append_after[next_append] < (int)mat_idx && next_append < n_appended)
-        {
-            // append
-            for (size_t j = 0; j < m; j++)
-                extended_mat[i][j] = 100;
-            next_append++;
-        }
-        else
-        {
-            // copy
-            for (size_t j = 0; j < m; j++)
-                extended_mat[i][j] = pa[mat_idx][j];
-            mat_idx++;
-        }
-    }
-}
-
-void shift_pointer_arr_right(size_t from, size_t n, int **pa)
+void rshift_row(size_t n, size_t m, size_t from, int **pa)
 {
     for (size_t i = n; i > from; i--)
-        (*pa)[i] = (*pa)[i-1];
+        for (size_t j = 0; j < m; j++)
+            pa[i][j] = pa[i - 1][j];
+}
+
+void insert_hundreds(int n_appended, size_t n, size_t m, int *append_after, int **pa)
+{
+    int shifted = 0;
+    for (int i = 0; i < n_appended; i++)
+    {
+        rshift_row(n + n_appended, m, append_after[i] + shifted, pa);
+        shifted++;
+        for (size_t j = 0; j < m; j++)
+            pa[append_after[i] + shifted][j] = 100;
+    }
 }
