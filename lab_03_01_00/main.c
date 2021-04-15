@@ -105,7 +105,7 @@ int elements_descending(size_t n, size_t idx, int **pa)
 {
     int flag = 1;
     for (size_t i = 0; i < (n - 1) && flag; i++)
-        if (pa[i + 1][idx] > pa[i][idx])
+        if (pa[i + 1][idx] >= pa[i][idx])
             flag = 0;
     return flag;
 }

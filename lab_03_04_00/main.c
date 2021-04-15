@@ -1,7 +1,5 @@
 /*
  * 2.3
- * Упорядочить строки матрицы:
- * 0. по возрастанию суммы их элементов;
  * Задача 4 лабы 3
  * 0. Найти и вывести на экран минимальное нечётное
  * число, расположенное под главной диагональю. 
@@ -12,7 +10,6 @@
 #include <limits.h>
 
 #define N 10
-#define M 10
 
 enum error_code
 {
@@ -32,7 +29,7 @@ int main()
 {
     int mat[N][N];
     int *pa[N];
-    transform(N, M, *mat, pa);
+    transform(N, N, *mat, pa);
     size_t n;
     int ec = ok;
 
@@ -70,7 +67,7 @@ int input_mat(size_t *n, int **pa)
     if (!validate_dim(*n))
         return input_error;
 
-    // printf("Start inputting matrix\n");
+    //printf("Start inputting matrix");
     for (size_t i = 0; i < *n; i++)
         for (size_t j = 0; j < *n; j++)
             if (scanf("%d", &pa[i][j]) != 1)
@@ -91,21 +88,20 @@ void print_error(const int ec)
 {
     switch (ec)
     {
-        case ok:
-            break;
-        case input_error:
-            printf("Input error\n");
-            break;
-        case no_min:
-            printf("No min\n");
-            break;
+    case ok:
+        break;
+    case input_error:
+        printf("Input error\n");
+        break;
+    case no_min:
+        printf("No min\n");
+        break;
     }
 }
 
 int find_min(size_t n, int **pa, int *has_min)
 {
     int min = INT_MAX;
-
     for (size_t i = 0; i < n; i++)
         for (size_t j = 0; j < n; j++)
             if (i > j && pa[i][j] < min && pa[i][j] % 2)
@@ -115,4 +111,3 @@ int find_min(size_t n, int **pa, int *has_min)
             }
     return min;
 }
-
