@@ -110,5 +110,5 @@ void bubble_sort(int *arr, size_t len)
     for (size_t i = 0; i < len; i++)
         for (size_t j = i; j < len; j++)
             if (arr[j] < arr[i])
-                swap(arr+j, arr+i);
+                swap(arr + j, arr + i);
 }
