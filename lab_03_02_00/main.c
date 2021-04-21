@@ -45,6 +45,7 @@ int main()
     ec = input_mat(&n, &m, pa);
     ec = input_digit(&digit);
 
+
     if (!ec)
     {
         int n_appended = gen_append_after(n, m, pa, append_after, digit);
@@ -137,7 +138,7 @@ void apply_cols(size_t n, size_t m, int **pa, int *out)
 
 int starts_with(int n, size_t digit)
 {
-    while (n > 10)
+    while (n >= 10)
         n /= 10;
     return (n % 10) == (int)digit;
 }

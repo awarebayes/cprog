@@ -36,7 +36,13 @@ int main()
     int ec = ok;
     transform(N, M, *mat, pa);
     ec = input_mat(&n, &m, pa);
-    if (!ec)
+    if (n == 1 && !ec)
+    {
+        for (size_t i = 0; i < m; i++)
+            printf("%d ", 0);
+        printf("\n");
+    } 
+    else if (!ec)
     {
         apply_cols(n, m, pa, res);
         print_arr(m, res);
