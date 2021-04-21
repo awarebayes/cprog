@@ -43,9 +43,8 @@ int main()
 
     transform(N, M, *mat, pa);
     ec = input_mat(&n, &m, pa);
-    ec = input_digit(&digit);
-
-
+    if (!ec)
+        ec = input_digit(&digit);
     if (!ec)
     {
         int n_appended = gen_append_after(n, m, pa, append_after, digit);
@@ -87,7 +86,7 @@ int input_digit(size_t *digit)
 {
     if (scanf("%zu", digit) != 1)
         return input_error;
-    if (*digit > 10)
+    if (*digit >= 10)
         return input_error;
     return ok;
 }

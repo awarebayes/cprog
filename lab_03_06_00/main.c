@@ -80,14 +80,14 @@ void print_error(const int ec)
 {
     switch (ec)
     {
-    case ok:
-        break;
-    case input_error:
-        printf("Input error\n");
-        break;
-    case no_primes:
-        printf("No primes\n");
-        break;
+        case ok:
+            break;
+        case input_error:
+            printf("Input error\n");
+            break;
+        case no_primes:
+            printf("No primes\n");
+            break;
     }
 }
 

@@ -88,14 +88,14 @@ void print_error(const int ec)
 {
     switch (ec)
     {
-    case ok:
-        break;
-    case input_error:
-        printf("Input error\n");
-        break;
-    case no_min:
-        printf("No min\n");
-        break;
+        case ok:
+            break;
+        case input_error:
+            printf("Input error\n");
+            break;
+        case no_min:
+            printf("No min\n");
+            break;
     }
 }
 
