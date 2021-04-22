@@ -19,10 +19,10 @@ enum error_code
 };
 
 int validate_dim(size_t dim);
-int input_mat(size_t *n, int **pa);
+int input_mat(size_t *n, size_t *m, int **pa);
 void print_mat(size_t n, size_t m, int **pa);
 void print_error(int ec);
-int find_min(size_t n, int **pa, int *has_min);
+int find_min(size_t n, size_t m, int **pa, int *has_min);
 void transform(size_t n, size_t m, int *mat, int **ptr);
 
 int main()
@@ -30,15 +30,15 @@ int main()
     int mat[N][N];
     int *pa[N];
     transform(N, N, *mat, pa);
-    size_t n;
+    size_t n, m;
     int ec = ok;
 
-    ec = input_mat(&n, pa);
+    ec = input_mat(&n, &m, pa);
     int has_min = 0;
 
     if (!ec)
     {
-        int min = find_min(n, pa, &has_min);
+        int min = find_min(n, m, pa, &has_min);
         if (has_min)
             printf("%d\n", min);
         else
@@ -59,21 +59,23 @@ int validate_dim(size_t dim)
     return (dim > 1) && (dim <= N);
 }
 
-int input_mat(size_t *n, int **pa)
+int input_mat(size_t *n, size_t *m, int **pa)
 {
     // printf("Input n and m:\n");
-    if (scanf("%zu", n) != 1)
+    if (scanf("%zu %zu", n, m) != 2)
         return input_error;
-    if (!validate_dim(*n))
+    if (!validate_dim(*n) || !validate_dim(*m))
         return input_error;
 
-    //printf("Start inputting matrix");
+    // printf("Start inputting matrix\n");
     for (size_t i = 0; i < *n; i++)
-        for (size_t j = 0; j < *n; j++)
+        for (size_t j = 0; j < *m; j++)
             if (scanf("%d", &pa[i][j]) != 1)
                 return input_error;
     return ok;
 }
+
+
 
 void print_mat(size_t n, size_t m, int **pa)
 {
@@ -99,11 +101,11 @@ void print_error(const int ec)
     }
 }
 
-int find_min(size_t n, int **pa, int *has_min)
+int find_min(size_t n, size_t m, int **pa, int *has_min)
 {
     int min = INT_MAX;
     for (size_t i = 0; i < n; i++)
-        for (size_t j = 0; j < n; j++)
+        for (size_t j = 0; j < m; j++)
             if (i > j && pa[i][j] < min && pa[i][j] % 2)
             {
                 min = pa[i][j];
