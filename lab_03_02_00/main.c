@@ -147,7 +147,7 @@ int ends_with(int n, size_t digit)
     return (n % 10) == (int)digit;
 }
 
-int gen_append_after(size_t n, size_t m, int **pa, int(*append_after), size_t digit)
+int gen_append_after(size_t n, size_t m, int **pa, int *append_after, size_t digit)
 {
     int current = 0;
     for (size_t i = 0; i < n; i++)
