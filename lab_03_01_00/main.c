@@ -67,7 +67,7 @@ int input_mat(size_t *n, size_t *m, int **pa)
     // printf("Input n and m:\n");
     if (scanf("%zu %zu", n, m) != 2)
         return input_error;
-    if (!validate_dim(*n) || *m == 1 || !validate_dim(*m))
+    if (!validate_dim(*n) || !validate_dim(*m))
         return input_error;
 
     // printf("Start inputting matrix\n");
