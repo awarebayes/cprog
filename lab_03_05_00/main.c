@@ -63,7 +63,7 @@ void transform(size_t n, size_t m, int *mat, int **ptr)
 
 int validate_dim(size_t dim)
 {
-    return (dim > 1) && (dim <= N);
+    return (dim > 0) && (dim <= N);
 }
 
 int input_mat(size_t *n, size_t *m, int **pa)
