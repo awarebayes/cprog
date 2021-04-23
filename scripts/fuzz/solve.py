@@ -21,6 +21,8 @@ for i in a:
     n_starts = 0
     n_ends = 0
     for j in i:
+        if j < 0:
+            j *= -1
         if str(j)[0] == digit:
             n_starts += 1
         if str(j)[-1] == digit:

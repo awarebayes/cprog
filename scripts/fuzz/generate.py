@@ -20,7 +20,7 @@ print(n, m)
 a = []
 
 for i in range(n):
-    a.append([random.randint(0, 10) for i in range(m)])
+    a.append([random.randint(-10, 10) for i in range(m)])
 
 for i in range(n):
     for j in range(m):

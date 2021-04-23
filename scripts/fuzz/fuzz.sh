@@ -11,7 +11,7 @@ do
     if ! diff -b -B <(python ./scripts/fuzz/solve.py < ./scripts/fuzz/input.txt) <(./$1/main.exe < ./scripts/fuzz/input.txt) > /dev/null
     then
         echo "_____________"
-        echo "$TEST failed:"
+        echo "failed:"
         diff -b -B <(python ./scripts/fuzz/solve.py < ./scripts/fuzz/input.txt) <(./$1/main.exe < ./scripts/fuzz/input.txt) 
         echo "_____________"
         exit
