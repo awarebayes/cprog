@@ -9,8 +9,8 @@
 
 #include <stdio.h>
 
-#define N 10
-#define M 10
+#define N 20
+#define M 20
 
 enum error_code
 {

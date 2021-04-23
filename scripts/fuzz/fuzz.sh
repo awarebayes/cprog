@@ -1,10 +1,10 @@
 #! /usr/bin/bash
 
-cd $1
+cd "$1" || 
 gcc -std=c99 -Werror -Wall -lm ./main.c -o ./main.exe
 cd ..
 
-for i in $(seq 1000)
+for i in $(seq 10000)
 do
     python ./scripts/fuzz/generate.py > ./scripts/fuzz/input.txt
     

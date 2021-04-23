@@ -12,17 +12,15 @@ def print_mat(a):
             print(a[i][j], end=' ')
         print()
 
-"""
-2
-n = random.randint(1, 10)
-m = random.randint(1, 10)
+n = random.randint(2, 10)
+m = random.randint(2, 10)
 
 print(n, m)
 
 a = []
 
 for i in range(n):
-    a.append([random.randint(0, 1000) for i in range(m)])
+    a.append([random.randint(0, 10) for i in range(m)])
 
 for i in range(n):
     for j in range(m):
@@ -30,11 +28,12 @@ for i in range(n):
     print()
 
 print(random.randint(0, 9))
-"""
 
+"""
 n = random.randint(2, 10)
 
 a = random_matrix(n, n)
 
 print(n)
 print_mat(a)
+"""
