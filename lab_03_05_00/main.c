@@ -108,12 +108,13 @@ int is_prime(int num)
 {
     if (num <= 1)
         return 0;
-    for (int i = 2; i <= sqrt(num); i++)
+    int flag = 1;
+    for (int i = 2; i <= sqrt(num) && flag; i++)
     {
         if (num % i == 0)
-            return 0;
+            flag = 0;
     }
-    return 1;
+    return flag;
 }
 
 size_t find_primes(size_t n, size_t m, int **pa, int *primes, int *has_primes)

@@ -22,7 +22,6 @@ int validate_dim(size_t dim);
 int input_mat(size_t *n, size_t *m, int **pa);
 void print_mat(size_t n, size_t m, int **pa);
 void print_error(int ec);
-void apply_cols(size_t n, size_t m, int **pa, int *out);
 void print_arr(size_t n, int *arr);
 int starts_with(int n, size_t digit);
 int ends_with(int n, size_t digit);
@@ -116,21 +115,6 @@ void print_error(const int ec)
             printf("Input error\n");
             break;
     }
-}
-
-int elements_descending(size_t n, size_t idx, int **pa)
-{
-    int flag = 1;
-    for (size_t i = 0; i < (n - 1) && flag; i++)
-        if (pa[i][idx] > pa[i + 1][idx])
-            flag = 0;
-    return flag;
-}
-
-void apply_cols(size_t n, size_t m, int **pa, int *out)
-{
-    for (size_t i = 0; i < m; i++)
-        out[i] = elements_descending(n, i, pa);
 }
 
 int starts_with(int n, size_t digit)
