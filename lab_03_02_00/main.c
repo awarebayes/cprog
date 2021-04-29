@@ -9,8 +9,8 @@
 
 #include <stdio.h>
 
-#define N 10
-#define M 10
+#define N 20
+#define M 20
 
 enum error_code
 {
@@ -135,13 +135,17 @@ void apply_cols(size_t n, size_t m, int **pa, int *out)
 
 int starts_with(int n, size_t digit)
 {
+    if (n < 0)
+        n *= -1;
     while (n >= 10)
         n /= 10;
     return (n % 10) == (int)digit;
 }
 
 int ends_with(int n, size_t digit)
-{
+{    
+    if (n < 0)
+        n *= -1;
     return (n % 10) == (int)digit;
 }
 

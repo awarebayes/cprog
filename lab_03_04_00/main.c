@@ -15,7 +15,8 @@ enum error_code
 {
     ok,
     input_error,
-    no_min
+    no_odd_error,
+    non_square_error
 };
 
 int validate_dim(size_t dim);
@@ -32,9 +33,9 @@ int main()
     transform(N, N, *mat, pa);
     size_t n, m;
     int ec = ok;
+    int has_min = 0;
 
     ec = input_mat(&n, &m, pa);
-    int has_min = 0;
 
     if (!ec)
     {
@@ -42,7 +43,7 @@ int main()
         if (has_min)
             printf("%d\n", min);
         else
-            ec = no_min;
+            ec = no_odd_error;
     }
     print_error(ec);
     return ec;
@@ -63,6 +64,8 @@ int input_mat(size_t *n, size_t *m, int **pa)
 {
     if (scanf("%zu %zu", n, m) != 2)
         return input_error;
+    if (*n != *m)
+        return non_square_error;
     if (!validate_dim(*n) || !validate_dim(*m))
         return input_error;
 
@@ -93,8 +96,11 @@ void print_error(const int ec)
         case input_error:
             printf("Input error\n");
             break;
-        case no_min:
-            printf("No min\n");
+        case no_odd_error:
+            printf("No odd numbers\n");
+            break;
+        case non_square_error:
+            printf("Matrix is not square\n");
             break;
     }
 }

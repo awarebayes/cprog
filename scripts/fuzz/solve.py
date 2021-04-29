@@ -7,7 +7,7 @@
  * на эту же цифру. В ситуации, когда таких чисел не обнаружено вообще, строку из
  * сотен не вставлять. Цифра вводится в виде числа после ввода матрицы.
  */
-
+"""
 n, m = map(int, input().split())
 
 a = []
@@ -21,6 +21,8 @@ for i in a:
     n_starts = 0
     n_ends = 0
     for j in i:
+        if j < 0:
+            j *= -1
         if str(j)[0] == digit:
             n_starts += 1
         if str(j)[-1] == digit:
@@ -34,7 +36,6 @@ for i in a:
             print(100, end=' ')
         print()
 
-"""
 
 """
 /*
@@ -45,7 +46,7 @@ for i in a:
  * Написал: Щербина Михаил
  */
 """
-
+"""
 n = int(input())
 a = []
 
@@ -66,3 +67,4 @@ if m is None:
     print('No min')
 else:
     print(m)
+"""
