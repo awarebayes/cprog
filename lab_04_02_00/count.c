@@ -3,7 +3,7 @@ void print_word_count(char **pa, int n_words)
     int count = 0;
     int encountered = 0;
 
-    printf("Result: ");
+    printf("Result: \n");
     for (int i = 0; i < n_words; i++)
     {
         encountered = 0;

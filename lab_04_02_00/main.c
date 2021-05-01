@@ -13,8 +13,7 @@ void print_error(const int ec);
 enum ec
 {
     ok,
-    no_words,
-    input_error
+    no_words
 };
 
 int main()
@@ -57,8 +56,6 @@ void print_error(const int ec)
             break;
         case no_words:
             printf("Error: no words in line\n");
-            break;
-        case input_error:
             break;
     }
 }
