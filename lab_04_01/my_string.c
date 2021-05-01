@@ -4,7 +4,6 @@
 
 const char *my_strpbrk(const char *str1, const char *str2)
 {
-
     const char *start_str2 = str2;
     const char *found = NULL;
     while (*str1 && !found)
@@ -59,8 +58,8 @@ size_t my_strcspn(const char *str1, const char *str2)
         str1++;
         n++;
         str2 = start_str2;
-   }
-   return n - 1;
+    }
+    return n - 1;
 }
 
 const char *my_strchr(const char *str, int character)
@@ -72,13 +71,13 @@ const char *my_strchr(const char *str, int character)
             flag = 0;
         str++;
     }
-    return (*str) ? (str-1) : NULL;
+    return (*str) ? (str - 1) : NULL;
 }
 
-const char *my_strrchr(const char * str, int character)
+const char *my_strrchr(const char *str, int character)
 {
     int flag = 1;
-    const char* strbegin = str;
+    const char *strbegin = str;
     while (*str)
         str++;
     str--; 
@@ -88,5 +87,5 @@ const char *my_strrchr(const char * str, int character)
             flag = 0;
         str--;
     }
-    return (strbegin <= str) ? (str+1) : NULL;
+    return (strbegin <= str) ? (str + 1) : NULL;
 }

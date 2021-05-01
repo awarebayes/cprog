@@ -18,6 +18,6 @@ void print_word_count(char **pa, int n_words)
                 if (strcmp(pa[i], pa[j]) == 0)
                     count++;
             printf("%s %d\n", pa[i], count);
-        }
+        } 
     }
 }
