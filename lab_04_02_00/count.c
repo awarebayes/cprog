@@ -3,6 +3,7 @@ void print_word_count(char **pa, int n_words)
     int count = 0;
     int encountered = 0;
 
+    printf("Result: ");
     for (int i = 0; i < n_words; i++)
     {
         encountered = 0;
@@ -16,7 +17,7 @@ void print_word_count(char **pa, int n_words)
             for (int j = i; j < n_words; j++)
                 if (strcmp(pa[i], pa[j]) == 0)
                     count++;
-            printf("Result: %s %d\n", pa[i], count);
+            printf("%s %d\n", pa[i], count);
         }
     }
 }
