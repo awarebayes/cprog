@@ -3,13 +3,13 @@
 char *split_on = " ,;:-.!?";
 #define NSPLITC 8 // N splitting characters
 
-int split(char **words, char *s, int n)
+int split(char **words, char *s, int n, int *ec)
 {
     int just_splitted = 1; // Только что разделили, во 2 раз не надо
     int should_split = 0; // Нужно ли разделять
     int current_word = 0; // Индекс слова, которое мы сейчас обрабатываем
     int current_char = 0; // Индекс буквы в слове
-    for (int i = 0; i <= n; i++)
+    for (int i = 0; i <= n && !(*ec); i++)
     {
         should_split = 0;
         for (int j = 0; j < NSPLITC; j++)
@@ -28,6 +28,8 @@ int split(char **words, char *s, int n)
         {
             words[current_word][current_char] = s[i];
             current_char++;
+            if (current_char >= 17)
+                *ec = 3; // long word
             just_splitted = 0;
         }
     }

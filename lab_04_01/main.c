@@ -5,10 +5,6 @@
 
 int main()
 {
-    test_strpbrk();
-    test_strspn();
-    test_strcspn();
-    test_strchr();
-    test_strrchr();
+    fuzz();
     return 0;
 }

@@ -1,17 +1,50 @@
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
+#include <stdlib.h>
 #include "my_string.c"
 
-void test_strpbrk()
+static char *rand_string(char *str, size_t size)
 {
-    char *str1 = "abcdeff123";
-    char *str2 = "e";
-    assert(strpbrk(str1, str2) == my_strpbrk(str1, str2));
-    str2 = "ec";
-    assert(strpbrk(str1, str2) == my_strpbrk(str1, str2));
-    str2 = "32";
-    assert(strpbrk(str1, str2) == my_strpbrk(str1, str2));
+    const char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJK,.:;!12345";
+    if (size) 
+    {
+        --size;
+        for (size_t n = 0; n < size; n++) 
+        {
+            int key = rand() % (int) (sizeof(charset) - 1);
+            str[n] = charset[key];
+        }
+        str[size] = '\0';
+    }
+    return str;
+}
+
+void fuzz()
+{
+    int str1_len = 100;
+    //int str2_len = 100;
+    char str1[str1_len];
+    //char str2[str2_len];
+
+    for (size_t i = 0; i < 10000000; i++) 
+    {
+        str1_len = rand() % 100;
+        // str_len = rand() % 100;
+        char c = rand() % 128;
+        rand_string(str1, str1_len);
+        // rand_string(str2, str2_len);
+        if (strchr(str1, c) != my_strchr(str1, c))
+        {
+            printf("Fuzzing failed:\n");
+            printf("s1: %s\n", str1);
+            printf("s2: %c (%d)\n", c, (int)c);
+            printf("std, %p\n", strchr(str1, c));
+            printf("my , %p\n", my_strchr(str1, c));
+            printf("___________________\n");
+            exit(1);
+        }
+    }
 }
 
 void test_strspn()
