@@ -2,29 +2,28 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
-#include "util.c"
+#include "util.h"
 
 #define MSTRLEN 256
 
 char *strstrip(char *s)
 {
-        size_t size;
-        char *end;
+    size_t size;
+    char *end;
 
-        size = strlen(s);
+    size = strlen(s);
 
-        if (!size)
-                return s;
-
-        end = s + size - 1;
-        while (end >= s && isspace(*end))
-                end--;
-        *(end + 1) = '\0';
-
-        while (*s && isspace(*s))
-                s++;
-
+    if (!size)
         return s;
+
+    end = s + size - 1;
+    while (end >= s && isspace(*end))
+        end--;
+    *(end + 1) = '\0';
+
+    while (*s && isspace(*s))
+        s++;
+    return s;
 }
 
 int char_to_int(char c)
@@ -81,7 +80,7 @@ int ip_addr_valid(char *str)
     if (value <= 255)
         succeding_values++;
     if (succeding_values != 4)
-            valid = 0;
+        valid = 0;
     return valid;
 }
 

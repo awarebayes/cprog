@@ -1,10 +1,5 @@
- #include <stdio.h>
-
-enum ec
-{
-    ok,
-    string_overflow,
-};
+#include <stdio.h>
+#include "util.h"
 
 void transform(size_t n, size_t m, char *mat, char **pa)
 {
