@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-#include "strings.c"
-#include "util.c"
+#include "strings.h"
+#include "util.h"
 
 int main()
 {

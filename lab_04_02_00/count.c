@@ -1,3 +1,7 @@
+#include "count.h"
+#include <string.h>
+#include <stdio.h>
+
 void print_word_count(char **pa, int n_words)
 {
     int count = 0;

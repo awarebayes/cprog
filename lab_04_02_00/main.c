@@ -1,14 +1,11 @@
 #include <stdio.h>
 #include <string.h>
-#include "split.c"
-#include "count.c"
+#include "split.h"
+#include "count.h"
 
 #define MSLEN 256 // MaxStringLen
 #define MWORDS 128 // MaxWords in string
 #define MWORDLEN 16 // MaxWordLen
-
-int read_line(char *s, int n, int *ec);
-void print_error(const int ec);
 
 enum ec
 {
@@ -17,6 +14,9 @@ enum ec
     string_overflow,
     long_word,
 };
+
+int read_line(char *s, int n, int *ec);
+void print_error(const int ec);
 
 int main()
 {

@@ -1,4 +1,6 @@
+#include "split.h"
 #include <stdio.h>
+#include <string.h>
 
 char *split_on = " ,;:-.!?";
 #define NSPLITC 8 // N splitting characters

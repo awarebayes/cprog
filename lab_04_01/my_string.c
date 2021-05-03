@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "my_string.h"
 
 const char *my_strchr(const char *str, int character);
 

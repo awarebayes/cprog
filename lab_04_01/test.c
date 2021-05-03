@@ -2,9 +2,10 @@
 #include <string.h>
 #include <assert.h>
 #include <stdlib.h>
-#include "my_string.c"
+#include "my_string.h"
+#include "test.h"
 
-static char *rand_string(char *str, size_t size)
+char *rand_string(char *str, size_t size)
 {
     const char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJK,.:;!12345";
     if (size) 
