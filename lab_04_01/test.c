@@ -23,24 +23,25 @@ static char *rand_string(char *str, size_t size)
 void fuzz()
 {
     int str1_len = 100;
-    //int str2_len = 100;
+    int str2_len = 100;
     char str1[str1_len];
-    //char str2[str2_len];
+    char str2[str2_len];
 
-    for (size_t i = 0; i < 10000000; i++) 
+    for (size_t i = 0; i < 1000000000; i++) 
     {
         str1_len = rand() % 100;
-        // str_len = rand() % 100;
-        char c = rand() % 128;
+        str2_len = rand() % 100;
+        // char c = rand() % 128;
         rand_string(str1, str1_len);
-        // rand_string(str2, str2_len);
-        if (strchr(str1, c) != my_strchr(str1, c))
+        rand_string(str2, str2_len);
+        if (strcspn(str1, str2) != strcspn(str1, str2))
         {
             printf("Fuzzing failed:\n");
-            printf("s1: %s\n", str1);
-            printf("s2: %c (%d)\n", c, (int)c);
-            printf("std, %p\n", strchr(str1, c));
-            printf("my , %p\n", my_strchr(str1, c));
+            printf("s1: '%s'\n", str1);
+            printf("s2: '%s'\n", str2);
+            // printf("s2: %c (%d)\n", c, (int)c);
+            printf("std, %zu\n", strcspn(str1, str2));
+            printf("my , %zu\n", my_strcspn(str1, str2));
             printf("___________________\n");
             exit(1);
         }

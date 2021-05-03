@@ -6,14 +6,14 @@
 
 int main()
 {
-    int ec;
+    int ec = ok;
     char str[MSTRLEN];
     char result[MSTRLEN] = { '\0' };
     char *end = result;
     int remaining; // сколько слов осталось после удаления
 
     char words[MWORDS][MWORDLEN];
-    char *pa[MWORDLEN];
+    char *pa[MWORDS];
     transform(MWORDS, MWORDLEN, *words, pa); 
 
     read_line(str, MSTRLEN, &ec);

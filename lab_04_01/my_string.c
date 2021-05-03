@@ -1,7 +1,4 @@
-#pragma once
-
 #include <stdio.h>
-
 
 const char *my_strchr(const char *str, int character);
 

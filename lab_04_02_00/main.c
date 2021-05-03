@@ -5,7 +5,7 @@
 
 #define MSLEN 256 // MaxStringLen
 #define MWORDS 128 // MaxWords in string
-#define MWORDLEN 32 // MaxWordLen
+#define MWORDLEN 16 // MaxWordLen
 
 int read_line(char *s, int n, int *ec);
 void print_error(const int ec);
@@ -26,7 +26,7 @@ int main()
 
     line_len = read_line(line, MSLEN, &ec);
     char words[MWORDS][MWORDLEN];
-    char *pa[MWORDLEN];
+    char *pa[MWORDS];
 
     transform(MWORDS, MWORDLEN, *words, pa);
     int n_words;

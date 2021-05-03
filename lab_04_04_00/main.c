@@ -38,22 +38,26 @@ int ip_addr_valid(char *str)
 {
     int n = 0;
     int value = 0;
+    int value_read = 0;
     int ten_power = 1;
     int succeding_values = 0;
 
     n = strlen(str) - 1;
 
-    while (n >= 0)
+    int valid = 1;
+
+    while (n >= 0 && valid)
     {
         if (str[n] == '.')
         {
             // check value
-            if (value >= 256)
-                return 0;
+            if (value >= 256 || !value_read)
+                valid = 0;
             // reset value
             else
             {
                 value = 0;
+                value_read = 0;
                 succeding_values++;
                 ten_power = 1;
             }
@@ -65,19 +69,20 @@ int ip_addr_valid(char *str)
             {
                 value += ten_power * digit;
                 ten_power *= 10;
+                value_read = 1;
             }
             else
-                return 0;
+                valid = 0;
         }
         else
-            return 0;
+            valid = 0;
         n--;
     }
     if (value <= 255)
         succeding_values++;
-    if (succeding_values == 4)
-            return 1;
-    return 0;
+    if (succeding_values != 4)
+            valid = 0;
+    return valid;
 }
 
 int main()

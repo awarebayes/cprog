@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define MWORDLEN 32
+#define MWORDLEN 16
 #define MWORDS 128
 #define MSTRLEN 256
 #define DELIM " ,;:-.!?"
