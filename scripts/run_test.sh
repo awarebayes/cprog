@@ -1,6 +1,6 @@
 #! /usr/bin/bash
 cd $1
-gcc -std=c99 -Werror -Wall -lm ./main.c -o ./main
+# gcc -std=c99 -Werror -Wall -lm ./main.c -o ./main
 cd ./func_tests
 for TEST in $(ls | grep _in.txt | sed 's/_[^_]*//2g')
 do
