@@ -3,8 +3,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include "util.h"
+#include "util.c"
 
-#define MSTRLEN 257
+// Почему 258:
+// 256 + '\n' + '\0'
+#define MSTRLEN 258
 
 int ip_addr_valid(char *str);
 
@@ -14,10 +17,15 @@ int main()
     char str_arr[MSTRLEN];
     char *str = str_arr;
 
-    read_line(str_arr, MSTRLEN, &ec);
-    str = strstrip(str);
+    if (!fgets(str, MSTRLEN, stdin))
+        ec = input_error;
+
+    if (strchr(str, '\0') == str + MSTRLEN - 1 && str[MSTRLEN-2] != '\n')
+        ec = string_overflow;
+    
     if (!ec)
     {
+        str = strstrip(str);
         if (ip_addr_valid(str))
             printf("YES\n");
         else

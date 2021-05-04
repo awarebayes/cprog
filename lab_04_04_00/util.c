@@ -19,19 +19,10 @@ void print_error(const int ec)
         case string_overflow:
             printf("Error: string overflow\n");
             break;
+        case input_error:
+            printf("Error: input error\n");
+            break;
     }
-}
-
-int read_line(char *s, int n, int *ec)
-{
-    int ch, i = 0;
-    while ((ch = getchar()) != '\n' && ch != EOF)
-        if (i < n - 1)
-            s[i++] = ch;
-        else
-            *ec = string_overflow;
-    s[i] = '\0';
-    return i;
 }
 
 char *strstrip(char *s)

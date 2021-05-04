@@ -8,11 +8,11 @@ enum ec
     ok,
     string_overflow,
     empty_string,
+    input_error,
 };
 
 void transform(size_t n, size_t m, char *mat, char **pa);
 void print_error(const int ec);
-int read_line(char *s, int n, int *ec);
 char *strstrip(char *s);
 int char_to_int(char c);
 
