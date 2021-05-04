@@ -36,7 +36,11 @@ size_t my_strcspn(const char *str1, const char *str2)
 {
     size_t n = 0;
     if (*str1 == '\0' || *str2 == '\0')
+    {
+        while (str1[n])
+            n++;
         return n;
+    }
     while (*str1 && !(my_strchr(str2, *str1++)))
         n++;
     return n;

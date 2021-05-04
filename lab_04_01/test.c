@@ -63,7 +63,10 @@ void test_strspn()
 void test_strcspn()
 {
     char *str1 = "abcdeff123";
-    char *str2 = "123asdvc";
+    char *str2 = "\0";
+    size_t s1 = strcspn(str1, str2);
+    size_t s2 = my_strcspn(str1, str2);
+    assert (s1 == s2);
     assert(strcspn(str1, str2) == my_strcspn(str1, str2));
     str2 = "34213def";
     assert(strcspn(str1, str2) == my_strcspn(str1, str2));

@@ -6,6 +6,6 @@
 
 int main()
 {
-    fuzz();
+    test_strcspn();
     return 0;
 }
