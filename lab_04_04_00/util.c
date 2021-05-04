@@ -19,9 +19,6 @@ void print_error(const int ec)
         case string_overflow:
             printf("Error: string overflow\n");
             break;
-        case empty_string:
-            printf("Error: empty string\n");
-            break;
     }
 }
 

@@ -4,7 +4,7 @@
 #include <string.h>
 #include "util.h"
 
-#define MSTRLEN 256
+#define MSTRLEN 257
 
 int ip_addr_valid(char *str);
 
@@ -14,9 +14,7 @@ int main()
     char str_arr[MSTRLEN];
     char *str = str_arr;
 
-    int str_len = read_line(str_arr, MSTRLEN, &ec);
-    if (str_len == 0)
-        ec = empty_string;
+    read_line(str_arr, MSTRLEN, &ec);
     str = strstrip(str);
     if (!ec)
     {
