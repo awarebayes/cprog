@@ -2,35 +2,31 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
-#include "util.h"
+#include "util.c"
 
-#define MSTRLEN 255
+#define MSTRLEN 256
 
-char *strstrip(char *s)
+int ip_addr_valid(char *str);
+
+int main()
 {
-    size_t size;
-    char *end;
+    int ec = ok;
+    char str_arr[MSTRLEN];
+    char *str = str_arr;
 
-    size = strlen(s);
-
-    if (!size)
-        return s;
-
-    end = s + size - 1;
-    while (end >= s && isspace(*end))
-        end--;
-    *(end + 1) = '\0';
-
-    while (*s && isspace(*s))
-        s++;
-    return s;
-}
-
-int char_to_int(char c)
-{
-    if (c >= '0' && c <= '9')
-        return c - '0';
-    return -1;
+    int str_len = read_line(str_arr, MSTRLEN, &ec);
+    if (str_len == 0)
+        ec = empty_string;
+    str = strstrip(str);
+    if (!ec)
+    {
+        if (ip_addr_valid(str))
+            printf("YES\n");
+        else
+            printf("NO\n");
+    }
+    print_error(ec);
+    return ec;
 }
 
 int ip_addr_valid(char *str)
@@ -82,23 +78,4 @@ int ip_addr_valid(char *str)
     if (succeding_values != 4)
         valid = 0;
     return valid;
-}
-
-int main()
-{
-    int ec = ok;
-    char str_arr[MSTRLEN];
-    char *str = str_arr;
-
-    read_line(str_arr, MSTRLEN, &ec);
-    str = strstrip(str);
-    if (!ec)
-    {
-        if (ip_addr_valid(str))
-            printf("YES\n");
-        else
-            printf("NO\n");
-    }
-    print_error(ec);
-    return ec;
 }

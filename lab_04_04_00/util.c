@@ -16,6 +16,9 @@ void print_error(const int ec)
         case string_overflow:
             printf("Error: string overflow\n");
             break;
+        case empty_string:
+            printf("Error: empty string\n");
+            break;
     }
 }
 
@@ -31,3 +34,29 @@ int read_line(char *s, int n, int *ec)
     return i;
 }
 
+char *strstrip(char *s)
+{
+    size_t size;
+    char *end;
+
+    size = strlen(s);
+
+    if (!size)
+        return s;
+
+    end = s + size - 1;
+    while (end >= s && isspace(*end))
+        end--;
+    *(end + 1) = '\0';
+
+    while (*s && isspace(*s))
+        s++;
+    return s;
+}
+
+int char_to_int(char c)
+{
+    if (c >= '0' && c <= '9')
+        return c - '0';
+    return -1;
+}
