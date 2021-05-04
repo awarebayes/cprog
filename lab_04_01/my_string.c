@@ -60,7 +60,8 @@ const char *my_strchr(const char *str, int character)
         result = str - 1;
     else
     {
-        if (character) // charachter не \0, возможно возвращаем null
+        // charachter не \0, возможно возвращаем null
+        if (character)
             result = (*str) ? str : NULL;
         else
             result = str; // если character \0 то конец строки

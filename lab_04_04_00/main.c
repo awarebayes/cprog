@@ -4,7 +4,7 @@
 #include <string.h>
 #include "util.h"
 
-#define MSTRLEN 256
+#define MSTRLEN 255
 
 char *strstrip(char *s)
 {
@@ -37,9 +37,9 @@ int ip_addr_valid(char *str)
 {
     int n = 0;
     int value = 0;
-    int value_read = 0;
     int ten_power = 1;
     int succeding_values = 0;
+    int digits = 0;
 
     n = strlen(str) - 1;
 
@@ -50,13 +50,13 @@ int ip_addr_valid(char *str)
         if (str[n] == '.')
         {
             // check value
-            if (value >= 256 || !value_read)
+            if (value >= 256 || digits == 0 || digits > 3)
                 valid = 0;
             // reset value
             else
             {
                 value = 0;
-                value_read = 0;
+                digits = 0;
                 succeding_values++;
                 ten_power = 1;
             }
@@ -67,8 +67,8 @@ int ip_addr_valid(char *str)
             if (digit >= 0)
             {
                 value += ten_power * digit;
+                digits++;
                 ten_power *= 10;
-                value_read = 1;
             }
             else
                 valid = 0;
@@ -77,7 +77,7 @@ int ip_addr_valid(char *str)
             valid = 0;
         n--;
     }
-    if (value <= 255)
+    if (value <= 255 && digits > 0 && digits <= 3)
         succeding_values++;
     if (succeding_values != 4)
         valid = 0;
