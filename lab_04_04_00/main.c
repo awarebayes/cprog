@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "util.h"
-#include "util.c"
 
 // Почему 258:
 // 256 + '\n' + '\0'
