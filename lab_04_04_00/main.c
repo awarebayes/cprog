@@ -30,7 +30,6 @@ int main()
         else
             printf("NO\n");
     }
-    print_error(ec);
     return ec;
 }
 

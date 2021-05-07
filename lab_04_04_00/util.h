@@ -12,7 +12,6 @@ enum ec
 };
 
 void transform(size_t n, size_t m, char *mat, char **pa);
-void print_error(const int ec);
 char *strstrip(char *s);
 int char_to_int(char c);
 

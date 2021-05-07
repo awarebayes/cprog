@@ -10,21 +10,6 @@ void transform(size_t n, size_t m, char *mat, char **pa)
         pa[i] = mat + m * i;
 }
 
-void print_error(const int ec)
-{
-    switch (ec)
-    {
-        case ok:
-            break;
-        case string_overflow:
-            printf("Error: string overflow\n");
-            break;
-        case input_error:
-            printf("Error: input error\n");
-            break;
-    }
-}
-
 char *strstrip(char *s)
 {
     size_t size;
