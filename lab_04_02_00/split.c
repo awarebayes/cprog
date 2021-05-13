@@ -7,6 +7,7 @@ char *split_on = " ,;:-.!?";
 
 int split(char **words, char *s, int n, int *ec)
 {
+    *ec = 0;
     int just_splitted = 1; // Только что разделили, во 2 раз не надо
     int should_split = 0; // Нужно ли разделять
     int current_word = 0; // Индекс слова, которое мы сейчас обрабатываем
