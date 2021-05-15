@@ -1,6 +1,7 @@
-cd $1
-mkdir func_tests
-cd func_tests
+#! /usr/bin/sh
+cd $1 || exit 1
+mkdir func_tests 
+cd func_tests || exit 1
 
 touch readme.md
 

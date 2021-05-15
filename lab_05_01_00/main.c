@@ -8,8 +8,9 @@ int main()
 {
     int result;
     int rc = process(stdin, &result);
-    printf("%d %d \n", rc, result);
-
+    if (!rc)
+        printf("%d\n", result);
+    return rc;
 }
 
 int process(FILE *f, int *result)

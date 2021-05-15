@@ -16,6 +16,7 @@ int main(int argc, char **argv)
     FILE *input;
     int ec = 0;
     int min, max;
+    float mb = 0;
     input = fopen(argv[1], "r");
 
     if (argc != 2)
@@ -23,33 +24,43 @@ int main(int argc, char **argv)
     if (!ec)
         min_max(input, &min, &max, &ec);
     if (!ec)
-    {
-        float mb = mean_between(input, min, max, &ec);
-        printf("Mean between %f", mb);
-    }
+        mb = mean_between(input, min, max, &ec);
+    if (!ec)
+        printf("%f\n", mb);
     fclose(input);
+    return ec;
 }
 
 float mean_between(FILE *f, int min, int max, int *ec)
 {
-    fseek(f, 0, SEEK_SET);
+    rewind(f);
     int n = 0;
     float sum = 0.0f;
     int el = 0;
     int started = 0;
     int ended = 0;
     float mean = 0;
-    while (fscanf(f, "%d", &el))
+    int should_continue = 0;
+    while (!feof(f))
     {
-        if (el == max)
+        fscanf(f, "%d", &el);
+        should_continue = 0;
+        if ((el == max || el == min) && !started)
+        {
+            started = 1;
+            should_continue = 1;
+        }
+        if ((el == max || el == min) && started && !should_continue)
+        {
             ended = 1;
-        if (started && !ended)
+            should_continue = 1;
+        }
+        if (started && !ended && !should_continue)
         {
             sum += el;
             n++;
+            should_continue = 0;
         } 
-        if (el == min)
-            started = 1;
     }
     if (n == 0)
     {
@@ -63,16 +74,18 @@ float mean_between(FILE *f, int min, int max, int *ec)
 
 void min_max(FILE *f, int *min, int *max, int *ec)
 {
-    fseek(f, 0, SEEK_SET);
+    rewind(f);
     int first = 1;
     int el = 0;
     int read = 0;
-    while(fscanf(f, "%d", &el))
+    while(!feof(f))
     {
+        fscanf(f, "%d", &el);
         if (first)
         {
             *min = *max = el;
             read = 1;
+            first = 0;
         }
         else
         {
