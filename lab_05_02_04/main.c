@@ -20,7 +20,7 @@ int main(int argc, char **argv)
     input = fopen(argv[1], "r");
 
     if (argc != 2)
-        ec  = ARG_ERROR;
+        ec = ARG_ERROR;
     if (!ec)
         min_max(input, &min, &max, &ec);
     if (!ec)
@@ -78,7 +78,7 @@ void min_max(FILE *f, int *min, int *max, int *ec)
     int first = 1;
     int el = 0;
     int read = 0;
-    while(!feof(f))
+    while (!feof(f))
     {
         fscanf(f, "%d", &el);
         if (first)

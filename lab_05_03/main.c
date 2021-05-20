@@ -1,7 +1,14 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
+#include <time.h>
+#include "util.c"
 
-#define ARG_ERROR -1
+/*
+ * 
+ *
+ *
+ */
 
 int main(int argc, char **argv)
 {
@@ -10,21 +17,25 @@ int main(int argc, char **argv)
         ec = ARG_ERROR;
     if (ec)
         return ec;
+    for (int i = 1; i < argc; i++)
+    {
+        printf("%s\n", argv[i]);
+    }
     if (strcmp(argv[1], "c") == 0)
     {
-        int n = atoi(argv[2]);
-
+        int n;
+        if (argc != 4)
+            ec = ARG_ERROR;
+        if (!ec)
+        {
+            n = atoi(argv[2]);
+            if (n == 0) 
+                ec = ARG_ERROR;
+        }
+        if (!ec)
+            create_random_file(argv[3], n);
     }
-}
-
-void create_random_file(char *filename, int n)
-{
-    FILE* f = fopen(filename, "w");
-    srand(time(NULL));
-    for (int i = 0; i < n; i++)
-    {
-        int num = rand() % 1000;
-        fprintf(f, "%d ", num);
-    }
-    fclose(f);
+    if (strcmp(argv[1], "p") == 0)
+        ec = print_file(argv[2]);
+    return ec;
 }
