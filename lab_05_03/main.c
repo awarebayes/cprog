@@ -3,7 +3,6 @@
 #include <stdlib.h>
 
 #include "futil.h"
-#include "futil.c"
 
 #define ARG_ERROR -1
 
