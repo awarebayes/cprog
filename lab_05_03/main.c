@@ -1,27 +1,20 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <time.h>
-#include "util.c"
 
-/*
- * 
- *
- *
- */
+#include "futil.h"
+#include "futil.c"
+
+#define ARG_ERROR -1
+
+void print_error(int ec);
 
 int main(int argc, char **argv)
 {
     int ec = 0;
     if (argc < 2)
         ec = ARG_ERROR;
-    if (ec)
-        return ec;
-    for (int i = 1; i < argc; i++)
-    {
-        printf("%s\n", argv[i]);
-    }
-    if (strcmp(argv[1], "c") == 0)
+    if (!ec && strcmp(argv[1], "c") == 0 && argc == 4)
     {
         int n;
         if (argc != 4)
@@ -33,9 +26,23 @@ int main(int argc, char **argv)
                 ec = ARG_ERROR;
         }
         if (!ec)
-            create_random_file(argv[3], n);
+            frcreate(argv[3], n);
     }
-    if (strcmp(argv[1], "p") == 0)
-        ec = print_file(argv[2]);
+    else if (!ec && strcmp(argv[1], "p") == 0 && argc == 3)
+        ec = fprint(argv[2]);
+    else if (!ec && strcmp(argv[1], "s") == 0 && argc == 3)
+        ec = fsort(argv[2]);
+    else
+        ec = ARG_ERROR;
+
+    print_error(ec);
     return ec;
+}
+
+void print_error(int ec)
+{
+    if (ec == ARG_ERROR)
+        printf("Invalid arguments\n");
+    else if (ec == NO_FILE)
+        printf("File does not exist!\n");
 }
