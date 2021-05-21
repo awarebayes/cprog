@@ -6,8 +6,6 @@
 
 #define ARG_ERROR -1
 
-void print_error(int ec);
-
 int main(int argc, char **argv)
 {
     int ec = 0;
@@ -33,15 +31,5 @@ int main(int argc, char **argv)
         ec = fsort(argv[2]);
     else
         ec = ARG_ERROR;
-
-    print_error(ec);
     return ec;
-}
-
-void print_error(int ec)
-{
-    if (ec == ARG_ERROR)
-        printf("Invalid arguments\n");
-    else if (ec == NO_FILE)
-        printf("File does not exist!\n");
 }
