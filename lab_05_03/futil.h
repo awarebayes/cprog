@@ -12,8 +12,8 @@ int get_number_by_pos(FILE *file, int pos);
 void set_number_by_pos(FILE *file, int pos, int num);
 void fswap(FILE *f, int p1, int p2);
 int fsize(FILE *file);
-int frcreate(char *filename, int n);
-int fprint(char *filename);
-int fsort(char *filename);
+int frcreate(FILE *file, int n);
+int fprint(FILE *file);
+int fsort(FILE *file);
 
 #endif

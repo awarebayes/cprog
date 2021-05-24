@@ -15,7 +15,7 @@ int main(int argc, char **argv)
         if (n == 0) 
             ec = ARG_ERROR;
         FILE* f = fopen(argv[3], "wb");
-        if (!f)
+        if (f == NULL)
             ec = FILE_ERROR;
         if (!ec)
             ec = frcreate(f, n);
@@ -38,7 +38,7 @@ int main(int argc, char **argv)
         if (f == NULL)
             ec = FILE_ERROR;
         if (!ec)
-            ec = fsort(argv[2]);
+            ec = fsort(f);
         if (ec != FILE_ERROR)
             fclose(f);
     }

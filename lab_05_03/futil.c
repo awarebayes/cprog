@@ -56,12 +56,10 @@ void fswap(FILE *f, int p1, int p2)
 
 int fsort(FILE *f)
 {
-
     int n = fsize(f);
     for (int i = 0; i < n; i++)
         for (int j = 0; j < n - 1; j++)
             if (get_number_by_pos(f, j) > get_number_by_pos(f, j + 1))
                 fswap(f, j, j + 1);
-    fclose(f);
     return 0;
 }
