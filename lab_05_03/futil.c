@@ -14,10 +14,16 @@ void set_number_by_pos(FILE *file, int pos, int num)
     fwrite(&num, sizeof(int), 1, file);
 }
 
-int fsize(FILE *file)
+int fsize(FILE *file, int *ec)
 {
+    if (file == NULL && ec)
+        *ec = IO_ERROR;
+
+
     fseek(file, 0, SEEK_END);
     long n = ftell(file);
+    if (ec && !*ec && n % sizeof(int))
+            *ec = IO_ERROR;
     return (int)(n / sizeof(int));
 }
 
@@ -37,12 +43,12 @@ int frcreate(FILE *f, int n)
 
 int fprint(FILE *f)
 {
-
-    long fs = fsize(f);
+    int ec = 0;
+    long fs = fsize(f, NULL);
     for (int i = 0; i < fs; i++)
         printf("%d ", get_number_by_pos(f, i));
     printf("\n");
-    return 0;
+    return ec;
 }
 
 void fswap(FILE *f, int p1, int p2)
@@ -56,7 +62,7 @@ void fswap(FILE *f, int p1, int p2)
 
 int fsort(FILE *f)
 {
-    int n = fsize(f);
+    int n = fsize(f, NULL);
     for (int i = 0; i < n; i++)
         for (int j = 0; j < n - 1; j++)
             if (get_number_by_pos(f, j) > get_number_by_pos(f, j + 1))

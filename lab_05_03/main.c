@@ -17,6 +17,7 @@ int main(int argc, char **argv)
         FILE* f = fopen(argv[3], "wb");
         if (f == NULL)
             ec = FILE_ERROR;
+        fsize(f, &ec);
         if (!ec)
             ec = frcreate(f, n);
         if (ec != FILE_ERROR)
@@ -27,6 +28,7 @@ int main(int argc, char **argv)
         FILE *f = fopen(argv[2], "rb");
         if (f == NULL)
             ec = FILE_ERROR;
+        fsize(f, &ec);
         if (!ec)
             ec = fprint(f);
         if (ec != FILE_ERROR)
@@ -37,6 +39,7 @@ int main(int argc, char **argv)
         FILE *f = fopen(argv[2], "rb+");
         if (f == NULL)
             ec = FILE_ERROR;
+        fsize(f, &ec);
         if (!ec)
             ec = fsort(f);
         if (ec != FILE_ERROR)

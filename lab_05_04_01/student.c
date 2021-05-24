@@ -19,7 +19,6 @@ int serialize(student_t *s, int size, char *buf)
         n = sprintf(buf, "%d\n", s->grades[i]);
         buf += n;
     }
-    sprintf(buf, "\n");
     return 0;
 }
 

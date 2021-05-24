@@ -19,7 +19,7 @@ void fset(FILE *file, int pos, student_t *s)
 
 void fswap(FILE *file, int pos1, int pos2)
 {
-    student_t s1, s2;
+    student_t s1, s2 = { 0 };
     s1 = fget(file, pos1);
     s2 = fget(file, pos2);
     fset(file, pos2, &s1);
@@ -28,7 +28,7 @@ void fswap(FILE *file, int pos1, int pos2)
 
 int fcmp(FILE *file, int pos1, int pos2)
 {
-    student_t s1, s2;
+    student_t s1, s2 = { 0 };
     s1 = fget(file, pos1);
     s2 = fget(file, pos2);
     
@@ -64,7 +64,7 @@ void fdelete(char *filename, int *pos, int n_pos)
 {
     FILE *file = fopen(filename, "rb");
     FILE *temp = tmpfile();
-    student_t s;
+    student_t s = { 0 };
     int n_deleted = 0;
     int n = fsize(file);
     
@@ -91,7 +91,7 @@ void fdelete(char *filename, int *pos, int n_pos)
 
 void ffind_substr(FILE *file, char *substr, int *pos, int *n_pos)
 {
-    student_t s;
+    student_t s = { 0 };
     int cur_pos = 0;
     for (int i = 0; i < fsize(file); i++)
     {
@@ -107,7 +107,7 @@ void ffind_substr(FILE *file, char *substr, int *pos, int *n_pos)
 void fserializef(FILE *from, FILE *to, int *pos, int n_pos)
 {
     char buf[128];
-    student_t s;
+    student_t s = { 0 };
     for (int i = 0; i < n_pos; i++)
     {
         s = fget(from, pos[i]); 
@@ -120,7 +120,7 @@ void f_less_mean(FILE *file, int *pos, int *n_pos)
 {
     float mean = 0;
     float sum = 0;
-    student_t s;
+    student_t s = { 0 };
     int n = fsize(file);
     for (int i = 0; i < n; i++)
     {
