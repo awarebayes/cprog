@@ -13,13 +13,13 @@ int main(int argc, char **argv)
 {
     int ec = OK;
     int buf_len = POS_BUF_LEN;
-    int pos_buf[buf_len];
+    int pos_buf[POS_BUF_LEN];
     for (int i = 0; i < POS_BUF_LEN; i++) 
         pos_buf[i] = i;
     if (argc == 3 && strcmp(argv[1], "sb") == 0)
     {
         FILE *file = fopen(argv[2], "rb+");
-        if (!file)
+        if (file_invalid(file))
             ec = FILE_ERROR;
         else
         {
@@ -32,7 +32,7 @@ int main(int argc, char **argv)
     {
         FILE *file = fopen(argv[2], "rb+");
         FILE *out = fopen(argv[3], "wb+");
-        if (!file || !out)
+        if (file_invalid(file) || !out)
             ec = FILE_ERROR;
         else
         {
@@ -45,7 +45,7 @@ int main(int argc, char **argv)
     else if (argc == 3 && strcmp(argv[1], "db") == 0)
     {
         FILE *file = fopen(argv[2], "rb+");
-        if (!file)
+        if (file_invalid(file))
             ec = FILE_ERROR;
         else
         {

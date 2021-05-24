@@ -142,3 +142,11 @@ void f_less_mean(FILE *file, int *pos, int *n_pos)
     }
     *n_pos = cur_pos;
 }
+
+int file_invalid(FILE *file)
+{
+    if (file == NULL)
+        return 1;
+    fseek(file, 0, SEEK_END);
+    return ftell(file) % sizeof(student_t);
+}
