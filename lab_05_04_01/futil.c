@@ -1,25 +1,25 @@
-#include "futil.h"
-#include "student.h"
 #include <stdio.h>
 #include <string.h>
+#include "student.h"
+#include "futil.h"
 
-Student fget(FILE *file, int pos)
+student_t fget(FILE *file, int pos)
 {
-    Student blank;
-    fseek(file, sizeof(Student) * pos, SEEK_SET);
-    fread(&blank, sizeof(Student), 1, file);
+    student_t blank;
+    fseek(file, sizeof(student_t) * pos, SEEK_SET);
+    fread(&blank, sizeof(student_t), 1, file);
     return blank;
 }
 
-void fset(FILE *file, int pos, Student *s)
+void fset(FILE *file, int pos, student_t *s)
 {
-    fseek(file, sizeof(Student) * pos, SEEK_SET);
-    fwrite(s, sizeof(Student), 1, file);
+    fseek(file, sizeof(student_t) * pos, SEEK_SET);
+    fwrite(s, sizeof(student_t), 1, file);
 }
 
 void fswap(FILE *file, int pos1, int pos2)
 {
-    Student s1, s2;
+    student_t s1, s2;
     s1 = fget(file, pos1);
     s2 = fget(file, pos2);
     fset(file, pos2, &s1);
@@ -28,9 +28,9 @@ void fswap(FILE *file, int pos1, int pos2)
 
 int fcmp(FILE *file, int pos1, int pos2)
 {
-    Student s1, s2;
-    fget(file, pos1);
-    fget(file, pos2);
+    student_t s1, s2;
+    s1 = fget(file, pos1);
+    s2 = fget(file, pos2);
     
     int cmp1 = strcmp(s1.lastname, s2.lastname);
     int cmpres;
@@ -48,38 +48,39 @@ int fsize(FILE *file)
 {
     fseek(file, 0, SEEK_END);
     int pos = (int)ftell(file);
-    return pos / sizeof(Student);
+    return pos / sizeof(student_t);
 }
 
 void fsort(FILE *file)
 {
     int size = fsize(file);
     for (int i = 0; i < size; i++)
-        for (int j = 0; i < size - 1; j++)
+        for (int j = 0; j < size - 1; j++)
             if (fcmp(file, j, j + 1) > 0)
                 fswap(file, j, j + 1);
 }
 
-void fdelete(FILE *file, int *pos, int n_pos)
+void fdelete(char *filename, int *pos, int n_pos)
 {
+    FILE *file = fopen(filename, "rb");
     FILE *temp = tmpfile();
-    Student s;
+    student_t s;
     int n_deleted = 0;
     int n = fsize(file);
     
     for (int i = 0; i < n; i++)
     {
         if (n_deleted < n_pos && pos[n_deleted] == i)
-            n_deleted+=1;
+            n_deleted += 1;
         else
         {
             s = fget(file, i);
-            fset(temp, i-n_deleted, &s);
+            fset(temp, i - n_deleted, &s);
         }
     }
 
     fclose(file);
-    file = fopen(file, "wb+");
+    file = fopen(filename, "wb");
     for (int i = 0; i < fsize(temp); i++)
     {
         s = fget(temp, i);
@@ -90,7 +91,7 @@ void fdelete(FILE *file, int *pos, int n_pos)
 
 void ffind_substr(FILE *file, char *substr, int *pos, int *n_pos)
 {
-    Student s;
+    student_t s;
     int cur_pos = 0;
     for (int i = 0; i < fsize(file); i++)
     {
@@ -100,5 +101,44 @@ void ffind_substr(FILE *file, char *substr, int *pos, int *n_pos)
             pos[cur_pos++] = i;
         }
     }
-    *n_pos = cur_pos-1;
+    *n_pos = cur_pos; // WATCH
+}
+
+void fserializef(FILE *from, FILE *to, int *pos, int n_pos)
+{
+    char buf[128];
+    student_t s;
+    for (int i = 0; i < n_pos; i++)
+    {
+        s = fget(from, pos[i]); 
+        serialize(&s, sizeof(buf), buf);
+        fprintf(to, "%s", buf);
+    }
+}
+
+void f_less_mean(FILE *file, int *pos, int *n_pos)
+{
+    float mean = 0;
+    float sum = 0;
+    student_t s;
+    int n = fsize(file);
+    for (int i = 0; i < n; i++)
+    {
+        s = fget(file, i);
+        sum += mean_grade(&s);
+    }
+    mean = sum / n;
+    
+    int cur_pos = 0;
+    for (int i = 0; i < n; i++)
+    {
+        s = fget(file, i);
+        float grade = mean_grade(&s);
+        if (grade < mean && *n_pos > cur_pos)
+        {
+            pos[cur_pos] = i;
+            cur_pos += 1;
+        }
+    }
+    *n_pos = cur_pos;
 }

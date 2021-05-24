@@ -22,9 +22,8 @@ int fsize(FILE *file)
 }
 
 
-int frcreate(char *filename, int n)
+int frcreate(FILE *f, int n)
 {
-    FILE* f = fopen(filename, "wb");
     if (f == NULL)
         return FILE_ERROR;
     srand(time(NULL));
@@ -33,20 +32,16 @@ int frcreate(char *filename, int n)
         int num = rand() % 1000;
         set_number_by_pos(f, i, num);
     }
-    fclose(f);
     return 0;
 }
 
-int fprint(char *filename)
+int fprint(FILE *f)
 {
-    FILE *f = fopen(filename, "rb");
-    if (f == NULL)
-        return FILE_ERROR;
+
     long fs = fsize(f);
     for (int i = 0; i < fs; i++)
         printf("%d ", get_number_by_pos(f, i));
     printf("\n");
-    fclose(f);
     return 0;
 }
 
@@ -59,11 +54,9 @@ void fswap(FILE *f, int p1, int p2)
     set_number_by_pos(f, p2, a);
 }
 
-int fsort(char *filename)
+int fsort(FILE *f)
 {
-    FILE *f = fopen(filename, "rb+");
-    if (f == NULL)
-        return FILE_ERROR;
+
     int n = fsize(f);
     for (int i = 0; i < n; i++)
         for (int j = 0; j < n - 1; j++)

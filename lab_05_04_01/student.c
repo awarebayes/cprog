@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int serialize(Student *s, int size, char *buf)
+int serialize(student_t *s, int size, char *buf)
 {
     if (size < (int)(MIN_SERIALIZE_SYM * sizeof(char)))
         return 1;
@@ -14,12 +14,21 @@ int serialize(Student *s, int size, char *buf)
     n = sprintf(buf, "%s\n", s->name);
     buf += n;
 
-    for (int i = 0; i < (int)(sizeof(s->grades)/sizeof(int)); i++)
+    for (int i = 0; i < N_GRADES; i++)
     {
-        n = sprintf(buf, "%d ", s->grades[i]);
+        n = sprintf(buf, "%d\n", s->grades[i]);
         buf += n;
     }
-    *(buf+1) = '\n';
-    *(buf+2) = '\0';
+    sprintf(buf, "\n");
     return 0;
+}
+
+float mean_grade(student_t *s)
+{
+    float sum = 0;
+    for (int i = 0; i < N_GRADES; i++)
+    {
+        sum += s->grades[i];
+    }
+    return sum / N_GRADES;
 }
