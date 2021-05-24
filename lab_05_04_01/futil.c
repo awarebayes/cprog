@@ -5,7 +5,7 @@
 
 student_t fget(FILE *file, int pos)
 {
-    student_t blank;
+    student_t blank = { 0 };
     fseek(file, sizeof(student_t) * pos, SEEK_SET);
     fread(&blank, sizeof(student_t), 1, file);
     return blank;
@@ -19,8 +19,7 @@ void fset(FILE *file, int pos, student_t *s)
 
 void fswap(FILE *file, int pos1, int pos2)
 {
-    student_t s1 = { 0 };
-    student_t s2 = { 0 };
+    student_t s1 = { 0 }, s2= { 0 };
     s1 = fget(file, pos1);
     s2 = fget(file, pos2);
     fset(file, pos2, &s1);
@@ -29,8 +28,7 @@ void fswap(FILE *file, int pos1, int pos2)
 
 int fcmp(FILE *file, int pos1, int pos2)
 {
-    student_t s1 = { 0 };
-    student_t s2 = { 0 };
+    student_t s1 = { 0 }, s2 = { 0 };
     s1 = fget(file, pos1);
     s2 = fget(file, pos2);
     
