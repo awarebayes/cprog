@@ -3,5 +3,5 @@
 
 int main()
 {
-    student_t a = {"Mikhail", "Scherbina", {1, 2, 3, 4}};
+    student_t a = { "Mikhail", "Scherbina", { 1, 2, 3, 4 } };
 }
