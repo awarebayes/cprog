@@ -23,7 +23,7 @@ int fsize(FILE *file, int *ec)
     fseek(file, 0, SEEK_END);
     long n = ftell(file);
     if (ec && !*ec && n % sizeof(int))
-            *ec = IO_ERROR;
+        *ec = IO_ERROR;
     return (int)(n / sizeof(int));
 }
 
