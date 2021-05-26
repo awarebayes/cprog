@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "futil.c"
+#include "futil.h"
 
 #define ARG_ERROR -1
 
@@ -41,7 +41,7 @@ int main(int argc, char **argv)
             ec = FILE_ERROR;
         fsize(f, &ec);
         if (!ec)
-    		ec = fsort(f);
+            ec = fsort(f);
         if (ec != FILE_ERROR)
             fclose(f);
     }
