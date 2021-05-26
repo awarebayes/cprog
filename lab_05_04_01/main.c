@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#include "student.h"
-#include "futil.h"
+#include "student.c"
+#include "futil.c"
 
 #define OK 0
 #define ARG_ERROR 53
@@ -40,7 +40,7 @@ int main(int argc, char **argv)
         {
             ffind_substr(file, argv[4], pos_buf, &buf_len);
             if (buf_len != 0)
-                fserializef(file, out, pos_buf, buf_len);
+                ffilter(file, out, buf_len, pos_buf);
             else
                 ec = NO_SEARCH_RES;
         }

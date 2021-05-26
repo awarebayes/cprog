@@ -168,3 +168,14 @@ void fdump(char *filename, int n, student_t *students)
     }
     fclose(file);
 }
+
+void ffilter(FILE *in, FILE *out, int n, int *indices)
+{
+    int k = 0;
+    student_t s = { 0 };
+    for (int i = 0; i < n; i++)
+    {
+        s = fget(in, indices[i]);
+        fset(out, k++, &s);
+    }
+}
