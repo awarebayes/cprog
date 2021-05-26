@@ -1,12 +1,10 @@
 #include <stdio.h>
-
 #include "../../student.h"
 #include "../../student.c"
 #include "../../futil.c"
 
 int main()
 {
-
     student_t a = { "Sherbina", "Mikhail", { 1,2,3,4 } };
     student_t b = { "Sherbina", "Aleksandr", { 1,2,3,4 } };
     student_t c = { "Aboba", "Aboba", {0,0,0,0} };
