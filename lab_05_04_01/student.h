@@ -6,8 +6,8 @@
 
 typedef struct
 {
-    char lastname[25];
-    char name[10];
+    char lastname[26];
+    char name[11];
     unsigned int grades[N_GRADES];
 } student_t;
 

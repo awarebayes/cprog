@@ -101,7 +101,7 @@ void ffind_substr(FILE *file, char *substr, int *pos, int *n_pos)
             pos[cur_pos++] = i;
         }
     }
-    *n_pos = cur_pos; // WATCH
+    *n_pos = cur_pos; 
 }
 
 void fserializef(FILE *from, FILE *to, int *pos, int n_pos)
