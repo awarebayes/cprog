@@ -15,5 +15,7 @@ void ffind_substr(FILE *file, char *substr, int *pos, int *n_pos);
 void fserializef(FILE *from, FILE *to, int *pos, int n_pos);
 void f_less_mean(FILE *file, int *pos, int *n_pos);
 int file_invalid(FILE *file);
+int fempty(FILE *file);
+void fdump(char *filename, int n, student_t *students);
 
 #endif

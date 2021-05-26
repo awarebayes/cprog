@@ -148,5 +148,23 @@ int file_invalid(FILE *file)
     if (file == NULL)
         return 1;
     fseek(file, 0, SEEK_END);
-    return ftell(file) % sizeof(student_t);
+    int res = ftell(file) % sizeof(student_t);
+    res = res & fempty(file);
+    return res;
+}
+
+int fempty(FILE *file)
+{
+    fseek(file, 0, SEEK_END);
+    return ftell(file);
+}
+
+void fdump(char *filename, int n, student_t *students)
+{
+    FILE *file = fopen(filename, "wb");
+    for (int i = 0; i < n; i++)
+    {
+        fset(file, i, &students[i]);
+    }
+    fclose(file);
 }

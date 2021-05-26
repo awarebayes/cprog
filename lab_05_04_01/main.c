@@ -6,6 +6,7 @@
 #define OK 0
 #define ARG_ERROR 53
 #define FILE_ERROR 1
+#define NO_SEARCH_RES 2
 
 #define POS_BUF_LEN 256
 
@@ -26,7 +27,8 @@ int main(int argc, char **argv)
             fsort(file);
             fserializef(file, stdout, pos_buf, fsize(file));
         }
-        fclose(file);
+        if (ec != FILE_ERROR)
+            fclose(file);
     }
     else if (argc == 5 && strcmp(argv[1], "fb") == 0)
     {
@@ -37,10 +39,16 @@ int main(int argc, char **argv)
         else
         {
             ffind_substr(file, argv[4], pos_buf, &buf_len);
-            fserializef(file, out, pos_buf, buf_len);
+            if (buf_len != 0)
+                fserializef(file, out, pos_buf, buf_len);
+            else
+                ec = NO_SEARCH_RES;
         }
-        fclose(file);
-        fclose(out);
+        if (ec != FILE_ERROR)
+        {
+            fclose(file);
+            fclose(out);
+        }
     }
     else if (argc == 3 && strcmp(argv[1], "db") == 0)
     {
