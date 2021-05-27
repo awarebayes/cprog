@@ -152,7 +152,7 @@ int read_students(FILE *in, student_t *out_buf)
 
 int main(int argc, char **argv)
 {	
-	FILE *in = fopen(argc[1], "r");
+	FILE *in = fopen(argv[1], "r");
 	FILE *out = fopen(argv[2], "w");
 	
 	student_t students[MAX_STUDENTS];
