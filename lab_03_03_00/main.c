@@ -66,11 +66,12 @@ int input_mat(size_t *n, size_t *m, int **pa)
     if (!validate_dim(*n) || !validate_dim(*m))
         return input_error;
 
-    for (size_t i = 0; i < *n; i++)
-        for (size_t j = 0; j < *m; j++)
+    int ec = ok;
+    for (size_t i = 0; i < *n && !ec; i++)
+        for (size_t j = 0; j < *m && !ec; j++)
             if (scanf("%d", &pa[i][j]) != 1)
-                return input_error;
-    return ok;
+                ec = input_error;
+    return ec;
 }
 
 void print_mat(size_t n, size_t m, int **pa)
@@ -116,7 +117,7 @@ void bubble_sort(size_t len, int *values, int **pa, size_t m)
         for (j = 0; j < len - i - 1; j++)
             if (values[j] > values[j + 1])
             {
-                swap(&values[j], &values[j + 1]);
+                swap(values + j, values + j + 1);
                 swap_rows(m, pa[j], pa[j + 1]);
             }
 }

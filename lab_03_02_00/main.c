@@ -71,12 +71,14 @@ int input_mat(size_t *n, size_t *m, int **pa)
         return input_error;
     if (!validate_dim(*n) || !validate_dim(*m))
         return input_error;
+    
+    int ec = ok;
 
-    for (size_t i = 0; i < *n; i++)
-        for (size_t j = 0; j < *m; j++)
+    for (size_t i = 0; i < *n && !ec; i++)
+        for (size_t j = 0; j < *m && !ec; j++)
             if (scanf("%d", &pa[i][j]) != 1)
-                return input_error;
-    return ok;
+                ec = input_error;
+    return ec;
 }
 
 int input_digit(size_t *digit)
