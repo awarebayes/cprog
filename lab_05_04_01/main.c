@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#include "student.c"
-#include "futil.c"
+#include "student.h"
+#include "futil.h"
 
 #define OK 0
 #define ARG_ERROR 53
