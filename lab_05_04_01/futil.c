@@ -149,23 +149,15 @@ int file_invalid(FILE *file)
         return 1;
     fseek(file, 0, SEEK_END);
     int res = ftell(file) % sizeof(student_t);
-    res = res & fempty(file);
-    return res;
-}
-
-int file_invalid_mb_empty(FILE *file)
-{
-    if (file == NULL)
-        return 1;
-    fseek(file, 0, SEEK_END);
-    int res = ftell(file) % sizeof(student_t);
+    res = res || fempty(file);
     return res;
 }
 
 int fempty(FILE *file)
 {
     fseek(file, 0, SEEK_END);
-    return ftell(file);
+    int res = (int)ftell(file);
+    return res <= 0 ? 1 : res;
 }
 
 void fdump(char *filename, int n, student_t *students)

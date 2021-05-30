@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#include "student.h"
-#include "futil.h"
+#include "student.c"
+#include "futil.c"
 
 #define OK 0
 #define ARG_ERROR 53
@@ -20,7 +20,7 @@ int main(int argc, char **argv)
     if (argc == 3 && strcmp(argv[1], "sb") == 0)
     {
         FILE *file = fopen(argv[2], "rb+");
-        if (file_invalid_mb_empty(file))
+        if (file_invalid(file))
             ec = FILE_ERROR;
         else
         {
