@@ -32,8 +32,8 @@ int main(int argc, char **argv)
     }
     else if (argc == 5 && strcmp(argv[1], "fb") == 0)
     {
-        FILE *file = fopen(argv[2], "rb+");
-        FILE *out = fopen(argv[3], "wb+");
+        FILE *file = fopen(argv[2], "rb");
+        FILE *out = fopen(argv[3], "wb");
         if (file_invalid(file) || !out)
             ec = FILE_ERROR;
         else
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
     }
     else if (argc == 3 && strcmp(argv[1], "db") == 0)
     {
-        FILE *file = fopen(argv[2], "rb+");
+        FILE *file = fopen(argv[2], "rb");
         if (file_invalid(file))
             ec = FILE_ERROR;
         else
