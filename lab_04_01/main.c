@@ -4,8 +4,9 @@
 #include "test.h"
 #include "my_string.h"
 
-int main()
+int main(void)
 {
-    test_strcspn();
-    return 0;
+    float a = 2.7f;
+    int b = a;
+    printf("%d", b);
 }

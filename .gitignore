@@ -12,3 +12,4 @@ bin/
 /lab*/main
 .tabignore
 /fuzz
+/**/temp/
