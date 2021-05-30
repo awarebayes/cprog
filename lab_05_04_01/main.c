@@ -33,12 +33,11 @@ int main(int argc, char **argv)
     else if (argc == 5 && strcmp(argv[1], "fb") == 0)
     {
         FILE *file = fopen(argv[2], "rb");
-        FILE *out = NULL;
-        if (file_invalid(file))
+        FILE *out = fopen(argv[3], "wb");
+        if (file_invalid(file) || !out)
             ec = FILE_ERROR;
-        if(!ec)
+        else
         {
-            out = fopen(argv[3], "wb");
             ffind_substr(file, argv[4], pos_buf, &buf_len);
             if (buf_len != 0)
                 ffilter(file, out, buf_len, pos_buf);

@@ -148,7 +148,8 @@ int file_invalid(FILE *file)
     if (file == NULL)
         return 1;
     fseek(file, 0, SEEK_END);
-    int res = ftell(file) % sizeof(student_t);
+    int res;
+    res = ftell(file) % sizeof(student_t) != 0;
     res = res || fempty(file);
     return res;
 }
