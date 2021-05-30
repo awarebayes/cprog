@@ -158,7 +158,7 @@ int fempty(FILE *file)
 {
     fseek(file, 0, SEEK_END);
     int res = (int)ftell(file);
-    return res <= 0 ? 1 : res;
+    return res > 0 ? 0 : 1;
 }
 
 void fdump(char *filename, int n, student_t *students)
