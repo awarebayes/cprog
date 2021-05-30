@@ -2,13 +2,15 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
-#include "util.h"
+#include "util.c"
 
 // Почему 258:
 // 256 + '\n' + '\0'
 #define MSTRLEN 258
 
 int ip_addr_valid(char *str);
+void reset_values(int *value, int *digits, int *succeding_values, int *ten_power);
+void process_digit(int digit, int *value, int *ten_power, int *digits, int *valid);
 
 int main()
 {
@@ -35,43 +37,26 @@ int main()
 
 int ip_addr_valid(char *str)
 {
-    int n = 0;
     int value = 0;
     int ten_power = 1;
     int succeding_values = 0;
     int digits = 0;
-
-    n = strlen(str) - 1;
-
     int valid = 1;
+    int n = strlen(str) - 1;
 
     while (n >= 0 && valid)
     {
         if (str[n] == '.')
         {
-            // check value
             if (value >= 256 || digits == 0 || digits > 3)
                 valid = 0;
-            // reset value
             else
-            {
-                value = 0;
-                digits = 0;
-                succeding_values++;
-                ten_power = 1;
-            }
+                reset_values(&value, &digits, &succeding_values, &ten_power);
         }
         else if (isdigit(str[n]))
         {
             int digit = char_to_int(str[n]);
-            if (digit >= 0)
-            {
-                value += ten_power * digit;
-                digits++;
-                ten_power *= 10;
-            }
-            else
-                valid = 0;
+            process_digit(digit, &value, &ten_power, &digits, &valid);
         }
         else
             valid = 0;
@@ -82,4 +67,24 @@ int ip_addr_valid(char *str)
     if (succeding_values != 4)
         valid = 0;
     return valid;
+}
+
+void reset_values(int *value, int *digits, int *succeding_values, int *ten_power)
+{
+    *value = 0;
+    *digits = 0;
+    *succeding_values += 1;
+    *ten_power = 1;
+}
+
+void process_digit(int digit, int *value, int *ten_power, int *digits, int *valid)
+{
+    if (digit >= 0)
+    {
+        *value += (*ten_power) * digit;
+        *digits += 1;
+        *ten_power *= 10;
+    }
+    else
+        *valid = 0;
 }
