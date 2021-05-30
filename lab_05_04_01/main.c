@@ -20,7 +20,7 @@ int main(int argc, char **argv)
     if (argc == 3 && strcmp(argv[1], "sb") == 0)
     {
         FILE *file = fopen(argv[2], "rb+");
-        if (file_invalid(file))
+        if (file_invalid_mb_empty(file))
             ec = FILE_ERROR;
         else
         {
