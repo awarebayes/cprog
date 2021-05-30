@@ -1,4 +1,5 @@
 #include "count.h"
+#include "split.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -38,7 +39,7 @@ void print_word_count(char **pa, int n_words)
     char unique_mat[MWORDS][MWORDLEN] = { 0 };
     char *unique[MWORDS];
     transform(MWORDS, MWORDLEN, *unique_mat, unique);
-    
+
     unique_words(pa, unique, n_words, &n_unique);
     word_count(pa, unique, count, n_words, n_unique);
 
