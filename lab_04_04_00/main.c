@@ -2,7 +2,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
-#include "util.c"
+#include "util.h"
 
 // Почему 258:
 // 256 + '\n' + '\0'

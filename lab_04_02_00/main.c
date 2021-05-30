@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#include "split.c"
-#include "count.c"
+#include "split.h"
+#include "count.h"
 #include "error.h"
 
 
