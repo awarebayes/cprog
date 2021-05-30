@@ -6,7 +6,7 @@
 void unique_words(char **pa, char **unique, int n_words, int *n_unique)
 {
     int encountered = 0;
-
+    *n_unique = 0;
     for (int i = 0; i < n_words; i++)
     {
         encountered = 0;
@@ -16,7 +16,7 @@ void unique_words(char **pa, char **unique, int n_words, int *n_unique)
 
         if (!encountered)
         {
-            strcpy(unique[(*n_unique)], pa[i]);
+            strcpy(unique[*n_unique], pa[i]);
             *n_unique += 1;
         } 
     }
@@ -34,7 +34,7 @@ void word_count(char **pa, char **unique, int *count, int n_words, int n_unique)
 
 void print_word_count(char **pa, int n_words)
 {
-    int n_unique;
+    int n_unique = 0;
     int count[MWORDS] = { 0 };
     char unique_mat[MWORDS][MWORDLEN] = { 0 };
     char *unique[MWORDS];
