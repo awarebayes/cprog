@@ -67,13 +67,12 @@ int validate_dim(size_t dim)
 
 int input_mat(size_t *n, size_t *m, int **pa)
 {
-    if (scanf("%zu %zu", n, m) != 2)
-        return input_error;
-    if (!validate_dim(*n) || !validate_dim(*m))
-        return input_error;
-    
     int ec = ok;
-
+    if (scanf("%zu %zu", n, m) != 2)
+        ec = input_error;
+    if (!validate_dim(*n) || !validate_dim(*m))
+        ec = input_error;
+    
     for (size_t i = 0; i < *n && !ec; i++)
         for (size_t j = 0; j < *m && !ec; j++)
             if (scanf("%d", &pa[i][j]) != 1)
