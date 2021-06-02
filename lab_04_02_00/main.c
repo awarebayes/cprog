@@ -12,22 +12,28 @@ int main()
 {
     int ec = ok;
     char line[MSLEN];
-    int line_len;
-
-    line_len = read_line(line, MSLEN, &ec);
+    int line_len = read_line(line, MSLEN, &ec);
     char words[MWORDS][MWORDLEN];
     char *pa[MWORDS];
 
-    transform(MWORDS, MWORDLEN, *words, pa);
-    int n_words;
+    int n_unique = 0;
+    int count[MWORDS] = { 0 };
+    char unique_mat[MWORDS][MWORDLEN] = { 0 };
+    char *unique[MWORDS];
 
-    n_words = split(pa, line, line_len, &ec);
+    transform(MWORDS, MWORDLEN, *words, pa);
+    transform(MWORDS, MWORDLEN, *unique_mat, unique);
+    int n_words = split(pa, line, line_len, &ec);
     if (!ec)
     {
         if (n_words == 0 || line_len == 0)
             ec = no_words;
         else
-            print_word_count(pa, n_words);
+        {
+            unique_words(pa, unique, n_words, &n_unique);
+            word_count(pa, unique, count, n_words, n_unique);
+            print_word_count(n_unique, unique, count);
+        }
     }
     print_error(ec);
     return ec;

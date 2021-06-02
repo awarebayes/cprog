@@ -32,17 +32,8 @@ void word_count(char **pa, char **unique, int *count, int n_words, int n_unique)
     }
 }
 
-void print_word_count(char **pa, int n_words)
+void print_word_count(int n_unique, char **unique, int *count)
 {
-    int n_unique = 0;
-    int count[MWORDS] = { 0 };
-    char unique_mat[MWORDS][MWORDLEN] = { 0 };
-    char *unique[MWORDS];
-    transform(MWORDS, MWORDLEN, *unique_mat, unique);
-
-    unique_words(pa, unique, n_words, &n_unique);
-    word_count(pa, unique, count, n_words, n_unique);
-
     printf("Result: \n");
     for (int i = 0; i < n_unique; i++)
     {
