@@ -1,4 +1,6 @@
 #include "split.h"
+#include "count.h"
+#include "error.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -9,7 +11,7 @@ int split(char **words, char *s, int n, int *ec)
 {
     if (*ec)
         return -1;
-    *ec = 0;
+    *ec = ok;
     int just_splitted = 1; // Только что разделили, во 2 раз не надо
     int should_split = 0; // Нужно ли разделять
     int current_word = 0; // Индекс слова, которое мы сейчас обрабатываем
@@ -33,8 +35,8 @@ int split(char **words, char *s, int n, int *ec)
         {
             words[current_word][current_char] = s[i];
             current_char++;
-            if (current_char >= 17)
-                *ec = 3; // long word
+            if (current_char >= MWORDLEN)
+                *ec = long_word; 
             just_splitted = 0;
         }
     }
