@@ -1,0 +1,48 @@
+<students>
+	<student group="IU7-25B">
+		<name>Mikhail</name>
+		<surname>Scherbina</surname>
+		<marks>
+			<mark subject="info">5</mark>
+			<mark subject="math">4</mark>
+			<mark subject="russ">3</mark>
+			<mark subject="tech">2</mark>
+			<mark subject="aboba">1</mark>
+		</marks>
+	</student>
+	<student group="IU7-25B">
+		<name>Pavel</name>
+		<surname>Ivanov</surname>
+		<marks>
+			<mark subject="info">3</mark>
+			<mark subject="math">3</mark>
+			<mark subject="russ">3</mark>
+			<mark subject="tech">2</mark>
+			<mark subject="aboba">1</mark>
+		</marks>
+	</student>
+	<student group="IU7-25B">
+		<name>Semen</name>
+		<surname>Romanov</surname>
+		<marks>
+			<mark subject="info">5</mark>
+			<mark subject="math">4</mark>
+			<mark subject="russ">3</mark>
+			<mark subject="tech">2</mark>
+			<mark subject="aboba">1</mark>
+		</marks>
+	</student>
+	<student group="IU7-25B">
+		<name>Valeria</name>
+		<surname>Chvanova</surname>
+		<marks>
+			<mark subject="info">5</mark>
+			<mark subject="math">4</mark>
+			<mark subject="russ">3</mark>
+			<mark subject="tech">2</mark>
+			<mark subject="aboba">1</mark>
+		</marks>
+	</student>
+
+
+</students>
