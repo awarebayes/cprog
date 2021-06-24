@@ -1,6 +1,7 @@
-cd $1
-mkdir func_tests
-cd func_tests
+#! /usr/bin/sh
+cd $1 || exit 1
+mkdir func_tests 
+cd func_tests || exit 1
 
 touch readme.md
 
@@ -27,4 +28,8 @@ do
     then
         touch "neg_$(printf "%02d" "$i")_out.txt"
     fi
+<<<<<<< HEAD
 done;
+=======
+done;
+>>>>>>> 644a2d7b396acb3ca9df987892727e9a887511a9
