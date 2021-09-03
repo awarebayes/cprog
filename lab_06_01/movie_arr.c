@@ -28,14 +28,14 @@ int arr_insert_sorted(movie_t *arr, int arr_size, movie_t *m, int mode)
 {
     field_t target = {0};
     field_t to_cmp = {0};
-    field_get(&target, m, mode);
+    field_from(&target, m, mode);
     int index = 0;
     int flag = 1;
     for (int i = 0; i < arr_size && flag; i++)
     {
-        field_get(&to_cmp, arr + i, mode);
+        field_from(&to_cmp, arr + i, mode);
         index = i;
-        if (field_cmp(to_cmp, target) > 0)
+        if (field_cmp(&to_cmp, &target) > 0)
             flag = 0;
         else
             index++;
@@ -54,12 +54,12 @@ int arr_find(movie_t *arr, int n, field_t *target, int mode)
     while (low <= high)
     {
         mid = (low + high - 1) / 2;
-        field_get(&to_cmp, arr + mid, mode);
-        if (field_cmp(to_cmp, *target) == 0)
+        field_from(&to_cmp, arr + mid, mode);
+        if (field_cmp(&to_cmp, target) == 0)
             return mid;
-        else if (field_cmp(to_cmp, *target) < 0)
+        else if (field_cmp(&to_cmp, target) < 0)
             low = mid + 1;
-        else if (field_cmp(to_cmp, *target) > 0)
+        else if (field_cmp(&to_cmp, target) > 0)
             high = mid - 1;
     }
     return -1;

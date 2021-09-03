@@ -6,6 +6,7 @@
 
 #define MAX_TITLE_LEN 25
 #define MAX_LN_LEN 25
+#define N_FIELDS 3
 
 typedef struct {
     char title[MAX_TITLE_LEN + 1];
@@ -33,7 +34,10 @@ typedef struct {
 
 movie_t read_movie(FILE *f);
 void print_movie(movie_t *m);
-void field_get(field_t *self, movie_t *movie, int type);
-int field_cmp(field_t self, field_t other);
+void field_from(field_t *self, movie_t *movie, int type);
+int field_cmp(field_t *self, field_t *other);
+
+int get_field_type(char *str);
+field_t field_from_str(char *value, int type);
 
 #endif
