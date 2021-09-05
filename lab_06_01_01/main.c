@@ -41,7 +41,6 @@ int main(int argc, char **argv)
     {
         for (int i = 0; i < movies_len; i++)
             print_movie(movies + i);
-        printf("\n");
     }
     else
     {
@@ -54,7 +53,6 @@ int main(int argc, char **argv)
             else
             {
                 print_movie(movies + index);
-                printf("\n");
             }
         }
     }
