@@ -12,8 +12,8 @@ movie_t read_movie(FILE *f)
 {
     char year_buf[16]; // todo replace 16
     movie_t m = {0};
-    fgets(m.title, MAX_TITLE_LEN, f);
-    fgets(m.name, MAX_LN_LEN, f);
+    fgets(m.title, MAX_TITLE_LEN+1, f);
+    fgets(m.name, MAX_LN_LEN+1, f);
     fgets(year_buf, 16, f);
     sscanf(year_buf, "%d", &m.year);
     remove_lf(m.title);
@@ -23,7 +23,8 @@ movie_t read_movie(FILE *f)
 
 int string_cmp(char *haystack, char *needle) 
 {
-    return strncmp(needle, haystack, strlen(needle));
+    //return strncmp(needle, haystack, strlen(needle));
+    return strcmp(needle, haystack);
 }
 
 int int_cmp(int i1, int i2)

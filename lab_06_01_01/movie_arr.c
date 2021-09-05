@@ -22,8 +22,6 @@ void arr_insert(movie_t *arr, movie_t *m, int pos)
     arr[pos] = *m;
 }
 
-
-
 int arr_insert_sorted(movie_t *arr, int arr_size, movie_t *m, int mode)
 {
     field_t target = {0};
