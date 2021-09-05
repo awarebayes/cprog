@@ -2,20 +2,34 @@
 #include "string.h"
 #include <stdlib.h>
 
-static char *field_names[] = {"title", "name", "year" };
+#define READ_ERROR 4
+#define BLANK_MOVIE 5
 
-void remove_lf(char *str) {
+static char *field_names[] = { "title", "name", "year" };
+
+void remove_lf(char *str) 
+{
     str[strcspn(str, "\n")] = '\0';
 }
 
-movie_t read_movie(FILE *f) 
+movie_t read_movie(FILE *f, int *ec) 
 {
     char year_buf[16]; // todo replace 16
     movie_t m = { 0 };
-    fgets(m.title, MAX_TITLE_LEN+1, f);
-    fgets(m.name, MAX_LN_LEN+1, f);
+    fgets(m.title, MAX_TITLE_LEN + 1, f);
+    if (feof(f) && strcmp(m.title, "") == 0)
+    {
+        *ec = BLANK_MOVIE;
+        return m;
+    }
+    fgets(m.name, MAX_LN_LEN + 1, f);
     fgets(year_buf, 16, f);
-    sscanf(year_buf, "%d", &m.year);
+
+    if (sscanf(year_buf, "%d", &m.year) != 1)
+    {
+        *ec = READ_ERROR;
+        return m;
+    }
     remove_lf(m.title);
     remove_lf(m.name);
     return m;
@@ -55,18 +69,18 @@ void field_from(field_t *self, movie_t *movie, int type)
 
 field_t field_from_str(char *value, int type)
 {
-    field_t self = {0};
+    field_t self = { 0 };
     self.type = type;
     switch (type)
     {
-    case f_name:
-    case f_title:
-        self.data.string = value;
-        break;
-    case f_year:
-        sscanf(value, "%d", &self.data.number); // todo error handling
-    default:
-        break;
+        case f_name:
+        case f_title:
+            self.data.string = value;
+            break;
+        case f_year:
+            sscanf(value, "%d", &self.data.number); // todo error handling
+        default:
+            break;
     }
     return self;
 }
@@ -87,7 +101,8 @@ void print_movie(movie_t *m)
 }
 
 
-int get_field_type(char *str) {
+int get_field_type(char *str) 
+{
     int flag = 0;
     for (int i = 0; i < N_FIELDS && !flag; i++)
     {

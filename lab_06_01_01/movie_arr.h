@@ -8,6 +8,6 @@
 
 void arr_insert(movie_t *arr, movie_t *m, int pos);
 int arr_find(movie_t *arr, int n, field_t *target, int mode);
-int read_all_movies(FILE *f, movie_t *in, int mode);
+int read_all_movies(FILE *f, movie_t *in, int mode, int *ec);
 
 #endif

@@ -9,6 +9,8 @@ enum errors
     arg_error,
     path_error,
     field_type_error,
+    read_error,
+    blank_movie
 };
 
 int main(int argc, char **argv)
@@ -27,7 +29,11 @@ int main(int argc, char **argv)
     int field_type = get_field_type(field_name);
     if (field_type < 0)
         return field_type_error;
-    int movies_len = read_all_movies(f, movies, field_type);
+
+    int ec = ok;
+    int movies_len = read_all_movies(f, movies, field_type, &ec);
+    if (ec)
+        return ec;
 
     if (argc == 3)
     {

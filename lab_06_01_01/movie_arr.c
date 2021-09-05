@@ -2,9 +2,12 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define BLANK_MOVIE 5
+
 void shift_arr_right(movie_t *movie_arr, int from)
 {
-    if (from >= MAX_MOVIES_LEN) {
+    if (from >= MAX_MOVIES_LEN) 
+    {
         perror("Bad from in shift arr\n");
         exit(-1);
     }
@@ -17,15 +20,14 @@ void shift_arr_right(movie_t *movie_arr, int from)
 
 void arr_insert(movie_t *arr, movie_t *m, int pos)
 {
-    
     shift_arr_right(arr, pos);
     arr[pos] = *m;
 }
 
 int arr_insert_sorted(movie_t *arr, int arr_size, movie_t *m, int mode)
 {
-    field_t target = {0};
-    field_t to_cmp = {0};
+    field_t target = { 0 };
+    field_t to_cmp = { 0 };
     field_from(&target, m, mode);
     int index = 0;
     int flag = 1;
@@ -63,15 +65,23 @@ int arr_find(movie_t *arr, int n, field_t *target, int mode)
     return -1;
 }
 
-int read_all_movies(FILE *f, movie_t *in, int mode) 
+int read_all_movies(FILE *f, movie_t *in, int mode, int *ec) 
 {
     int count = 0;
     movie_t m;
-    while (!feof(f))
+    int blank_encountered = 0;
+    while (!feof(f) && !(*ec) && !blank_encountered)
     {
-        m = read_movie(f);
-        arr_insert_sorted(in, count, &m, mode);
-        count++;
+        m = read_movie(f, ec);
+        if (*ec == BLANK_MOVIE)
+            blank_encountered = 1;
+        else
+        {
+            arr_insert_sorted(in, count, &m, mode);
+            count++;
+        }
     }
+    if (blank_encountered)
+        *ec = 0;
     return count;
 }

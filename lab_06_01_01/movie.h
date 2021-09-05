@@ -35,7 +35,7 @@ typedef struct
     enum field_type type;
 } field_t;
 
-movie_t read_movie(FILE *f);
+movie_t read_movie(FILE *f, int *ec);
 void print_movie(movie_t *m);
 void field_from(field_t *self, movie_t *movie, int type);
 int field_cmp(field_t *self, field_t *other);
