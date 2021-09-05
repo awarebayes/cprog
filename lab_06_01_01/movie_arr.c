@@ -53,7 +53,7 @@ int arr_find(movie_t *arr, int n, field_t *target, int mode)
 
     while (low <= high)
     {
-        mid = (low + high - 1) / 2;
+        mid = (low + high) / 2;
         field_from(&to_cmp, arr + mid, mode);
         if (field_cmp(&to_cmp, target) == 0)
             return mid;

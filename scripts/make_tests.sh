@@ -16,6 +16,14 @@ do
 
         touch "pos_$(printf "%02d" "$i")_out.txt"
     fi
+    if [ "$4" = "yes" ]
+    then
+        if ! [ -f "pos_$(printf "%02d" "$i")_args.txt" ]
+        then
+
+            touch "pos_$(printf "%02d" "$i")_args.txt"
+        fi
+    fi
 done;
 
 for i in $(seq 1 "$3")
@@ -27,5 +35,13 @@ do
     if ! [ -f  "neg_$(printf "%02d" "$i")_out.txt" ]
     then
         touch "neg_$(printf "%02d" "$i")_out.txt"
+    fi
+    if [ "$4" = "yes" ]
+    then
+        if ! [ -f "neg_$(printf "%02d" "$i")_args.txt" ]
+        then
+
+            touch "neg_$(printf "%02d" "$i")_args.txt"
+        fi
     fi
 done;
