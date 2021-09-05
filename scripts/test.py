@@ -79,7 +79,7 @@ def check(ins, outs, args, pos=True):
         exit_code = process.wait()
         output = output.decode()
         output = ''.join(list(filter(lambda x: x != "\r", output)))
-        o = ''.join(list(filter(lambda x: x != "\r", output)))
+        o = ''.join(list(filter(lambda x: x != "\r", o)))
 
         if pos and exit_code != 0:
             failed = True

@@ -10,12 +10,12 @@ static char *field_names[] = { "title", "name", "year" };
 
 void remove_lf(char *str) 
 {
-    str[strcspn(str, "\n")] = '\0';
+    str[strcspn(str, "\r\n")] = '\0';
 }
 
 movie_t read_movie(FILE *f, int *ec) 
 {
-    char year_buf[YEAR_SIZE]; // todo replace 16
+    char year_buf[YEAR_SIZE];
     movie_t m = { 0 };
     fgets(m.title, MAX_TITLE_LEN + 1, f);
     if (feof(f) && strcmp(m.title, "") == 0)
