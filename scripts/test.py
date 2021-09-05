@@ -11,11 +11,14 @@ os.chdir(sys.argv[1] + "/func_tests/")
 files = os.listdir(os.getcwd())
 console = Console()
 
+
 def match_name(index, word):
     return lambda name: name.split("_")[index] == word
 
+
 def fand(f1, f2):
     return lambda *args: f1(*args) and f2(*args)
+
 
 is_in = match_name(-1, "in.txt")
 is_arg = match_name(-1, "args.txt")
@@ -23,6 +26,7 @@ is_out = match_name(-1, "out.txt")
 is_pos = match_name(0, "pos")
 is_neg = match_name(0, "neg")
 has_args = any(filter(is_arg, files))
+
 
 def get_in_out_arg(pos_neg):
     filt = lambda ioa: list(sorted(filter(fand(ioa, pos_neg), files)))
@@ -67,14 +71,19 @@ def check(ins, outs, args, pos=True):
             a = read_file(arg_path)
             a = shlex.split(a)
         i = read_file(in_path)
+
         o = read_file(out_path)
 
         process = Popen(["../main", *a], stdout=PIPE)
         (output, err) = process.communicate(input=str.encode(i))
-        output = output.decode()
         exit_code = process.wait()
+        output = output.decode()
+        output = ''.join(list(filter(lambda x: x != "\r", output)))
+        o = ''.join(list(filter(lambda x: x != "\r", output)))
 
         if pos and exit_code != 0:
+            failed = True
+        if not pos and exit_code == 0:
             failed = True
         if output != o:
             failed = True
@@ -83,6 +92,7 @@ def check(ins, outs, args, pos=True):
         if failed:
             failed_table.add_row(test_name, diff, f"{exit_code}")
             fail_count += 1
+        
         table.add_row(test_name, f"{exit_code}", "❌" if failed else "✅")
 
     console.print(table)
@@ -91,13 +101,14 @@ def check(ins, outs, args, pos=True):
         console.print(failed_table)
     else:
         console.print("[bold green]All tests succeded![/bold green]")
-        
+
 
 def main():
     pos_in, pos_out, pos_arg = get_in_out_arg(is_pos)
     neg_in, neg_out, neg_arg = get_in_out_arg(is_neg)
     check(pos_in, pos_out, pos_arg)
     check(neg_in, neg_out, neg_arg, False)
+
 
 if __name__ == "__main__":
     main()

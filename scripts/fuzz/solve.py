@@ -28,12 +28,12 @@ for i in a:
         if str(j)[-1] == digit:
             n_ends += 1
     for j in i:
-        print(j, end=' ')
+        print(j, end=" ")
     print()
 
     if n_starts == n_ends != 0:
         for j in i:
-            print(100, end=' ')
+            print(100, end=" ")
         print()
 
 

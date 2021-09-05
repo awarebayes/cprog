@@ -1,7 +1,7 @@
 #! /usr/bin/bash
 
 cd "$1" || 
-gcc -std=c99 -Werror -Wall -lm ./main.c -o ./main.exe
+gcc -std=c99 -Werror -Wall -lm ./main.c -o ./main
 cd ..
 
 for i in $(seq 10000)

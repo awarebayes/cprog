@@ -4,6 +4,7 @@
 
 #define READ_ERROR 4
 #define BLANK_MOVIE 5
+#define YEAR_SIZE 16
 
 static char *field_names[] = { "title", "name", "year" };
 
@@ -14,7 +15,7 @@ void remove_lf(char *str)
 
 movie_t read_movie(FILE *f, int *ec) 
 {
-    char year_buf[16]; // todo replace 16
+    char year_buf[YEAR_SIZE]; // todo replace 16
     movie_t m = { 0 };
     fgets(m.title, MAX_TITLE_LEN + 1, f);
     if (feof(f) && strcmp(m.title, "") == 0)
@@ -22,14 +23,24 @@ movie_t read_movie(FILE *f, int *ec)
         *ec = BLANK_MOVIE;
         return m;
     }
+
+    // /r/n was not read, just put it into yearbuffer
+    if (strlen(m.title) == MAX_TITLE_LEN)
+        fgets(year_buf, YEAR_SIZE, f);
+
     fgets(m.name, MAX_LN_LEN + 1, f);
-    fgets(year_buf, 16, f);
+
+    // /r/n was not read, just put it into yearbuffer
+    if (strlen(m.name) == MAX_LN_LEN)
+        fgets(year_buf, YEAR_SIZE, f);
+    fgets(year_buf, YEAR_SIZE, f);
 
     if (sscanf(year_buf, "%d", &m.year) != 1)
     {
         *ec = READ_ERROR;
         return m;
     }
+
     remove_lf(m.title);
     remove_lf(m.name);
     return m;
@@ -67,7 +78,7 @@ void field_from(field_t *self, movie_t *movie, int type)
     }
 }
 
-field_t field_from_str(char *value, int type)
+field_t field_from_str(char *value, int type, int *ec)
 {
     field_t self = { 0 };
     self.type = type;
@@ -78,7 +89,11 @@ field_t field_from_str(char *value, int type)
             self.data.string = value;
             break;
         case f_year:
-            sscanf(value, "%d", &self.data.number); // todo error handling
+            if (sscanf(value, "%d", &self.data.number) != 1)
+            {
+                *ec = READ_ERROR;
+            }
+            break;
         default:
             break;
     }

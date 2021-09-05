@@ -2,7 +2,6 @@
 #include "movie.h"
 #include "movie_arr.h"
 
-
 enum errors
 {
     ok,
@@ -10,7 +9,8 @@ enum errors
     path_error,
     field_type_error,
     read_error,
-    blank_movie
+    blank_movie,
+    empty_file,
 };
 
 int main(int argc, char **argv)
@@ -32,6 +32,8 @@ int main(int argc, char **argv)
 
     int ec = ok;
     int movies_len = read_all_movies(f, movies, field_type, &ec);
+    if (movies_len == 0)
+        ec = empty_file;
     if (ec)
         return ec;
 
@@ -39,18 +41,21 @@ int main(int argc, char **argv)
     {
         for (int i = 0; i < movies_len; i++)
             print_movie(movies + i);
-        printf("\n");
     }
     else
     {
-        field_t field = field_from_str(argv[3], field_type);
-        int index = arr_find(movies, movies_len, &field, field_type);
-        if (index < 0)
-            printf("Not found\n");
-        else
+        field_t field = field_from_str(argv[3], field_type, &ec);
+        if (!ec)
         {
-            print_movie(movies + index);
-            printf("\n");
+            int index = arr_find(movies, movies_len, &field, field_type);
+            if (index < 0)
+                printf("Not found\n");
+            else
+            {
+                print_movie(movies + index);
+                printf("\n");
+            }
         }
     }
+    return ec;
 }

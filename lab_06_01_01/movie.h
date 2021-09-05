@@ -41,6 +41,6 @@ void field_from(field_t *self, movie_t *movie, int type);
 int field_cmp(field_t *self, field_t *other);
 
 int get_field_type(char *str);
-field_t field_from_str(char *value, int type);
+field_t field_from_str(char *value, int type, int *ec);
 
 #endif
