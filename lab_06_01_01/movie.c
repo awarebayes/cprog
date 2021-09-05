@@ -11,7 +11,7 @@ void remove_lf(char *str) {
 movie_t read_movie(FILE *f) 
 {
     char year_buf[16]; // todo replace 16
-    movie_t m = {0};
+    movie_t m = { 0 };
     fgets(m.title, MAX_TITLE_LEN+1, f);
     fgets(m.name, MAX_LN_LEN+1, f);
     fgets(year_buf, 16, f);

@@ -11,11 +11,11 @@ enum errors
     field_type_error,
 };
 
-int main(int argc, char **argv) {
-
+int main(int argc, char **argv)
+{
     movie_t movies[MAX_MOVIES_LEN];
-
-    if (argc != 3 && argc != 4) {
+    if (argc != 3 && argc != 4) 
+    {
         return arg_error;
     }  
 

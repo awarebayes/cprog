@@ -8,7 +8,8 @@
 #define MAX_LN_LEN 25
 #define N_FIELDS 3
 
-typedef struct {
+typedef struct 
+{
     char title[MAX_TITLE_LEN + 1];
     char name[MAX_LN_LEN + 1];
     int year;
@@ -21,13 +22,15 @@ enum field_type
     f_year,
 };
 
-typedef union {
+typedef union 
+{
     char *string;
     int number;
 } field_u;
 
 
-typedef struct {
+typedef struct 
+{
     field_u data;
     enum field_type type;
 } field_t;

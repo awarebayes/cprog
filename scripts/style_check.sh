@@ -1,6 +1,6 @@
 #! /usr/bin/sh
 
-for dir in $(ls | grep lab_)
+for dir in $(ls | grep lab_06)
 do
     cd $dir
     echo "$dir:\n"
