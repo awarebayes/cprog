@@ -48,7 +48,9 @@ int main(int argc, char **argv)
         if (index < 0)
             printf("Not found\n");
         else
+        {
             print_movie(movies + index);
-        printf("\n");
+            printf("\n");
+        }
     }
 }

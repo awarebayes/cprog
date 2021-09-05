@@ -38,7 +38,7 @@ movie_t read_movie(FILE *f, int *ec)
 int string_cmp(char *haystack, char *needle) 
 {
     //return strncmp(needle, haystack, strlen(needle));
-    return strcmp(needle, haystack);
+    return strcmp(haystack, needle);
 }
 
 int int_cmp(int i1, int i2)
