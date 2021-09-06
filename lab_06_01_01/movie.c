@@ -1,6 +1,7 @@
 #include "movie.h"
 #include "string.h"
 #include <stdlib.h>
+#include <ctype.h>
 
 #define READ_ERROR 4
 #define BLANK_MOVIE 5
@@ -11,6 +12,18 @@ static char *field_names[] = { "title", "name", "year" };
 void remove_lc(char *str) 
 {
     str[strcspn(str, "\r\n")] = '\0';
+}
+
+int all_digits(char *str)
+{
+    int flag = 1;
+    while (flag && *str)
+    {
+        if(!isdigit(*str))
+            flag = 0;
+        str++;
+    }
+    return flag;
 }
 
 movie_t read_movie(FILE *f, int *ec) 
@@ -38,8 +51,9 @@ movie_t read_movie(FILE *f, int *ec)
             fgets(year_buf, YEAR_SIZE, f);
 
         fgets(year_buf, YEAR_SIZE, f);
+        remove_lc(year_buf);
 
-        if (sscanf(year_buf, "%d", &m.year) != 1)
+        if (sscanf(year_buf, "%d", &m.year) != 1 || !all_digits(year_buf))
         {
             *ec = READ_ERROR;
         }

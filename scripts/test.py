@@ -26,6 +26,7 @@ is_out = match_name(-1, "out.txt")
 is_pos = match_name(0, "pos")
 is_neg = match_name(0, "neg")
 has_args = any(filter(is_arg, files))
+get_number = lambda name: name.split("_")[1]
 
 
 def get_in_out_arg(pos_neg):
@@ -58,14 +59,21 @@ def check(ins, outs, args, pos=True):
 
     failed_table = Table(show_header=True, header_style="bold white")
     failed_table.add_column("Name")
+    failed_table.add_column("Args")
     failed_table.add_column("Diff")
     failed_table.add_column("Exit Code")
 
     for in_path, out_path, arg_path in zip(ins, outs, args):
+        if get_number(in_path) != get_number(out_path) or get_number(in_path) != get_number(arg_path):
+            print("Something is wrong with your files! You need to have: n in, n out, n args.")
+            print(f"You have: {len(ins)} ins, {len(outs)} outs and {len(args)} args")
+            print(f"We have a mismatch zip iterating: {in_path} {out_path} {arg_path}")
+            exit(1)
+
         failed = False
         diff = ""
         test_name = "_".join(in_path.split("_")[:2])
-
+        
         a = []
         if arg_path:
             a = read_file(arg_path)
@@ -91,7 +99,7 @@ def check(ins, outs, args, pos=True):
             for d in dl.unified_diff([o], [output]):
                 diff += d
         if failed:
-            failed_table.add_row(test_name, diff, f"{exit_code}")
+            failed_table.add_row(test_name, "\n".join(a), diff, f"{exit_code}")
             fail_count += 1
         
         table.add_row(test_name, f"{exit_code}", "❌" if failed else "✅")

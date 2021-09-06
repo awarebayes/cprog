@@ -11,6 +11,7 @@ enum errors
     read_error,
     blank_movie,
     empty_file,
+    too_many_movies,
 };
 
 int main(int argc, char **argv)

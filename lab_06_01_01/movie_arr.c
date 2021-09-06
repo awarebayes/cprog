@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #define BLANK_MOVIE 5
+#define TOO_MANY_MOVIES 7
 
 void shift_arr_right(movie_t *movie_arr, int from)
 {
@@ -72,8 +73,13 @@ int read_all_movies(FILE *f, movie_t *in, int mode, int *ec)
             blank_encountered = 1;
         else
         {
-            arr_insert_sorted(in, count, &m, mode);
-            count++;
+            if (count >= MAX_MOVIES_LEN)
+                *ec = TOO_MANY_MOVIES;
+            else 
+            {
+                arr_insert_sorted(in, count, &m, mode);
+                count++;
+            }
         }
     }
     if (blank_encountered)
