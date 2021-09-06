@@ -25,12 +25,14 @@ movie_t read_movie(FILE *f, int *ec)
 
     if (!*ec)
     {
+        remove_lc(m.title);
         // /r/n was not read, just put it into yearbuffer
         if (strlen(m.title) == MAX_TITLE_LEN)
             fgets(year_buf, YEAR_SIZE, f);
 
         fgets(m.name, MAX_LN_LEN + 1, f);
-
+        remove_lc(m.name);
+        
         // /r/n was not read, just put it into yearbuffer
         if (strlen(m.name) == MAX_LN_LEN)
             fgets(year_buf, YEAR_SIZE, f);
@@ -43,8 +45,6 @@ movie_t read_movie(FILE *f, int *ec)
         }
     }
 
-    remove_lc(m.title);
-    remove_lc(m.name);
     return m;
 }
 
