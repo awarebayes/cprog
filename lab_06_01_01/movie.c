@@ -62,7 +62,7 @@ void read_year(FILE *f, int *target, int *ec)
     char year_buf[TEMP_BUF_SIZE] = {0};
     fgets(year_buf, TEMP_BUF_SIZE, f);
     remove_lc(year_buf);
-    if (sscanf(year_buf, "%d", target) != 1 || !all_digits(year_buf))
+    if (sscanf(year_buf, "%d", target) != 1)
         *ec = READ_ERROR;
 }
 
@@ -97,15 +97,15 @@ void field_from(field_t *self, movie_t *movie, int type)
     self->type = type;
     switch (type)
     {
-    case f_name:
-        self->data.string = movie->name;
-        break;
-    case f_title:
-        self->data.string = movie->title;
-        break;
-    case f_year:
-        self->data.number = movie->year;
-        break;
+        case f_name:
+            self->data.string = movie->name;
+            break;
+        case f_title:
+            self->data.string = movie->title;
+            break;
+        case f_year:
+            self->data.number = movie->year;
+            break;
     }
 }
 
@@ -115,16 +115,16 @@ field_t field_from_str(char *value, int type, int *ec)
     self.type = type;
     switch (type)
     {
-    case f_name:
-    case f_title:
-        self.data.string = value;
-        break;
-    case f_year:
-        if (sscanf(value, "%d", &self.data.number) != 1)
-            *ec = READ_ERROR;
-        break;
-    default:
-        break;
+        case f_name:
+        case f_title:
+            self.data.string = value;
+            break;
+        case f_year:
+            if (sscanf(value, "%d", &self.data.number) != 1)
+                *ec = READ_ERROR;
+            break;
+        default:
+            break;
     }
     return self;
 }
