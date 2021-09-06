@@ -15,44 +15,47 @@ enum errors
 
 int main(int argc, char **argv)
 {
-    movie_t movies[MAX_MOVIES_LEN];
-    if (argc != 3 && argc != 4) 
-    {
-        return arg_error;
-    }  
-
-    FILE *f = fopen(argv[1], "r");
-    if (!f)
-        return path_error;
-
-    char *field_name = argv[2];
-    int field_type = get_field_type(field_name);
-    if (field_type < 0)
-        return field_type_error;
-
     int ec = ok;
-    int movies_len = read_all_movies(f, movies, field_type, &ec);
-    if (movies_len == 0)
-        ec = empty_file;
-    if (ec)
-        return ec;
+    movie_t movies[MAX_MOVIES_LEN];
+    FILE *f = fopen(argv[1], "r");
+    int field_type;
+    int movies_len;
 
-    if (argc == 3)
+    if (argc != 3 && argc != 4) 
+        ec = arg_error;
+    
+    if (!ec && !f)
+        ec = path_error;
+
+    if (!ec)
     {
-        for (int i = 0; i < movies_len; i++)
-            print_movie(movies + i);
+        char *field_name = argv[2];
+        field_type = get_field_type(field_name);
+        if (field_type < 0)
+            ec = field_type_error;
     }
-    else
+
+    if (!ec)
     {
-        field_t field = field_from_str(argv[3], field_type, &ec);
-        if (!ec)
+        movies_len = read_all_movies(f, movies, field_type, &ec);
+        if (movies_len == 0)
+            ec = empty_file;
+    }
+
+    if (!ec)
+    {
+        if (argc == 3)
+            print_movie_arr(movies, movies_len);
+        else
         {
-            int index = arr_find(movies, movies_len, &field, field_type);
-            if (index < 0)
-                printf("Not found\n");
-            else
+            field_t field = field_from_str(argv[3], field_type, &ec);
+            if (!ec)
             {
-                print_movie(movies + index);
+                int index = arr_find(movies, movies_len, &field, field_type);
+                if (index < 0)
+                    printf("Not found\n");
+                else
+                    print_movie(movies + index);
             }
         }
     }

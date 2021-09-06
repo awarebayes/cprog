@@ -13,3 +13,4 @@ bin/
 .tabignore
 /fuzz
 /**/temp/
+/**/sus_tests/

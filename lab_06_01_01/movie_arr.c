@@ -6,12 +6,6 @@
 
 void shift_arr_right(movie_t *movie_arr, int from)
 {
-    if (from >= MAX_MOVIES_LEN) 
-    {
-        perror("Bad from in shift arr\n");
-        exit(-1);
-    }
-
     for (int i = MAX_MOVIES_LEN - 1; i > from; i--)
     {
         movie_arr[i] = movie_arr[i - 1];
@@ -50,19 +44,20 @@ int arr_find(movie_t *arr, int n, field_t *target, int mode)
     int high = n;
     int mid;
     field_t to_cmp;
+    int found = 0;
 
-    while (low <= high)
+    while (low <= high && !found)
     {
         mid = (low + high) / 2;
         field_from(&to_cmp, arr + mid, mode);
         if (field_cmp(&to_cmp, target) == 0)
-            return mid;
-        else if (field_cmp(&to_cmp, target) < 0)
+            found = 1;
+        else if (field_cmp(&to_cmp, target) < 0 && !found)
             low = mid + 1;
-        else if (field_cmp(&to_cmp, target) > 0)
+        else if (field_cmp(&to_cmp, target) > 0 && !found)
             high = mid - 1;
     }
-    return -1;
+    return found ? mid : -1;
 }
 
 int read_all_movies(FILE *f, movie_t *in, int mode, int *ec) 
@@ -84,4 +79,12 @@ int read_all_movies(FILE *f, movie_t *in, int mode, int *ec)
     if (blank_encountered)
         *ec = 0;
     return count;
+}
+
+void print_movie_arr(movie_t *arr, int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        print_movie(arr + i);
+    }
 }

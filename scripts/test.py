@@ -78,6 +78,7 @@ def check(ins, outs, args, pos=True):
         (output, err) = process.communicate(input=str.encode(i))
         exit_code = process.wait()
         output = output.decode()
+        
         output = ''.join(list(filter(lambda x: x != "\r", output)))
         o = ''.join(list(filter(lambda x: x != "\r", o)))
 
