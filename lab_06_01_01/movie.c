@@ -5,11 +5,11 @@
 
 #define READ_ERROR 4
 #define BLANK_MOVIE 5
-#define YEAR_SIZE 16
+#define TEMP_BUF_SIZE 16
 
-static char *field_names[] = { "title", "name", "year" };
+static char *field_names[] = {"title", "name", "year"};
 
-void remove_lc(char *str) 
+void remove_lc(char *str)
 {
     str[strcspn(str, "\r\n")] = '\0';
 }
@@ -19,61 +19,70 @@ int all_digits(char *str)
     int flag = 1;
     while (flag && *str)
     {
-        if(!isdigit(*str))
+        if (!isdigit(*str))
             flag = 0;
         str++;
     }
     return flag;
 }
 
-movie_t read_movie(FILE *f, int *ec) 
+int all_space(char *str)
 {
-    char year_buf[YEAR_SIZE] = { 0 };
-    movie_t m = { 0 };
-    fgets(m.title, MAX_TITLE_LEN + 1, f);
-    if (feof(f) && strcmp(m.title, "") == 0)
+    int flag = 1;
+    while (flag && *str)
     {
-        *ec = BLANK_MOVIE;
+        if (!isspace(*str))
+            flag = 0;
+        str++;
     }
+    return flag;
+}
 
-    if (!*ec)
+void read_string(FILE *f, char *target, int max_target_len, int *ec)
+{
+    char temp_buf[TEMP_BUF_SIZE];
+    fgets(target, max_target_len + 1, f);
+    remove_lc(target);
+    if (all_space(target))
     {
-
-        // todo refactor as functions
-        
-        remove_lc(m.title);
-        // /r/n was not read, just put it into yearbuffer
-        if (strlen(m.title) == MAX_TITLE_LEN)
-            fgets(year_buf, YEAR_SIZE, f);
-        
-        remove_lc(year_buf);
-        if (strcmp(year_buf, "") != 0)
-            *ec =READ_ERROR;
-
-        fgets(m.name, MAX_LN_LEN + 1, f);
-        remove_lc(m.name);
-        
-        // /r/n was not read, just put it into yearbuffer
-        if (strlen(m.name) == MAX_LN_LEN)
-            fgets(year_buf, YEAR_SIZE, f);
-        
-        remove_lc(year_buf);
-        if (strcmp(year_buf, "") != 0)
-            *ec =READ_ERROR;
-
-        fgets(year_buf, YEAR_SIZE, f);
-        remove_lc(year_buf);
-
-        if (sscanf(year_buf, "%d", &m.year) != 1 || !all_digits(year_buf))
-        {
+        *ec = READ_ERROR;
+    }
+    // /r/n was not read, just put it into yearbuffer
+    if ((int)strlen(target) == max_target_len)
+    {
+        fgets(temp_buf, TEMP_BUF_SIZE, f);
+        remove_lc(temp_buf);
+        if (strcmp(temp_buf, "") != 0)
             *ec = READ_ERROR;
-        }
+    }
+}
+
+void read_year(FILE *f, int *target, int *ec)
+{
+    char year_buf[TEMP_BUF_SIZE] = {0};
+    fgets(year_buf, TEMP_BUF_SIZE, f);
+    remove_lc(year_buf);
+    if (sscanf(year_buf, "%d", target) != 1 || !all_digits(year_buf))
+        *ec = READ_ERROR;
+}
+
+movie_t read_movie(FILE *f, int *ec)
+{
+    movie_t m = {0};
+
+    read_string(f, m.title, MAX_TITLE_LEN, ec);
+    if (feof(f) && strcmp(m.title, "") == 0)
+        *ec = BLANK_MOVIE;
+    else
+    {
+        read_string(f, m.name, MAX_LN_LEN, ec); 
+        read_year(f, &m.year, ec);
     }
 
     return m;
 }
 
-int string_cmp(char *haystack, char *needle) 
+int string_cmp(char *haystack, char *needle)
 {
     return strcmp(haystack, needle);
 }
@@ -88,34 +97,34 @@ void field_from(field_t *self, movie_t *movie, int type)
     self->type = type;
     switch (type)
     {
-        case f_name:
-            self->data.string = movie->name;
-            break;
-        case f_title:
-            self->data.string = movie->title;
-            break;
-        case f_year:
-            self->data.number = movie->year;
-            break;
+    case f_name:
+        self->data.string = movie->name;
+        break;
+    case f_title:
+        self->data.string = movie->title;
+        break;
+    case f_year:
+        self->data.number = movie->year;
+        break;
     }
 }
 
 field_t field_from_str(char *value, int type, int *ec)
 {
-    field_t self = { 0 };
+    field_t self = {0};
     self.type = type;
     switch (type)
     {
-        case f_name:
-        case f_title:
-            self.data.string = value;
-            break;
-        case f_year:
-            if (sscanf(value, "%d", &self.data.number) != 1)
-                *ec = READ_ERROR;
-            break;
-        default:
-            break;
+    case f_name:
+    case f_title:
+        self.data.string = value;
+        break;
+    case f_year:
+        if (sscanf(value, "%d", &self.data.number) != 1)
+            *ec = READ_ERROR;
+        break;
+    default:
+        break;
     }
     return self;
 }
@@ -131,13 +140,12 @@ int field_cmp(field_t *self, field_t *other)
     return res;
 }
 
-void print_movie(movie_t *m) 
+void print_movie(movie_t *m)
 {
     printf("%s\n%s\n%d\n", m->title, m->name, m->year);
 }
 
-
-int get_field_type(char *str) 
+int get_field_type(char *str)
 {
     int flag = 0;
     int index = 0;

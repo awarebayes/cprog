@@ -99,7 +99,7 @@ def check(ins, outs, args, pos=True):
             for d in dl.unified_diff([o], [output]):
                 diff += d
         if failed:
-            failed_table.add_row(test_name, "\n".join(a), diff, f"{exit_code}")
+            failed_table.add_row(test_name, "".join(a), diff, f"{exit_code}")
             fail_count += 1
         
         table.add_row(test_name, f"{exit_code}", "❌" if failed else "✅")
