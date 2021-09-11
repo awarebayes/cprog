@@ -55,11 +55,22 @@ void read_string(FILE *f, char *target, int max_target_len, int *ec)
     }
 }
 
+int all_char_digits(char *s)
+{
+    while (isdigit(*(s++)))
+        ;
+    return *s == '\n';
+}
+
+
 void read_year(FILE *f, int *target, int *ec)
 {
     char year_buf[TEMP_BUF_SIZE] = {0};
     fgets(year_buf, TEMP_BUF_SIZE, f);
     remove_lc(year_buf);
+    if (!all_char_digits(year_buf))
+        *ec = READ_ERROR;
+
     if (sscanf(year_buf, "%d", target) != 1)
         *ec = READ_ERROR;
 }
