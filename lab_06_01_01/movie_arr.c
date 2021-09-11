@@ -44,7 +44,7 @@ int arr_find(movie_t *arr, int n, field_t *target, int mode)
     int low = 0;
     int high = n;
     int mid;
-    field_t to_cmp = {0};
+    field_t to_cmp = { 0 };
     int found = 0;
 
     while (low <= high && !found)

@@ -7,7 +7,7 @@
 #define BLANK_MOVIE 5
 #define TEMP_BUF_SIZE 16
 
-static char *field_names[] = {"title", "name", "year"};
+static char *field_names[] = { "title", "name", "year" };
 
 void remove_lc(char *str)
 {
@@ -40,7 +40,7 @@ int all_space(char *str)
 
 void read_string(FILE *f, char *target, int max_target_len, int *ec)
 {
-    char temp_buf[TEMP_BUF_SIZE] = {0};
+    char temp_buf[TEMP_BUF_SIZE] = { 0 };
     fgets(target, max_target_len + 1, f);
     remove_lc(target);
     if (all_space(target))
@@ -57,15 +57,14 @@ void read_string(FILE *f, char *target, int max_target_len, int *ec)
 
 int all_char_digits(char *s)
 {
-    while (isdigit(*(s++)))
-        ;
+    while (isdigit(*(s++)));
     return *s == '\n';
 }
 
 
 void read_year(FILE *f, int *target, int *ec)
 {
-    char year_buf[TEMP_BUF_SIZE] = {0};
+    char year_buf[TEMP_BUF_SIZE] = { 0 };
     fgets(year_buf, TEMP_BUF_SIZE, f);
     remove_lc(year_buf);
     if (!all_char_digits(year_buf))
@@ -77,7 +76,7 @@ void read_year(FILE *f, int *target, int *ec)
 
 movie_t read_movie(FILE *f, int *ec)
 {
-    movie_t m = {0};
+    movie_t m = { 0 };
 
     read_string(f, m.title, MAX_TITLE_LEN, ec);
     if (feof(f) && strcmp(m.title, "") == 0)
@@ -106,21 +105,21 @@ void field_from(field_t *self, movie_t *movie, int type)
     self->type = type;
     switch (type)
     {
-    case f_name:
-        self->data.string = movie->name;
-        break;
-    case f_title:
-        self->data.string = movie->title;
-        break;
-    case f_year:
-        self->data.number = movie->year;
-        break;
+        case f_name:
+            self->data.string = movie->name;
+            break;
+        case f_title:
+            self->data.string = movie->title;
+            break;
+        case f_year:
+            self->data.number = movie->year;
+            break;
     }
 }
 
 field_t field_from_str(char *value, int type, int *ec)
 {
-    field_t self = {0};
+    field_t self = { 0 };
     self.type = type;
     switch (type)
     {
