@@ -40,14 +40,12 @@ int all_space(char *str)
 
 void read_string(FILE *f, char *target, int max_target_len, int *ec)
 {
-    char temp_buf[TEMP_BUF_SIZE];
+    char temp_buf[TEMP_BUF_SIZE] = {0};
     fgets(target, max_target_len + 1, f);
     remove_lc(target);
     if (all_space(target))
-    {
         *ec = READ_ERROR;
-    }
-    // /r/n was not read, just put it into yearbuffer
+
     if ((int)strlen(target) == max_target_len)
     {
         fgets(temp_buf, TEMP_BUF_SIZE, f);
@@ -97,15 +95,15 @@ void field_from(field_t *self, movie_t *movie, int type)
     self->type = type;
     switch (type)
     {
-        case f_name:
-            self->data.string = movie->name;
-            break;
-        case f_title:
-            self->data.string = movie->title;
-            break;
-        case f_year:
-            self->data.number = movie->year;
-            break;
+    case f_name:
+        self->data.string = movie->name;
+        break;
+    case f_title:
+        self->data.string = movie->title;
+        break;
+    case f_year:
+        self->data.number = movie->year;
+        break;
     }
 }
 
@@ -159,3 +157,6 @@ int get_field_type(char *str)
     }
     return flag ? index : -1;
 }
+
+// This is a personal academic project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com

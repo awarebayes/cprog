@@ -12,3 +12,6 @@ int read_all_movies(FILE *f, movie_t *in, int mode, int *ec);
 void print_movie_arr(movie_t *arr, int n);
 
 #endif
+
+// This is a personal academic project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com

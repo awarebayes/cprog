@@ -44,7 +44,7 @@ int arr_find(movie_t *arr, int n, field_t *target, int mode)
     int low = 0;
     int high = n;
     int mid;
-    field_t to_cmp;
+    field_t to_cmp = {0};
     int found = 0;
 
     while (low <= high && !found)
@@ -94,3 +94,6 @@ void print_movie_arr(movie_t *arr, int n)
         print_movie(arr + i);
     }
 }
+
+// This is a personal academic project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com

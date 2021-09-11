@@ -18,13 +18,16 @@ int main(int argc, char **argv)
 {
     int ec = ok;
     movie_t movies[MAX_MOVIES_LEN];
-    FILE *f = fopen(argv[1], "r");
+    FILE *f = NULL;
     int field_type;
     int movies_len;
 
     if (argc != 3 && argc != 4) 
         ec = arg_error;
     
+    if (!ec)
+        f = fopen(argv[1], "r");
+
     if (!ec && !f)
         ec = path_error;
 
@@ -60,5 +63,10 @@ int main(int argc, char **argv)
             }
         }
     }
+    if (f != NULL)
+        fclose(f);
     return ec;
 }
+
+// This is a personal academic project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
