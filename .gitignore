@@ -5,11 +5,13 @@
 *.gcda
 *.gcno
 *.gch
+*.d
 /**/temp.py
-.vscode/
 bin/
 .mypy_cache/
 /lab*/main
+/lab*/test
+/**/sus_tests
 .tabignore
 /fuzz
 /**/temp/
