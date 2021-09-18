@@ -8,7 +8,7 @@
             "name": "gcc - Сборка и отладка активного файла",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "program": "${fileDirname}/main",
             "args": ["func_tests/neg_07_in.txt", "title"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
@@ -22,7 +22,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "C/C++: gcc сборка активного файла",
+            "preLaunchTask": "Compile folder for debugging",
             "miDebuggerPath": "/usr/bin/gdb"
         }
     ]

@@ -17,6 +17,21 @@
             }
         },
         {
+            "label": "Compile folder for debugging",
+            "type": "shell",
+            "group": "build",
+            "command": "cd ${fileDirname} && make -B debug",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
             "label": "Compile folder for testing",
             "type": "shell",
             "group": "build",
@@ -97,6 +112,15 @@
                 "showReuseMessage": true,
                 "clear": false
             }
+        },
+        {
+            "label": "Run valgrind",
+            "type": "shell",
+            "command": "python ./scripts/valgrind.py ${fileDirname}",
+            "problemMatcher": [],
+            "dependsOn": [
+                "Debug build folder"
+            ]
         }
     ],
     "inputs":[

@@ -6,6 +6,10 @@ src = $(filter-out test.c main.c,  $(wildcard *.c))
 obj = $(src:.c=.o)
 dep = $(obj:.o=.d)
 
+.PHONY: debug
+debug: CFLAGS += -DDEBUG -g
+debug: main
+
 main: main.o $(obj)
 	$(CC) $(CFLAGS) -o $@ $^
 
