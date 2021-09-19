@@ -1,6 +1,8 @@
 CC := gcc
 
 CFLAGS := -std=c99 -MMD -Wall -Wpedantic -Wextra -Wfloat-conversion -Wfloat-equal -Wvla -lcheck
+LDFLAGS := -lcheck
+INC := -I inc/
 
 .PHONY: debug
 debug: main.exe
@@ -10,20 +12,26 @@ debug: CFLAGS += -DDEBUG -g
 debug_tests: CFLAGS += -DDEBUG -g
 debug_tests: test.exe
 
-src = $(filter-out test.c main.c,  $(wildcard *.c))
-obj = $(src:.c=.o)
+src = $(filter-out src/test.c src/main.c,  $(wildcard src/*.c))
+obj = $(src:src/%.c=out/%.o)
 dep = $(obj:.o=.d)
 
-main.exe: main.o $(obj)
-	$(CC) $(CFLAGS) -o $@ $^
+main.exe: out/main.o $(obj)
+	$(CC) -o $@ $^ $(LDFLAGS)
 
-test.exe: test.o $(obj)
-	$(CC) $(CFLAGS) -o $@ $^
+test.exe: out/check_test.o $(obj)
+	$(CC) -o $@ $^ $(LDFLAGS)
+
+%.d: src/%.c
+	@$(CC) $(CFLAGS) $< -MM -MT $(@:%d=out/@.o) >$@
 
 -include $(dep)
 
+out/%.o: src/%.c
+	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
+
 .PHONY: unit
-unit: test.exe
+unit: /check_test.exe
 	./test.exe
 
 .PHONY: func
@@ -32,5 +40,5 @@ func: main.exe
 
 .PHONY: clean
 clean:
-	$(RM) -f $(obj) ./main.exe ./test.exe main.o test.o
-	$(RM) -f $(dep) main.d test.d
+	$(RM) -f ./out/*
+	$(RM) -f ./*.exe

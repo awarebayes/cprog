@@ -7,7 +7,7 @@
 *.gch
 *.d
 /**/temp.py
-bin/
+bin/*
 .mypy_cache/
 /lab*/main
 /lab*/test

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <check.h>
-#include "util.h"
+#include "../inc/util.h"
 
 START_TEST(test_key_1)
 {
