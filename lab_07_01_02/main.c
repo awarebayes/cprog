@@ -47,6 +47,8 @@ int main(int argc, char **argv)
             free(arr);
             arr = res_begin;
             n = res_end - res_begin;
+            if (n == 0)
+                ec = empty_arr_err;
         }
         mysort(arr, n, sizeof(n), int_cmp);
         write_arr(arr, n, f_out);

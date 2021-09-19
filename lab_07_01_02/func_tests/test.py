@@ -114,13 +114,16 @@ def check(ins, outs, args, pos=True):
         console.print(failed_table)
     else:
         console.print("[bold green]All tests succeded![/bold green]")
+    return fail_count
 
 
 def main():
     pos_in, pos_out, pos_arg = get_in_out_arg(is_pos)
     neg_in, neg_out, neg_arg = get_in_out_arg(is_neg)
-    check(pos_in, pos_out, pos_arg)
-    check(neg_in, neg_out, neg_arg, False)
+    fails = 0
+    fails += check(pos_in, pos_out, pos_arg)
+    fails += check(neg_in, neg_out, neg_arg, False)
+    exit(fails)
 
 
 if __name__ == "__main__":
