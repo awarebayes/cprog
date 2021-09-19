@@ -5,7 +5,7 @@
             "label": "Compile folder",
             "type": "shell",
             "group": "build",
-            "command": "cd ${fileDirname} && make main",
+            "command": "cd ${fileDirname} && make main.exe",
             "problemMatcher": [],
             "presentation": {
                 "echo": true,
@@ -35,7 +35,22 @@
             "label": "Compile folder for testing",
             "type": "shell",
             "group": "build",
-            "command": "cd ${fileDirname} && make test",
+            "command": "cd ${fileDirname} && make test.exe",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Compile folder for testing and debugging",
+            "type": "shell",
+            "group": "build",
+            "command": "cd ${fileDirname} && make -B debug_tests",
             "problemMatcher": [],
             "presentation": {
                 "echo": true,
@@ -67,20 +82,36 @@
         {
             "label": "Func test folder",
             "type": "shell",
-            "command": "python ./scripts/test.py ${fileDirname}",
+            "command": "python ${fileDirname}/func_tests/test.py ${fileDirname}",
             "dependsOn": [
                 "Compile folder"
             ],
-            "problemMatcher": []
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
         },
         {
             "label": "Unit test folder",
             "type": "shell",
-            "command": "${fileDirname}/test",
+            "command": "${fileDirname}/test.exe",
             "dependsOn": [
                 "Compile folder for testing"
             ],
-            "problemMatcher": []
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
         },
         {
             "label": "Run unit and functional tests",
@@ -99,7 +130,7 @@
         {
             "label": "Run folder",
             "type": "shell",
-            "command": "cd ${fileDirname} && ./main",
+            "command": "cd ${fileDirname} && ./main.exe",
             "dependsOn": [
                 "Compile folder"
             ],

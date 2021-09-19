@@ -1,19 +1,23 @@
 CC := gcc
 
-CFLAGS := -std=c99 -MMD -Wall -Wpedantic -Wextra -Wfloat-conversion -Wfloat-equal -Wvla 
+CFLAGS := -std=c99 -MMD -Wall -Wpedantic -Wextra -Wfloat-conversion -Wfloat-equal -Wvla -lcheck
+
+.PHONY: debug
+debug: CFLAGS += -DDEBUG -g
+debug: main.exe
+
+.PHONY: debug_tests
+debug_tests: CFLAGS += -DDEBUG -g
+debug_tests: test.exe
 
 src = $(filter-out test.c main.c,  $(wildcard *.c))
 obj = $(src:.c=.o)
 dep = $(obj:.o=.d)
 
-.PHONY: debug
-debug: CFLAGS += -DDEBUG -g
-debug: main
-
-main: main.o $(obj)
+main.exe: main.o $(obj)
 	$(CC) $(CFLAGS) -o $@ $^
 
-test: test.o $(obj)
+test.exe: test.o $(obj)
 	$(CC) $(CFLAGS) -o $@ $^
 
 -include $(dep)

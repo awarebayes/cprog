@@ -5,11 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "gcc - Сборка и отладка активного файла",
+            "name": "gcc - Сборка и отладка папки",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}/main",
-            "args": ["func_tests/neg_07_in.txt", "title"],
+            "program": "${fileDirname}/main.exe",
+            "args": ["./func_tests/neg_04_in.txt", "./func_tests/temp.txt", "f"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
@@ -23,6 +23,27 @@
                 }
             ],
             "preLaunchTask": "Compile folder for debugging",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "gcc - Сборка и отладка тестов",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/test.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Включить автоматическое форматирование для gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Compile folder for testing and debugging",
             "miDebuggerPath": "/usr/bin/gdb"
         }
     ]
