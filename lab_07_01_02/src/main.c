@@ -5,7 +5,6 @@
 
 int main(int argc, char **argv)
 {
-
     int ec = ok;
     int *arr = NULL;
     int filter_flag = 0;

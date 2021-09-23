@@ -82,7 +82,7 @@
         {
             "label": "Func test folder",
             "type": "shell",
-            "command": "python $(labfolder ${fileDirname})/func_tests/test.py ${fileDirname}/..",
+            "command": "python $(labfolder ${fileDirname})/func_tests/test.py $(labfolder ${fileDirname}/func_tests)",
             "dependsOn": [
                 "Compile folder"
             ],

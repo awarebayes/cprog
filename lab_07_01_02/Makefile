@@ -1,6 +1,6 @@
 CC := gcc
 
-CFLAGS := -std=c99 -MMD -Wall -Wpedantic -Wextra -Wfloat-conversion -Wfloat-equal -Wvla -lcheck
+CFLAGS := -std=c99 -Wall -Wpedantic -Wextra -Wfloat-conversion -Wfloat-equal -Wvla
 LDFLAGS := -lcheck
 INC := -I inc/
 
@@ -31,7 +31,7 @@ out/%.o: src/%.c
 
 .PHONY: unit
 unit:
-	cd ./unit_tests && make unit
+	cd ./unit_tests && $(MAKE) unit
 
 .PHONY: func
 func: main.exe

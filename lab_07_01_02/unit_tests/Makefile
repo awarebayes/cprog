@@ -1,6 +1,6 @@
 CC := gcc
 
-CFLAGS := -std=c99 -MMD -Wall -Wpedantic -Wextra -Wfloat-conversion -Wfloat-equal -Wvla 
+CFLAGS := -std=c99 -Wall -Wpedantic -Wextra -Wfloat-conversion -Wfloat-equal -Wvla 
 LDFLAGS := -lcheck
 INC := -I inc/
 
@@ -39,10 +39,6 @@ $(OUT_DIR)/%.o: %.c
 .PHONY: unit
 unit: test.exe
 	./test.exe
-
-.PHONY: func
-func: main.exe
-	python ./func_tests/test.py .
 
 .PHONY: clean
 clean:
