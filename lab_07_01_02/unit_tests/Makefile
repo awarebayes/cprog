@@ -22,7 +22,7 @@ dep = $(obj3:.o=.d)
 test.exe: $(OUT_DIR)/check_main.o $(obj)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
-$(OUT_DIR)/%.d: $(SRC_DIR)/%.c 
+%.d: $(SRC_DIR)/%.c 
 	@$(CC) $(CFLAGS) $< -MM -MT $(@:%d=$(OUT_DIR)/@.o) >$@
 
 -include $(dep)
