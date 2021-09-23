@@ -8,18 +8,14 @@ INC := -I inc/
 debug: main.exe
 debug: CFLAGS += -DDEBUG -g
 
-.PHONY: debug_tests
-debug_tests: CFLAGS += -DDEBUG -g
-debug_tests: test.exe
+debug_tests:
+	cd unit_tests && make debug_tests
 
-src = $(filter-out src/test.c src/main.c,  $(wildcard src/*.c))
+src = $(filter-out src/main.c,  $(wildcard src/*.c))
 obj = $(src:src/%.c=out/%.o)
 dep = $(obj:.o=.d)
 
 main.exe: out/main.o $(obj)
-	$(CC) -o $@ $^ $(LDFLAGS)
-
-test.exe: out/check_test.o $(obj)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 %.d: src/%.c
@@ -31,14 +27,15 @@ out/%.o: src/%.c
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
 .PHONY: unit
-unit: /check_test.exe
-	./test.exe
+unit:
+	cd ./unit_tests && make unit
 
 .PHONY: func
 func: main.exe
-	python ./func_tests/test.py .
+	python ./func_tests/test_simple.py .
 
 .PHONY: clean
 clean:
 	$(RM) -f ./out/*
+	$(RM) -f ./**/*.exe
 	$(RM) -f ./*.exe

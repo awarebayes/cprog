@@ -5,7 +5,7 @@
             "label": "Compile folder",
             "type": "shell",
             "group": "build",
-            "command": "cd ${fileDirname} && make main.exe",
+            "command": "cd $(labfolder ${fileDirname}) && make main.exe",
             "problemMatcher": [],
             "presentation": {
                 "echo": true,
@@ -20,7 +20,7 @@
             "label": "Compile folder for debugging",
             "type": "shell",
             "group": "build",
-            "command": "cd ${fileDirname} && make -B debug",
+            "command": "cd $(labfolder ${fileDirname}) && make -B debug",
             "problemMatcher": [],
             "presentation": {
                 "echo": true,
@@ -35,7 +35,7 @@
             "label": "Compile folder for testing",
             "type": "shell",
             "group": "build",
-            "command": "cd ${fileDirname} && make test.exe",
+            "command": "cd $(labfolder ${fileDirname})/unit_tests && make test.exe",
             "problemMatcher": [],
             "presentation": {
                 "echo": true,
@@ -50,7 +50,7 @@
             "label": "Compile folder for testing and debugging",
             "type": "shell",
             "group": "build",
-            "command": "cd ${fileDirname} && make -B debug_tests",
+            "command": "cd $(labfolder ${fileDirname}) && make -B debug_tests",
             "problemMatcher": [],
             "presentation": {
                 "echo": true,
@@ -72,7 +72,7 @@
             "type": "shell",
             "command": "./scripts/make_tests.sh",
             "args": [
-                "${fileDirname}",
+                "$(labfolder ${fileDirname})",
                 "${input:n_pos_tests}",
                 "${input:n_neg_tests}",
                 "${input:create_args}"
@@ -82,7 +82,7 @@
         {
             "label": "Func test folder",
             "type": "shell",
-            "command": "python ${fileDirname}/func_tests/test.py ${fileDirname}",
+            "command": "python $(labfolder ${fileDirname})/func_tests/test.py ${fileDirname}/..",
             "dependsOn": [
                 "Compile folder"
             ],
@@ -99,7 +99,7 @@
         {
             "label": "Unit test folder",
             "type": "shell",
-            "command": "${fileDirname}/test.exe",
+            "command": "$(labfolder ${fileDirname})/unit_tests/test.exe",
             "dependsOn": [
                 "Compile folder for testing"
             ],
@@ -130,7 +130,7 @@
         {
             "label": "Run folder",
             "type": "shell",
-            "command": "cd ${fileDirname} && ./main.exe",
+            "command": "$(labfolder ${fileDirname})/main.exe",
             "dependsOn": [
                 "Compile folder"
             ],
@@ -147,7 +147,7 @@
         {
             "label": "Run valgrind",
             "type": "shell",
-            "command": "python ./scripts/valgrind.py ${fileDirname}",
+            "command": "python ./scripts/valgrind.py $(labfolder ${fileDirname})",
             "problemMatcher": [],
             "dependsOn": [
                 "Debug build folder"

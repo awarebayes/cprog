@@ -3,19 +3,25 @@
 #include <stdlib.h>
 #include <string.h>
 
-int *read_numbers(FILE *f, int *n, int *ec)
+int n_numbers(FILE *f, int *ec)
 {
-    *n = 0;
+    int n = 0;
     int temp;
     while (!feof(f) && !(*ec))
     {
         if (fscanf(f, "%d", &temp) != 1)
             *ec = read_err;
-        *n += 1;
+        else
+            n += 1;
     }
 
     rewind(f);
+    return n;
+}
 
+int *read_numbers(FILE *f, int *n, int *ec)
+{
+    *n = n_numbers(f, ec);
     int *buf = NULL;
     if (*n > 0)
         buf = malloc(sizeof(int) * (*n));
@@ -25,7 +31,7 @@ int *read_numbers(FILE *f, int *n, int *ec)
     int i = 0;
     while (!feof(f) && !(*ec))
     {
-        fscanf(f, "%d", buf+i);
+        fscanf(f, "%d", buf + i);
         i++;
         // timed buffer overflow can be used here?
     }
@@ -127,8 +133,8 @@ void mysort(void *base, size_t nitems, size_t size, int (*cmp)(const void*, cons
     }
 }
 
-int int_cmp(const void * a, const void * b)
+int int_cmp(const void *a, const void *b)
 {
-   return ( *(int*)a - *(int*)b );
+    return (*(int*)a - *(int*)b);
 }
 
