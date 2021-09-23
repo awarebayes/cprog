@@ -8,6 +8,9 @@ INC := -I inc/
 debug: main.exe
 debug: CFLAGS += -DDEBUG -g
 
+.PHONY: release
+release: main.exe
+
 debug_tests:
 	cd unit_tests && make debug_tests
 
