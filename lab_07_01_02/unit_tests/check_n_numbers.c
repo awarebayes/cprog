@@ -4,6 +4,7 @@
 START_TEST(test_n_1)
 {
     FILE *f = fopen("./input/1.txt", "r");
+    ck_assert_ptr_nonnull(f);
     int target_res = 0;
     int ec = 0;
     int res = n_numbers(f, &ec);
@@ -16,6 +17,7 @@ END_TEST
 START_TEST(test_n_2)
 {
     FILE *f = fopen("./input/2.txt", "r");
+    ck_assert_ptr_nonnull(f);
     int target_res = 4;
     int ec = 0;
     int res = n_numbers(f, &ec);

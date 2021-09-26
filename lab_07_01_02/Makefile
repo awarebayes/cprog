@@ -1,44 +1,59 @@
 CC := gcc
 
-CFLAGS := -std=c99 -Wall -Wpedantic -Wextra -Wfloat-conversion -Wfloat-equal -Wvla
+CFLAGS := -std=c99 -Wall -Wpedantic -Wextra -Wfloat-conversion -Wfloat-equal -Wvla -g -DDEBUG
 LDFLAGS := -lcheck
 INC := -I inc/
 
-.PHONY: debug
-debug: main.exe
-debug: CFLAGS += -DDEBUG -g
+COMPILE := $(CC) $(CFLAGS) 
+
+obj := out/check_key.o out/check_mysort.o out/check_n_numbers.o out/check_read.o out/util.o
 
 .PHONY: release
-release: main.exe
+release: app.exe
 
-debug_tests:
-	cd unit_tests && make debug_tests
+.PHONY: debug
+debug: CFLAGS += -DDEBUG -g
+debug: app.exe
 
-src = $(filter-out src/main.c,  $(wildcard src/*.c))
-obj = $(src:src/%.c=out/%.o)
-dep = $(obj:.o=.d)
-
-main.exe: out/main.o $(obj)
-	$(CC) -o $@ $^ $(LDFLAGS)
-
-%.d: src/%.c
-	@$(CC) $(CFLAGS) $< -MM -MT $(@:%d=out/@.o) >$@
-
--include $(dep)
-
-out/%.o: src/%.c
-	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
-
-.PHONY: unit
-unit:
-	cd ./unit_tests && $(MAKE) unit
+.PHONY: tests
+tests: unit_tests/test.exe
 
 .PHONY: func
-func: main.exe
+func: app.exe
 	python ./func_tests/test_simple.py .
+
+unit: tests
+	cd ./unit_tests && ./test.exe
+
+app.exe: out/main.o $(obj)
+	 $(CC) -o $@ $^ $(LDFLAGS)
+
+unit_tests/test.exe: out/check_main.o $(obj)
+	$(CC) -o $@ $^ $(LDFLAGS)
+
+out/check_key.o: unit_tests/check_key.c 
+	$(COMPILE) -o $@ -c $^
+
+out/check_n_numbers.o: unit_tests/check_n_numbers.c 
+	$(COMPILE) -o $@ -c $^
+
+out/check_mysort.o: unit_tests/check_mysort.c
+	$(COMPILE) -o $@ -c $^
+
+out/check_read.o: unit_tests/check_read.c
+	$(COMPILE) -o $@ -c $^
+
+out/check_main.o: unit_tests/check_main.c 
+	$(COMPILE) -o $@ -c $^
+
+out/util.o: src/util.c 
+	$(COMPILE) -o $@ -c $^
+
+out/main.o: src/main.c
+	$(COMPILE) -o $@ -c $^
 
 .PHONY: clean
 clean:
 	$(RM) -f ./out/*
 	$(RM) -f ./**/*.exe
-	$(RM) -f ./*.exe
+	$(RM) -f ./*.ex

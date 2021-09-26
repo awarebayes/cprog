@@ -29,7 +29,7 @@
             "name": "gcc - Сборка и отладка тестов",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}/test.exe",
+            "program": "${fileDirname}/../unit_tests/test.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
@@ -43,7 +43,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Compile folder for testing and debugging",
+            // "preLaunchTask": "Compile folder for testing and debugging",
             "miDebuggerPath": "/usr/bin/gdb"
         }
     ]
