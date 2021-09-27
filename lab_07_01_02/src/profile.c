@@ -5,8 +5,8 @@
 
 #define MEAN = 1
 
-int means[] = {100, 10, 3, 1};
-int thresholds[] = {0, 100, 1000, 10000};
+int means[] = { 100, 10, 3, 1 };
+int thresholds[] = { 0, 100, 1000, 10000 };
 int nmeans = 4;
 
 int *gen_arr(int size)
@@ -27,7 +27,7 @@ int measure_time(sortf_t func, int size)
     clock_t start = clock();
     func(arr, size, sizeof(int), int_cmp);
     clock_t end = clock();
-    int ms = (end-start) * 1000000 / CLOCKS_PER_SEC;
+    int ms = (end - start) * 1000000 / CLOCKS_PER_SEC;
     free(arr);
     return ms;
 }
@@ -55,12 +55,12 @@ int find_mean(int size)
 
 int main(int argc, char **argv)
 {
-    int *sizes = malloc(sizeof(int) * (argc-1));
+    int *sizes = malloc(sizeof(int) * (argc - 1));
     for (int i = 1; i < argc; i++)
-        sscanf(argv[i], "%d", &sizes[i-1]);
+        sscanf(argv[i], "%d", &sizes[i - 1]);
 
     printf("n,q,my\n");
-    for (int i = 0; i < argc-1; i++)
+    for (int i = 0; i < argc - 1; i++)
     {
         int n = sizes[i];
         int tqsort = measure_time_mean(qsort, n, find_mean(n));
