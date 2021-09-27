@@ -40,19 +40,20 @@ int main(int argc, char **argv)
             ec = read_err;
     }
 
+    if (!ec && filter_flag)
+    {
+        int *res_begin = NULL;
+        int *res_end = NULL;
+        key(arr, arr + n, &res_begin, &res_end);
+        free(arr);
+        arr = res_begin;
+        n = res_end - res_begin;
+        if (n == 0)
+            ec = empty_arr_err;
+    }
+
     if (!ec)
     {
-        if (filter_flag)
-        {
-            int *res_begin = NULL;
-            int *res_end = NULL;
-            key(arr, arr + n, &res_begin, &res_end);
-            free(arr);
-            arr = res_begin;
-            n = res_end - res_begin;
-            if (n == 0)
-                ec = empty_arr_err;
-        }
         mysort(arr, n, sizeof(n), int_cmp);
         write_arr(arr, n, f_out);
     }
