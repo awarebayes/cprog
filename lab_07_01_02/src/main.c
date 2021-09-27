@@ -15,9 +15,13 @@ int main(int argc, char **argv)
 
     if (argc != 3 && argc != 4)
         ec = arg_err;
+
+    if (!ec)
+    {
+        f_in = fopen(argv[1], "r");
+        f_out = fopen(argv[2], "w");
+    }
     
-    f_in = fopen(argv[1], "r");
-    f_out = fopen(argv[2], "w");
     if (!f_in || !f_out)
         ec = path_err;
     

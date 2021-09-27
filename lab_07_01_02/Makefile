@@ -27,6 +27,9 @@ app.exe: out/main.o $(obj)
 profile.exe: out/profile.o $(obj)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
+unit_tests.exe:
+	cd ./unit_tests && $(MAKE) ../unit_tests.exe
+
 %.d: src/%.c
 	@$(CC) $(CFLAGS) $< -MM -MT $(@:%d=out/@.o) >$@
 
