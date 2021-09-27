@@ -4,7 +4,7 @@ CFLAGS := -std=c99 -Wall -Wpedantic -Wextra -Wfloat-conversion -Wfloat-equal -Wv
 LDFLAGS := -lcheck
 INC := -I inc/
 
-COMPILE := $(CC) $(CFLAGS) 
+COMPILE := $(CC) $(CFLAGS) $(INC)
 
 obj := out/check_key.o out/check_mysort.o out/check_n_numbers.o out/check_read.o out/util.o
 
@@ -59,4 +59,4 @@ out/main.o: src/main.c
 clean:
 	$(RM) -f ./out/*
 	$(RM) -f ./**/*.exe
-	$(RM) -f ./*.ex
+	$(RM) -f ./*.exe
