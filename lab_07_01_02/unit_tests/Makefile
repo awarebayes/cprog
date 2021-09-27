@@ -6,12 +6,12 @@ INC := -I inc/
 
 .PHONY: debug_tests
 debug_tests: CFLAGS += -DDEBUG -g
-debug_tests: test.exe
+debug_tests: ../unit_tests.exe
 
 SRC_DIR = ../src
 OUT_DIR = ../out
 
-src1 = $(filter-out $(SRC_DIR)/main.c,  $(wildcard $(SRC_DIR)/*.c))
+src1 = $(filter-out $(SRC_DIR)/main.c $(SRC_DIR)/profile.c,  $(wildcard $(SRC_DIR)/*.c))
 src2 = $(filter-out ./check_main.c, $(wildcard ./*.c))
 src = $(src1) $(src2)
 obj1 = $(src1:$(SRC_DIR)/%.c=$(OUT_DIR)/%.o)
@@ -19,7 +19,7 @@ obj2 = $(src2:./%.c=$(OUT_DIR)/%.o)
 obj = $(obj1) $(obj2)
 dep = $(obj3:.o=.d)
 
-test.exe: $(OUT_DIR)/check_main.o $(obj)
+../unit_tests.exe: $(OUT_DIR)/check_main.o $(obj)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 %.d: $(SRC_DIR)/%.c 
@@ -37,8 +37,8 @@ $(OUT_DIR)/%.o: %.c
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
 .PHONY: unit
-unit: test.exe
-	./test.exe
+unit: ../unit_tests.exe
+	cd .. && ./unit_tests.exe
 
 .PHONY: clean
 clean:

@@ -13,6 +13,9 @@ enum ec
     empty_arr_err,
 };
 
+
+typedef void sortf_t(void *base, size_t nitems, size_t size, int (*cmp)(const void *, const void *));
+
 int key(const int *pb_src, const int *pe_src, int **pb_dst, int **pe_dst);
 int *read_numbers(FILE *f, int *n, int *ec);
 int n_numbers(FILE *f, int *ec);

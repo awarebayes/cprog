@@ -5,20 +5,26 @@ LDFLAGS := -lcheck
 INC := -I inc/
 
 .PHONY: debug
-debug: main.exe
+debug: app.exe
 debug: CFLAGS += -DDEBUG -g
 
 .PHONY: release
-release: main.exe
+release: app.exe
+
+.PHONY: all
+all: app.exe
 
 debug_tests:
 	cd unit_tests && make debug_tests
 
-src = $(filter-out src/main.c,  $(wildcard src/*.c))
+src = $(filter-out src/main.c src/profile.c,  $(wildcard src/*.c))
 obj = $(src:src/%.c=out/%.o)
 dep = $(obj:.o=.d)
 
-main.exe: out/main.o $(obj)
+app.exe: out/main.o $(obj)
+	$(CC) -o $@ $^ $(LDFLAGS)
+
+profile.exe: out/profile.o $(obj)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 %.d: src/%.c
@@ -31,14 +37,14 @@ out/%.o: src/%.c
 
 .PHONY: unit
 unit:
-	cd ./unit_tests && $(MAKE) -f Makefile_bak unit
+	cd ./unit_tests && $(MAKE) unit
 
 .PHONY: func
-func: main.exe
+func: app.exe
 	python ./func_tests/test_simple.py .
 
 .PHONY: clean
 clean:
-	$(RM) -f ./out/*
+	$(RM) -f ./out/*.o
 	$(RM) -f ./**/*.exe
 	$(RM) -f ./*.exe

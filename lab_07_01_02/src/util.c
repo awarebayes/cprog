@@ -43,8 +43,9 @@ void write_arr(int *arr, int n, FILE *f)
 {
     for (int i = 0; i < n; i++)
     {
-        fprintf(f, "%d\n", *(arr + i));
+        fprintf(f, "%d ", *(arr + i));
     }
+    fprintf(f, "\n");
 }
 
 /*
