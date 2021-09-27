@@ -1,6 +1,6 @@
 CC := gcc
 
-CFLAGS := -std=c99 -Wall -Wpedantic -Wextra -Wfloat-conversion -Wfloat-equal -Wvla -g -DDEBUG
+CFLAGS := -std=c99 -Wall -Wpedantic -Wextra -Wfloat-conversion -Wfloat-equal -Wvla 
 LDFLAGS := -lcheck
 INC := -I inc/
 
@@ -10,6 +10,9 @@ obj := out/check_key.o out/check_mysort.o out/check_n_numbers.o out/check_read.o
 
 .PHONY: release
 release: app.exe
+
+.PHONY: all
+all: app.exe
 
 .PHONY: debug
 debug: CFLAGS += -DDEBUG -g
@@ -26,31 +29,31 @@ unit: tests
 	cd ./unit_tests && ./test.exe
 
 app.exe: out/main.o $(obj)
-	 $(CC) -o $@ $^ $(LDFLAGS)
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 unit_tests/test.exe: out/check_main.o $(obj)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 out/check_key.o: unit_tests/check_key.c 
-	$(COMPILE) -o $@ -c $^
+	$(COMPILE) -o $@ -c unit_tests/check_key.c
 
 out/check_n_numbers.o: unit_tests/check_n_numbers.c 
-	$(COMPILE) -o $@ -c $^
+	$(COMPILE) -o $@ -c unit_tests/check_n_numbers.c
 
 out/check_mysort.o: unit_tests/check_mysort.c
-	$(COMPILE) -o $@ -c $^
+	$(COMPILE) -o $@ -c unit_tests/check_mysort.c
 
 out/check_read.o: unit_tests/check_read.c
-	$(COMPILE) -o $@ -c $^
+	$(COMPILE) -o $@ -c unit_tests/check_read.c
 
-out/check_main.o: unit_tests/check_main.c 
-	$(COMPILE) -o $@ -c $^
+out/check_main.o: unit_tests/check_main.c inc/check_main.h
+	$(COMPILE) -o $@ -c unit_tests/check_main.c
 
-out/util.o: src/util.c 
-	$(COMPILE) -o $@ -c $^
+out/util.o: src/util.c  inc/util.h
+	$(COMPILE) -o $@ -c src/util.c
 
 out/main.o: src/main.c
-	$(COMPILE) -o $@ -c $^
+	$(COMPILE) -o $@ -c src/main.c
 
 .PHONY: clean
 clean:

@@ -60,7 +60,7 @@ def check(ins, outs, args, pos=True):
         i = read_file(in_path)
         o = read_file(out_path)
 
-        process = Popen(["../main.exe", *a], stdout=PIPE)
+        process = Popen(["../app.exe", *a], stdout=PIPE)
         (output, _) = process.communicate(input=str.encode(i))
         exit_code = process.wait()
         output = output.decode()

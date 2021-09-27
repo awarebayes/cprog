@@ -5,7 +5,7 @@
             "label": "Compile folder",
             "type": "shell",
             "group": "build",
-            "command": "cd $(labfolder ${fileDirname}) && make main.exe",
+            "command": "cd $(labfolder ${fileDirname}) && make app.exe",
             "problemMatcher": [],
             "presentation": {
                 "echo": true,
@@ -130,7 +130,7 @@
         {
             "label": "Run folder",
             "type": "shell",
-            "command": "$(labfolder ${fileDirname})/main.exe",
+            "command": "$(labfolder ${fileDirname})/app.exe",
             "dependsOn": [
                 "Compile folder"
             ],
@@ -154,7 +154,7 @@
             ]
         }
     ],
-    "inputs":[
+    "inputs": [
         {
             "type": "promptString",
             "id": "n_neg_tests",

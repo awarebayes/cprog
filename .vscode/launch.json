@@ -8,8 +8,12 @@
             "name": "gcc - Сборка и отладка папки",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}/../main.exe",
-            "args": ["./func_tests/neg_04_in.txt", "./func_tests/temp.txt", "f"],
+            "program": "${fileDirname}/../app.exe",
+            "args": [
+                "./func_tests/neg_04_in.txt",
+                "./func_tests/temp.txt",
+                "f"
+            ],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
