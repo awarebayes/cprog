@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <check.h>
 #include "../inc/util.h"
+#include "../inc/io.h"
 #include "../inc/check_main.h"
 
 int main()

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "../inc/util.h"
+#include "../inc/io.h"
 
 #define MEAN = 1
 
