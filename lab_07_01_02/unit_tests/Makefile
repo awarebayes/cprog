@@ -2,7 +2,7 @@ CC := gcc
 
 CFLAGS := -std=c99 -Wall -Wpedantic -Wextra -Wfloat-conversion -Wfloat-equal -Wvla 
 LDFLAGS := -lcheck
-INC := -I inc/
+INC := -I ../inc/
 
 .PHONY: debug_tests
 debug_tests: CFLAGS += -DDEBUG -g
@@ -31,6 +31,9 @@ $(OUT_DIR)/check_main.o: check_main.c $(obj)
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
 $(OUT_DIR)/util.o: $(SRC_DIR)/util.c
+	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
+
+$(OUT_DIR)/io.o: $(SRC_DIR)/io.c
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
 $(OUT_DIR)/%.o: %.c 
