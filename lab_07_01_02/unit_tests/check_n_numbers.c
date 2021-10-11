@@ -1,7 +1,6 @@
-#include "../inc/io.h"
+#include "io.h"
 #include "../inc/check_main.h"
 
-int file_n_numbers(FILE *f, int *ec);
 START_TEST(test_n_1)
 {
     FILE *f = fopen("./unit_tests/input/1.txt", "r");

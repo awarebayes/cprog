@@ -1,4 +1,4 @@
-#include "../inc/util.h"
+#include "io.h"
 #include "../inc/check_main.h"
 
 START_TEST(test_read_1)
