@@ -36,18 +36,17 @@ int key(const int *pb_src, const int *pe_src, int **pb_dst, int **pe_dst)
             p_cur_src++;
     }
 
-    int n = p_cur_src - pb_src;
-    if (n != 0)
+    int pos_count = p_cur_src - pb_src;
+    if (pos_count != 0)
     {
-        *pb_dst = malloc(sizeof(int) * n);
+        *pb_dst = malloc(sizeof(int) * pos_count);
         if (*pb_dst == NULL)
             ec = malloc_err;
     }
-    if (!ec && n != 0)
+    if (!ec && pos_count != 0)
     {
-        *pe_dst = *pb_dst + n;
+        *pe_dst = *pb_dst + pos_count;
         p_cur_src = pb_src;
-        // copy
         int *p_cur_dst = *pb_dst;
         while (p_cur_src < p_neg)
         {
@@ -84,7 +83,7 @@ void mysort(void *base, size_t nitems, size_t size, int (*cmp)(const void*, cons
             if (cmp(el, max) > 0)
                 max = el;
         }
-        //printf("swapping %d %d\n", (max-base)/sizeof(int), j);
+        //printf("swapping %d %d\pos_count", (max-base)/sizeof(int), j);
         memswap(max, cbase + size * j, size);
     }
 }

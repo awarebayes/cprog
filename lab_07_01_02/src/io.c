@@ -2,7 +2,7 @@
 #include "util.h"
 #include <stdlib.h>
 
-int n_numbers(FILE *f, int *ec)
+int file_n_numbers(FILE *f, int *ec)
 {
     int n = 0;
     int temp;
@@ -20,7 +20,7 @@ int n_numbers(FILE *f, int *ec)
 
 int *read_numbers(FILE *f, int *n, int *ec)
 {
-    *n = n_numbers(f, ec);
+    *n = file_n_numbers(f, ec);
     int *buf = NULL;
     if (*n > 0)
         buf = malloc(sizeof(int) * (*n));
@@ -32,7 +32,6 @@ int *read_numbers(FILE *f, int *n, int *ec)
     {
         fscanf(f, "%d", buf + i);
         i++;
-        // timed buffer overflow can be used here?
     }
 
     return buf;

@@ -7,7 +7,7 @@ START_TEST(test_n_1)
     ck_assert_ptr_nonnull(f);
     int target_res = 0;
     int ec = 0;
-    int res = n_numbers(f, &ec);
+    int res = file_n_numbers(f, &ec);
     ck_assert_int_eq(ec, 2);
     ck_assert_int_eq(res, target_res);
     fclose(f);
@@ -20,7 +20,7 @@ START_TEST(test_n_2)
     ck_assert_ptr_nonnull(f);
     int target_res = 4;
     int ec = 0;
-    int res = n_numbers(f, &ec);
+    int res = file_n_numbers(f, &ec);
     ck_assert_int_eq(ec, 0);
     ck_assert_int_eq(res, target_res);
     fclose(f);
