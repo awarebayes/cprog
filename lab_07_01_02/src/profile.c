@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <inttypes.h>
 #include "../inc/util.h"
 #include "../inc/io.h"
 
@@ -22,25 +23,69 @@ int *gen_arr(int size)
     return arr;
 }
 
-int measure_time(sortf_t func, int size)
+size_t measure_time(sortf_t func, int size)
 {
     int *arr = gen_arr(size);
     clock_t start = clock();
     func(arr, size, sizeof(int), int_cmp);
     clock_t end = clock();
-    int ms = (end - start) * 1000000 / CLOCKS_PER_SEC;
+    size_t ms = (end - start) * 1000000 / CLOCKS_PER_SEC;
     free(arr);
     return ms;
 }
 
-int measure_time_mean(sortf_t func, int size, int times)
+int64_t ticks(void)
 {
-    long int sum = 0;
+    int32_t h, l;
+    __asm__ __volatile__ (
+        "rdtsc\n"
+        "movl %%edx, %0\n"
+        "movl %%eax, %1\n"
+        : "=r" (h), "=r" (l)
+        :: "%rax", "%rbx", "%rcx", "%rdx"
+        );
+
+    int64_t t = ((int64_t)h << 32) | l;
+    return t;
+}
+
+int64_t measure_ticks(sortf_t func, int size)
+{
+    int *arr = gen_arr(size);
+    int64_t start = ticks();
+    func(arr, size, sizeof(int), int_cmp);
+    int64_t end = ticks();
+    int64_t ms = (end - start);
+    free(arr);
+    return ms;
+}
+
+size_t measure_time_mean(sortf_t func, int size, int times)
+{
+    size_t sum = 0;
+    // printf("%d, %d\n", size, times);
     for (int i = 0; i < times; i++)
     {
-        sum += (long int)measure_time(func, size);
+        size_t res = measure_time(func, size);
+        printf("profile %d %ld\n", i, res);
+        sum += res;
     }
-    return (int)(sum / (long int)times);
+    // printf("sum %ld %ld\n", sum, sum / (size_t) times);
+    return sum / (size_t)times;
+}
+
+size_t measure_ticks_mean(sortf_t func, int size, int times)
+{
+    size_t sum = 0;
+    // printf("%d, %d\n", size, times);
+    for (int i = 0; i < times; i++)
+    {
+        size_t res = measure_ticks(func, size);
+        // printf("profile %d %ld\n", i, res);
+        sum += res;
+    }
+    // printf("sum %ld %ld\n", sum, sum / (size_t) times);
+    return sum / (size_t)times;
 }
 
 int find_mean(int size)
@@ -64,9 +109,9 @@ int main(int argc, char **argv)
     for (int i = 0; i < argc - 1; i++)
     {
         int n = sizes[i];
-        int tqsort = measure_time_mean(qsort, n, find_mean(n));
-        int tmysort = measure_time_mean(mysort, n, find_mean(n));
-        printf("%d, %d, %d\n", sizes[i], tqsort, tmysort);
+        size_t tqsort = measure_time_mean(qsort, n, 10);
+        size_t tmysort = measure_time_mean(mysort, n, 10);
+        printf("%d, %ld, %ld\n", sizes[i], tqsort, tmysort);
     }
     
     free(sizes);

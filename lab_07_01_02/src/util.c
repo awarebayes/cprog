@@ -47,6 +47,7 @@ int key(const int *pb_src, const int *pe_src, int **pb_dst, int **pe_dst)
     {
         *pe_dst = *pb_dst + n;
         p_cur_src = pb_src;
+        // copy
         int *p_cur_dst = *pb_dst;
         while (p_cur_src < p_neg)
         {
@@ -84,7 +85,6 @@ void mysort(void *base, size_t nitems, size_t size, int (*cmp)(const void*, cons
                 max = el;
         }
         //printf("swapping %d %d\n", (max-base)/sizeof(int), j);
-        // swap
         memswap(max, cbase + size * j, size);
     }
 }

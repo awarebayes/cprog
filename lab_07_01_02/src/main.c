@@ -19,8 +19,8 @@ int main(int argc, char **argv)
 
     if (!ec)
     {
-        f_in = fopen(argv[1], "r");
-        f_out = fopen(argv[2], "w");
+        f_in = fopen(*(argv + 1), "r");
+        f_out = fopen(*(argv + 2), "w");
     }
     
     if (!f_in || !f_out)
@@ -28,7 +28,7 @@ int main(int argc, char **argv)
     
     if (argc == 4)
     {
-        if (strcmp(argv[3], "f") == 0)
+        if (strcmp(*(argv + 3), "f") == 0)
             filter_flag = 1;
         else
             ec = arg_err;
