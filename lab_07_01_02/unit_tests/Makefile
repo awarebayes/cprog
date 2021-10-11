@@ -30,10 +30,10 @@ dep = $(obj3:.o=.d)
 $(OUT_DIR)/check_main.o: check_main.c $(obj)
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
-$(OUT_DIR)/util.o: $(SRC_DIR)/util.c
+$(OUT_DIR)/io.o: $(SRC_DIR)/io.c
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
-$(OUT_DIR)/io.o: $(SRC_DIR)/io.c
+$(OUT_DIR)/util.o: $(SRC_DIR)/util.c
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
 $(OUT_DIR)/%.o: %.c 

@@ -33,7 +33,7 @@
             "name": "gcc - Сборка и отладка тестов",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}/../unit_tests/test.exe",
+            "program": "${fileDirname}/../unit_tests.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
