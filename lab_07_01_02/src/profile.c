@@ -67,7 +67,7 @@ size_t measure_time_mean(sortf_t func, int size, int times)
     for (int i = 0; i < times; i++)
     {
         size_t res = measure_time(func, size);
-        printf("profile %d %ld\n", i, res);
+        // printf("profile %d %ld\n", i, res);
         sum += res;
     }
     // printf("sum %ld %ld\n", sum, sum / (size_t) times);
@@ -109,8 +109,8 @@ int main(int argc, char **argv)
     for (int i = 0; i < argc - 1; i++)
     {
         int n = sizes[i];
-        size_t tqsort = measure_time_mean(qsort, n, 10);
-        size_t tmysort = measure_time_mean(mysort, n, 10);
+        size_t tqsort = measure_ticks_mean(qsort, n, find_mean(n));
+        size_t tmysort = measure_ticks_mean(mysort, n, find_mean(n));
         printf("%d, %ld, %ld\n", sizes[i], tqsort, tmysort);
     }
     
