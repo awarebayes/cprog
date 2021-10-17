@@ -157,6 +157,8 @@ matrix_t gaussian_solve(matrix_t *self, int *ec)
 		}
 	}
 
+	// matrix_print(self, stdout);
+
 	if (!*ec)
 	{
 		// Substitution

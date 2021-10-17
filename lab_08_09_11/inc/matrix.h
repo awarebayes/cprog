@@ -3,7 +3,8 @@
 
 #include <stdio.h>
 
-typedef struct {
+typedef struct 
+{
     int rows;
     int columns;
     double **data;

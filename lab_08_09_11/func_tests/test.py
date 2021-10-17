@@ -98,7 +98,7 @@ def check(ins, outs, args, pos=True):
             failed = True
         if not pos and exit_code == 0:
             failed = True
-        if output != o:
+        if output != o and pos:
             failed = True
             for d in dl.unified_diff([o], [output]):
                 diff += d

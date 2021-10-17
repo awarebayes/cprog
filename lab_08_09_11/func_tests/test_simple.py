@@ -74,7 +74,7 @@ def check(ins, outs, args, pos=True):
             failed = True
         if not pos and exit_code == 0:
             failed = True
-        if output != o:
+        if output != o and pos:
             failed = True
         
         fail_count += failed

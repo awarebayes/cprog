@@ -35,7 +35,7 @@ START_TEST(test_read_2)
 
 END_TEST
 
-Suite *read_suite(void)
+Suite *matrix_suite(void)
 {
 	Suite *s;
 	TCase *tc_core;
