@@ -1,6 +1,6 @@
 CC := gcc
 
-CFLAGS := -std=c99 -Wall -Wpedantic -Wextra -Wfloat-conversion -Wfloat-equal -Wvla 
+CFLAGS := -std=c99 -Wall -Wpedantic -Wextra -Wfloat-conversion -Wfloat-equal -Wvla -DDEBUG -g
 LDFLAGS := -lcheck
 INC := -I ../inc/
 
@@ -11,7 +11,7 @@ debug_tests: ../unit_tests.exe
 SRC_DIR = ../src
 OUT_DIR = ../out
 
-src1 = $(filter-out $(SRC_DIR)/main.c $(SRC_DIR)/profile.c,  $(wildcard $(SRC_DIR)/*.c))
+src1 = $(filter-out $(SRC_DIR)/main.c,  $(wildcard $(SRC_DIR)/*.c))
 src2 = $(filter-out ./check_main.c, $(wildcard ./*.c))
 src = $(src1) $(src2)
 obj1 = $(src1:$(SRC_DIR)/%.c=$(OUT_DIR)/%.o)
@@ -33,10 +33,11 @@ $(OUT_DIR)/check_main.o: check_main.c $(obj)
 $(OUT_DIR)/util.o: $(SRC_DIR)/util.c
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
-$(OUT_DIR)/io.o: $(SRC_DIR)/io.c
+
+$(OUT_DIR)/matrix.o: $(SRC_DIR)/matrix.c
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
-$(OUT_DIR)/%.o: %.c 
+$(OUT_DIR)/%.o: %.c
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
 .PHONY: unit

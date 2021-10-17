@@ -1,6 +1,6 @@
 CC := gcc
 
-CFLAGS := -std=c99 -Wall -Wpedantic -Wextra -Wfloat-conversion -Wfloat-equal -Wvla
+CFLAGS := -std=c99 -Wall -Wpedantic -Wextra -Wfloat-conversion -Wfloat-equal -Wvla -DDEBUG -g
 LDFLAGS := -lcheck
 INC := -I inc/
 
@@ -17,7 +17,7 @@ all: app.exe
 debug_tests:
 	cd unit_tests && make debug_tests
 
-src = $(filter-out src/main.c src/profile.c,  $(wildcard src/*.c))
+src = $(filter-out src/main.c, $(wildcard src/*.c))
 obj = $(src:src/%.c=out/%.o)
 dep = $(obj:.o=.d)
 
