@@ -1,5 +1,5 @@
 #! /bin/sh
-cd "$1" || exit 1
+cd "$(labfolder "$1")" || exit 1
 mkdir func_tests
 cd func_tests || exit
 

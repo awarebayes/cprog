@@ -6,7 +6,7 @@
 int main(int argc, char **argv)
 {
 	FILE *mf1 = NULL, *mf2 = NULL, *mfout = NULL;
-	matrix_t m1 = {0}, m2 = {0}, res = {0};
+	matrix_t m1 = { 0 }, m2 = { 0 }, res = { 0 };
 	int ec = ok;
 	if (argc != 5 && argc != 4)
 		ec = arg_err;
@@ -100,5 +100,5 @@ int main(int argc, char **argv)
 	matrix_delete(&m1);
 	matrix_delete(&m2);
 	matrix_delete(&res);
-    return ec;
+	return ec;
 }
