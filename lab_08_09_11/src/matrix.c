@@ -170,7 +170,7 @@ matrix_t gaussian_solve(matrix_t *self, int *ec)
 				x[i] = x[i] - arr[i][j] * x[j];
 			x[i] = x[i] / arr[i][i];
 		}
-		res = matrix_from_array(x, n, 1, ec);
+		res = matrix_from_array(x, 1, n, ec);
 		free(x);
 	}
 	return res;
