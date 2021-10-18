@@ -118,16 +118,8 @@ matrix_t matrix_mul(matrix_t *self, matrix_t *other, int *ec)
 	return res;
 }
 
-matrix_t gaussian_solve(matrix_t *self, int *ec)
+void gaussian_elimination(matrix_t *self, int *ec)
 {
-	matrix_t res = { 0 };
-	if (self->rows + 1 != self->columns)
-	{
-		*ec = matrix_size_err;
-		return res;
-	}
-	// Elimination
-
 	int n = self->rows;
 	int m = self->columns;
 	double **arr = self->data;
@@ -156,40 +148,28 @@ matrix_t gaussian_solve(matrix_t *self, int *ec)
 			}
 		}
 	}
-
-	// matrix_print(self, stdout);
-
-	if (!*ec)
-	{
-		// Substitution
-		double *x = calloc(n, sizeof(double));
-		for (int i = n - 1; i >= 0; i--)
-		{
-			x[i] = arr[i][m - 1];
-			for (int j = i + 1; j < m - 1; j++)
-				x[i] = x[i] - arr[i][j] * x[j];
-			x[i] = x[i] / arr[i][i];
-		}
-		res = matrix_from_array(x, 1, n, ec);
-		free(x);
-	}
-	return res;
 }
 
-int matrix_eq(matrix_t *self, matrix_t *other)
+double matrix_determinant(matrix_t *self, int *ec)
 {
-	int res = 1;
-	if (self->rows != other->rows)
-		res = 0;
-	if (self->columns != other->columns)
-		res = 0;
-	for (int i = 0; i < self->rows && res; ++i)
+	matrix_t matrix_copy = { 0 };
+	double result = 1;
+
+	if (self->rows != self->columns)
+		*ec = math_error;
+	if (!*ec)
+		matrix_copy = matrix_from_matrix(self, ec);
+	if (!*ec)
+		gaussian_elimination(&matrix_copy, ec);
+	
+	if (!*ec)
 	{
-		for (int j = 0; j < self->columns && res; ++j)
+		for (int i = 0; i < self->rows; i++)
 		{
-			if (fcmp(self->data[i][j], other->data[i][j]) != 0)
-				res = 0;
+			result *= self->data[i][i];
 		}
+		
 	}
-	return res;
+	matrix_delete(&matrix_copy);
+	return result;
 }

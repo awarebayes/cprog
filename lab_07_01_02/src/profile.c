@@ -60,6 +60,18 @@ int64_t measure_ticks(sortf_t func, int size)
     return ms;
 }
 
+int64_t measure_ticks_sorted(sortf_t func, int size)
+{
+    int *arr = gen_arr(size);
+    qsort(arr, size, sizeof(int), int_cmp);
+    int64_t start = ticks();
+    func(arr, size, sizeof(int), int_cmp);
+    int64_t end = ticks();
+    int64_t ms = (end - start);
+    free(arr);
+    return ms;
+}
+
 size_t measure_time_mean(sortf_t func, int size, int times)
 {
     size_t sum = 0;
@@ -74,7 +86,37 @@ size_t measure_time_mean(sortf_t func, int size, int times)
     return sum / (size_t)times;
 }
 
+size_t measure_time_mean_sorted(sortf_t func, int size, int times)
+{
+    size_t sum = 0;
+    // printf("%d, %d\n", size, times);
+    for (int i = 0; i < times; i++)
+    {
+        size_t res = measure_time(func, size);
+        // printf("profile %d %ld\n", i, res);
+        sum += res;
+    }
+    // printf("sum %ld %ld\n", sum, sum / (size_t) times);
+    return sum / (size_t)times;
+}
+
+
+
 size_t measure_ticks_mean(sortf_t func, int size, int times)
+{
+    size_t sum = 0;
+    // printf("%d, %d\n", size, times);
+    for (int i = 0; i < times; i++)
+    {
+        size_t res = measure_ticks(func, size);
+        // printf("profile %d %ld\n", i, res);
+        sum += res;
+    }
+    // printf("sum %ld %ld\n", sum, sum / (size_t) times);
+    return sum / (size_t)times;
+}
+
+size_t measure_ticks_mean_sorted(sortf_t func, int size, int times)
 {
     size_t sum = 0;
     // printf("%d, %d\n", size, times);
@@ -109,8 +151,8 @@ int main(int argc, char **argv)
     for (int i = 0; i < argc - 1; i++)
     {
         int n = sizes[i];
-        size_t tqsort = measure_ticks_mean(qsort, n, find_mean(n));
-        size_t tmysort = measure_ticks_mean(mysort, n, find_mean(n));
+        size_t tqsort = measure_ticks_mean_sorted(qsort, n, find_mean(n));
+        size_t tmysort = measure_ticks_mean_sorted(mysort, n, find_mean(n));
         printf("%d, %ld, %ld\n", sizes[i], tqsort, tmysort);
     }
     
