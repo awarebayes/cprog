@@ -39,7 +39,6 @@ int main(int argc, char **argv)
 			if (!ec)
 				matrix_print(&res, mfout);
 		}
-
 		else if (strcmp(argv[1], "m") == 0)
 		{
 			if (argc != 5)
@@ -66,7 +65,6 @@ int main(int argc, char **argv)
 			if (!ec)
 				matrix_print(&res, mfout);
 		}
-
 		else if (strcmp(argv[1], "c") == 0)
 		{
 			if (argc != 4)
@@ -86,7 +84,7 @@ int main(int argc, char **argv)
 					ec = file_err;
 			}
 			if (!ec)
-				fprintf(mfout,"%.6lf", dres);
+				fprintf(mfout, "%.6lf\n", dres);
 		}
 		else
 			ec = arg_err;

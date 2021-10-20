@@ -171,7 +171,6 @@ double matrix_determinant(const matrix_t *self, int *ec)
 			*ec= ec_elim;
 	}
 
-	// matrix_print(&matrix_copy, stdout);
 	if (!*ec)
 	{
 		for (int i = 0; i < self->rows; i++)
@@ -181,4 +180,22 @@ double matrix_determinant(const matrix_t *self, int *ec)
 	}
 	matrix_delete(&matrix_copy);
 	return result;
+}
+
+int matrix_eq(matrix_t *self, matrix_t *other)
+{
+	int res = 1;
+	if (self->rows != other->rows)
+		res = 0;
+	if (self->columns != other->columns)
+		res = 0;
+	for (int i = 0; i < self->rows && res; ++i)
+	{
+		for (int j = 0; j < self->columns && res; ++j)
+		{
+			if (fcmp(self->data[i][j], other->data[i][j]) != 0)
+				res = 0;
+		}
+	}
+	return res;
 }

@@ -2,7 +2,6 @@
 // Created by dev on 10/17/21.
 //
 
-
 #include "util.h"
 #include "../inc/matrix.h"
 #include "../inc/check_main.h"
