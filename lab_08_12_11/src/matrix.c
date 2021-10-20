@@ -168,7 +168,7 @@ double matrix_determinant(const matrix_t *self, int *ec)
 		if (ec_elim == math_error)
 			result = 0;
 		else
-			*ec= ec_elim;
+			*ec = ec_elim;
 	}
 
 	if (!*ec)
