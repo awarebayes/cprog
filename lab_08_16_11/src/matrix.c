@@ -26,7 +26,7 @@ matrix_t matrix_new(int n, int m, int *ec)
 	return self;
 }
 
-matrix_t matrix_from_matrix(matrix_t *m, int *ec)
+matrix_t matrix_from_matrix(const matrix_t *m, int *ec)
 {
 	matrix_t self = matrix_new(m->rows, m->columns, ec);
 	for (int i = 0; i < m->rows; i++)
@@ -72,7 +72,7 @@ matrix_t matrix_from_file(FILE *fin, int *ec)
 	return self;
 }
 
-void matrix_print(matrix_t *self, FILE *fout)
+void matrix_print(const matrix_t *self, FILE *fout)
 {
 	fprintf(fout, "%d %d\n", self->rows, self->columns);
 	for (int i = 0; i < self->rows; i++)
@@ -150,25 +150,34 @@ void gaussian_elimination(matrix_t *self, int *ec)
 	}
 }
 
-double matrix_determinant(matrix_t *self, int *ec)
+double matrix_determinant(const matrix_t *self, int *ec)
 {
 	matrix_t matrix_copy = { 0 };
 	double result = 1;
+	int ec_elim = 0; // local error code for elimination results
 
 	if (self->rows != self->columns)
 		*ec = math_error;
 	if (!*ec)
 		matrix_copy = matrix_from_matrix(self, ec);
 	if (!*ec)
-		gaussian_elimination(&matrix_copy, ec);
-	
+		gaussian_elimination(&matrix_copy, &ec_elim);
+
+	if (ec_elim != ok)
+	{
+		if (ec_elim == math_error)
+			result = 0;
+		else
+			*ec= ec_elim;
+	}
+
+	// matrix_print(&matrix_copy, stdout);
 	if (!*ec)
 	{
 		for (int i = 0; i < self->rows; i++)
 		{
-			result *= self->data[i][i];
+			result *= matrix_copy.data[i][i];
 		}
-		
 	}
 	matrix_delete(&matrix_copy);
 	return result;
