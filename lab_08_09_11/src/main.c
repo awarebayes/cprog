@@ -7,7 +7,6 @@ int main(int argc, char **argv)
 {
 	FILE *mf1 = NULL, *mf2 = NULL, *mfout = NULL;
 	matrix_t m1 = { 0 }, m2 = { 0 }, res = { 0 };
-	double dres = 0.0;
 	int ec = ok;
 	if (argc != 5 && argc != 4)
 		ec = arg_err;
@@ -67,25 +66,6 @@ int main(int argc, char **argv)
 		}
 		else if (strcmp(argv[1], "o") == 0)
 		{
-			// if (argc != 4)
-			// 	ec = arg_err;
-			// if (!ec)
-			// 	mf1 = fopen(argv[2], "r");
-			// if (mf1 == NULL)
-			// 	ec = file_err;
-			// if (!ec)
-			// 	m1 = matrix_from_file(mf1, &ec);
-			// if (!ec)
-			// 	dres = matrix_determinant(&m1, &ec);
-			// if (!ec)
-			// {
-			// 	mfout = fopen(argv[3], "w");
-			// 	if (mfout == NULL)
-			// 		ec = file_err;
-			// }
-			// if (!ec)
-			// 	fprintf(mfout, "%.6lf\n", dres);
-			
 			if (argc != 4)
 				ec = arg_err;
 			if (!ec)
@@ -104,7 +84,6 @@ int main(int argc, char **argv)
 			}
 			if (!ec)
 				matrix_print(&res, mfout);
-
 		}
 		else
 			ec = arg_err;

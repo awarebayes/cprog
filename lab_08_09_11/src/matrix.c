@@ -151,44 +151,9 @@ void gaussian_elimination(matrix_t *self, int *ec, int *row_switches)
 	}
 }
 
-double matrix_determinant(const matrix_t *self, int *ec)
-{
-	matrix_t matrix_copy = { 0 };
-	double result = 1;
-	int ec_elim = 0; // local error code for elimination results
-	int row_switches = 0;
-
-	if (self->rows != self->columns)
-		*ec = math_error;
-	if (!*ec)
-		matrix_copy = matrix_from_matrix(self, ec);
-	if (!*ec)
-		gaussian_elimination(&matrix_copy, &ec_elim, &row_switches);
-
-	if (ec_elim != ok)
-	{
-		if (ec_elim == math_error)
-			result = 0;
-		else
-			*ec = ec_elim;
-	}
-
-	if (!*ec)
-	{
-		for (int i = 0; i < self->rows; i++)
-		{
-			result *= matrix_copy.data[i][i];
-		}
-	}
-	matrix_delete(&matrix_copy);
-	if (row_switches % 2 == 1)
-		result *= -1;
-	return result;
-}
-
 matrix_t gaussian_solve(matrix_t *self, int *ec)
 {
-	matrix_t res = {0};
+	matrix_t res = { 0 };
 	int row_switches = 0;
 	int n = self->rows;
 	int m = self->columns;
