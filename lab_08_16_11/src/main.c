@@ -65,7 +65,7 @@ int main(int argc, char **argv)
 			if (!ec)
 				matrix_print(&res, mfout);
 		}
-		else if (strcmp(argv[1], "c") == 0)
+		else if (strcmp(argv[1], "o") == 0)
 		{
 			if (argc != 4)
 				ec = arg_err;

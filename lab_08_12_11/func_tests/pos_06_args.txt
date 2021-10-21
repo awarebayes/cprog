@@ -1,1 +1,0 @@
-c ./pos_06_in.txt ./temp.txt
