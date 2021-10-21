@@ -18,6 +18,7 @@ void matrix_print(const matrix_t *self, FILE *fout);
 matrix_t matrix_add(matrix_t *self, matrix_t *other, int *ec);
 matrix_t matrix_mul(matrix_t *self, matrix_t *other, int *ec);
 double matrix_determinant(const matrix_t *self, int *ec);
+matrix_t gaussian_solve(matrix_t *self, int *ec);
 int matrix_eq(matrix_t *self, matrix_t *other);
 
 #endif // !__MATRIX_H__

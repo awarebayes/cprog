@@ -67,6 +67,25 @@ int main(int argc, char **argv)
 		}
 		else if (strcmp(argv[1], "o") == 0)
 		{
+			// if (argc != 4)
+			// 	ec = arg_err;
+			// if (!ec)
+			// 	mf1 = fopen(argv[2], "r");
+			// if (mf1 == NULL)
+			// 	ec = file_err;
+			// if (!ec)
+			// 	m1 = matrix_from_file(mf1, &ec);
+			// if (!ec)
+			// 	dres = matrix_determinant(&m1, &ec);
+			// if (!ec)
+			// {
+			// 	mfout = fopen(argv[3], "w");
+			// 	if (mfout == NULL)
+			// 		ec = file_err;
+			// }
+			// if (!ec)
+			// 	fprintf(mfout, "%.6lf\n", dres);
+			
 			if (argc != 4)
 				ec = arg_err;
 			if (!ec)
@@ -76,7 +95,7 @@ int main(int argc, char **argv)
 			if (!ec)
 				m1 = matrix_from_file(mf1, &ec);
 			if (!ec)
-				dres = matrix_determinant(&m1, &ec);
+				res = gaussian_solve(&m1, &ec);
 			if (!ec)
 			{
 				mfout = fopen(argv[3], "w");
@@ -84,7 +103,8 @@ int main(int argc, char **argv)
 					ec = file_err;
 			}
 			if (!ec)
-				fprintf(mfout, "%.6lf\n", dres);
+				matrix_print(&res, mfout);
+
 		}
 		else
 			ec = arg_err;

@@ -186,6 +186,39 @@ double matrix_determinant(const matrix_t *self, int *ec)
 	return result;
 }
 
+matrix_t gaussian_solve(matrix_t *self, int *ec)
+{
+	matrix_t res = {0};
+	int row_switches = 0;
+	int n = self->rows;
+	int m = self->columns;
+	double **arr = self->data;
+
+	if (self->rows + 1 != self->columns)
+	{
+		*ec = matrix_size_err;
+		return res;
+	}
+
+	gaussian_elimination(self, ec, &row_switches);
+
+	if (!*ec)
+	{
+		// Substitution
+		double *x = calloc(n, sizeof(double));
+		for (int i = n - 1; i >= 0; i--)
+		{
+			x[i] = arr[i][m - 1];
+			for (int j = i + 1; j < m - 1; j++)
+				x[i] = x[i] - arr[i][j] * x[j];
+			x[i] = x[i] / arr[i][i];
+		}
+		res = matrix_from_array(x, n, 1, ec);
+		free(x);
+	}
+	return res;
+}
+
 int matrix_eq(matrix_t *self, matrix_t *other)
 {
 	int res = 1;
