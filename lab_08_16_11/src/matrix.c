@@ -118,7 +118,7 @@ matrix_t matrix_mul(matrix_t *self, matrix_t *other, int *ec)
 	return res;
 }
 
-void gaussian_elimination(matrix_t *self, int *ec)
+void gaussian_elimination(matrix_t *self, int *ec, int *row_switches)
 {
 	int n = self->rows;
 	int m = self->columns;
@@ -133,6 +133,7 @@ void gaussian_elimination(matrix_t *self, int *ec)
 				double *temp = arr[i];
 				arr[i] = arr[k];
 				arr[k] = temp;
+				row_switches++;
 			}
 		}
 		if (fcmp(arr[i][i], 0.0) == 0)
@@ -155,13 +156,14 @@ double matrix_determinant(const matrix_t *self, int *ec)
 	matrix_t matrix_copy = { 0 };
 	double result = 1;
 	int ec_elim = 0; // local error code for elimination results
+	int row_switches = 0;
 
 	if (self->rows != self->columns)
 		*ec = math_error;
 	if (!*ec)
 		matrix_copy = matrix_from_matrix(self, ec);
 	if (!*ec)
-		gaussian_elimination(&matrix_copy, &ec_elim);
+		gaussian_elimination(&matrix_copy, &ec_elim, &row_switches);
 
 	if (ec_elim != ok)
 	{
@@ -179,6 +181,8 @@ double matrix_determinant(const matrix_t *self, int *ec)
 		}
 	}
 	matrix_delete(&matrix_copy);
+	if (row_switches % 2 == 1)
+		result *= -1;
 	return result;
 }
 
