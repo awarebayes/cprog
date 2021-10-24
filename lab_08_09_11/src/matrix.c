@@ -141,7 +141,7 @@ void gaussian_elimination(matrix_t *self, int *ec, int *row_switches)
 		if (!*ec)
 		{
 			// Begin elimination
-			for (int k = i + 1; k < n; k++)
+			for (int k = i + 1; k < n && !*ec; k++)
 			{
 				double term = arr[k][i] / arr[i][i];
 				for (int j = 0; j < m; ++j)
