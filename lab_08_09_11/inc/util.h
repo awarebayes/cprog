@@ -13,7 +13,7 @@ enum enum_err
 	file_err,
 	malloc_err,
 	matrix_size_err,
-	math_error,
+	math_err,
 	arg_err,
 };
 

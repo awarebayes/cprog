@@ -137,7 +137,7 @@ void gaussian_elimination(matrix_t *self, int *ec, int *row_switches)
 			}
 		}
 		if (fcmp(arr[i][i], 0.0) == 0)
-			*ec = math_error;
+			*ec = math_err;
 		if (!*ec)
 		{
 			// Begin elimination
@@ -158,6 +158,8 @@ matrix_t gaussian_solve(matrix_t *self, int *ec)
 	int n = self->rows;
 	int m = self->columns;
 	double **arr = self->data;
+	double det = 1.0;
+
 
 	if (self->rows + 1 != self->columns)
 	{
@@ -167,6 +169,11 @@ matrix_t gaussian_solve(matrix_t *self, int *ec)
 
 	gaussian_elimination(self, ec, &row_switches);
 
+	for (int i = 0; i < self->rows; ++i)
+		det *= arr[i][i];
+	if (fcmp(det, 0.0) == 0)
+		*ec = math_err;
+	
 	if (!*ec)
 	{
 		// Substitution
