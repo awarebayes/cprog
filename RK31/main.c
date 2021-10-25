@@ -12,8 +12,8 @@ int main(int argc, char **argv)
 	matrix_t new_state = old_state;
 	printf("0\n");
 	matrix_print(&old_state, stdout);
-	int i = 0;
-	for (i = 1; ((i <= n_iter) || n_iter < 0) && !ended ; i++)
+
+	for (int i = 1; ((i <= n_iter) || n_iter < 0) && !ended ; i++)
 	{
 		printf("Step: %d\n", i);
 		new_state = life_update(&old_state, &ended);
@@ -21,7 +21,6 @@ int main(int argc, char **argv)
 		matrix_delete(&old_state);
 		old_state = new_state;
 	}
-	printf("i: %d %d\n", n_iter, i);
 	if (ended)
 		printf("Ended! :(\n");
 	
