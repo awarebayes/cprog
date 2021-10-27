@@ -34,6 +34,25 @@ START_TEST(test_read_2)
 
 END_TEST
 
+
+START_TEST(test_matrix_create)
+{
+	double arr[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+	int ec = 0;
+	matrix_t m = matrix_from_array(arr, 3, 3, &ec);
+	ck_assert_int_eq(ec, 0);
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; ++j)
+		{
+			ck_assert_double_eq(m.data[i][j], arr[i * 3 + j]);
+		}
+	}
+	matrix_delete(&m);
+}
+
+END_TEST
+
 Suite *matrix_suite(void)
 {
 	Suite *s;
@@ -44,6 +63,7 @@ Suite *matrix_suite(void)
 
 	tcase_add_test(tc_core, test_read_1);
 	tcase_add_test(tc_core, test_read_2);
+	tcase_add_test(tc_core, test_matrix_create);
 	suite_add_tcase(s, tc_core);
 
 	return s;

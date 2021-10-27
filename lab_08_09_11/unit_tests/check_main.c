@@ -5,7 +5,7 @@ int main()
 {
     int number_failed = 0;
     SRunner *sr;
-    sr = srunner_create(read_suite());
+    sr = srunner_create(util_suite());
     srunner_set_fork_status(sr, CK_NOFORK);
     srunner_add_suite(sr, matrix_suite());
     srunner_run_all(sr, CK_NORMAL);
