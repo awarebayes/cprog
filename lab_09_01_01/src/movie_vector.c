@@ -75,10 +75,10 @@ int vector_insert_sorted(vector_t *self, movie_t *m, int mode)
 	return self->size;
 }
 
-int vector_find(vector_t *self, int n, field_t *target, int mode)
+int vector_find(vector_t *self, field_t *target, int mode)
 {
 	int low = 0;
-	int high = n;
+	int high = self->size;
 	int mid;
 	field_t to_cmp = { 0 };
 	int found = 0;

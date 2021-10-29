@@ -9,7 +9,6 @@ int main(int argc, char **argv)
 	vector_t movies = { 0 };
 	FILE *f = NULL;
 	int field_type;
-	int movies_len = 0;
 
 	if (argc != 3 && argc != 4)
 		ec = arg_error;
@@ -31,6 +30,8 @@ int main(int argc, char **argv)
 	if (!ec)
 	{
 		movies = read_all_movies(f, field_type, &ec);
+		if (movies.size == 0)
+			ec = empty_file;
 	}
 
 	if (!ec)
@@ -42,7 +43,7 @@ int main(int argc, char **argv)
 			field_t field = field_from_str(argv[3], field_type, &ec);
 			if (!ec)
 			{
-				int index = vector_find(&movies, movies_len, &field, field_type);
+				int index = vector_find(&movies, &field, field_type);
 				if (index < 0)
 					printf("Not found\n");
 				else
