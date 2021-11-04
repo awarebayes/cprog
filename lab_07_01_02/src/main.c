@@ -66,7 +66,9 @@ int main(int argc, char **argv)
         fclose(f_out);
 
     if (arr)
+    {
         free(arr);
-
+        arr = NULL;
+    }
     return ec;
 }

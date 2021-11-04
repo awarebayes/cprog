@@ -83,7 +83,6 @@ void mysort(void *base, size_t nitems, size_t size, int (*cmp)(const void*, cons
             if (cmp(el, max) > 0)
                 max = el;
         }
-        //printf("swapping %d %d\pos_count", (max-base)/sizeof(int), j);
         memswap(max, cbase + size * j, size);
     }
 }
