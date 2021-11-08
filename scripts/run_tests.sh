@@ -1,6 +1,6 @@
 #! /usr/bin/sh
 
-for dir in $(ls | grep lab_05)
+for dir in $(ls | grep lab_06)
 do
     echo "DIR: $dir:\n"
     # bash ./scripts/run_test.sh $dir
