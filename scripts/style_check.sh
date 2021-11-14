@@ -2,15 +2,19 @@
 
 for dir in $(ls | grep lab_07)
 do
-    cd $dir
+    cd $dir || exit 1
     echo "$dir:\n"
-    for f in  ./**/*.c
+    for file in *.c
     do
-        code_checker $f
+        echo "$file:"
+        code_checker $file
+        echo "___"
     done
-    for f in ./**/*.h
+    for file in *.h
     do
-        code_checker $f
+        echo "$file:"
+        code_checker $file
+        echo "___"
     done
     cd ..
 done
