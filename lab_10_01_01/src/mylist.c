@@ -64,8 +64,9 @@ node_t *find(node_t *head, const void *data, comparator_t comparator)
 
 void *pop_front(node_t **head)
 {
-	if (*head == NULL)
+	if (*head == NULL || head == NULL)
 		return NULL;
+
 	void *result = (*head)->data;
 	node_t *current_ptr = *head;
 	(*head) = (*head)->next;
