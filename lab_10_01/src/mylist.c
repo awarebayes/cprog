@@ -136,7 +136,7 @@ void print_as_int(node_t *head)
 {
 	while (head)
 	{
-		printf("%d -> ", *((int *)head->data));
+		printf("%d -> ", *((int *) head->data));
 		head = head->next;
 	}
 	printf("null\n");
