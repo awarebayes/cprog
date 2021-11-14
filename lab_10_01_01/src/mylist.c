@@ -2,7 +2,6 @@
 // Created by dev on 11/10/21.
 //
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "mylist.h"
@@ -14,7 +13,7 @@
 
 node_t *node_new(void *value, int *ec)
 {
-	node_t *self = (node_t *) malloc(sizeof(node_t));
+	node_t *self = (node_t *)malloc(sizeof(node_t));
 	if (self == NULL && ec)
 	{
 		*ec = bad_malloc;
@@ -64,13 +63,14 @@ node_t *find(node_t *head, const void *data, comparator_t comparator)
 
 void *pop_front(node_t **head)
 {
-	if (*head == NULL || head == NULL)
-		return NULL;
-
-	void *result = (*head)->data;
-	node_t *current_ptr = *head;
-	(*head) = (*head)->next;
-	free(current_ptr);
+	void *result = NULL;
+	if (head != NULL && *head != NULL)
+	{
+		void *result = (*head)->data;
+		node_t *current_ptr = *head;
+		(*head) = (*head)->next;
+		free(current_ptr);
+	}
 	return result;
 }
 
@@ -137,7 +137,7 @@ void print_as_int(node_t *head)
 {
 	while (head)
 	{
-		printf("%d -> ", *((int *) head->data));
+		printf("%d -> ", *((int *)head->data));
 		head = head->next;
 	}
 	printf("null\n");
