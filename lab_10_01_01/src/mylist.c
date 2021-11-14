@@ -7,16 +7,16 @@
 #include "mylist.h"
 #include "memory.h"
 
-#define bad_malloc 1
-#define copied_error 2
-#define nullptr_err 3
+#define BAD_MALLOC 1
+#define COPIED_ERROR 2
+#define NULLPTR_ERR 3
 
 node_t *node_new(void *value, int *ec)
 {
 	node_t *self = (node_t *)malloc(sizeof(node_t));
 	if (self == NULL && ec)
 	{
-		*ec = bad_malloc;
+		*ec = BAD_MALLOC;
 	}
 	else
 	{
@@ -66,7 +66,7 @@ void *pop_front(node_t **head)
 	void *result = NULL;
 	if (head != NULL && *head != NULL)
 	{
-		void *result = (*head)->data;
+	 	result = (*head)->data;
 		node_t *current_ptr = *head;
 		(*head) = (*head)->next;
 		free(current_ptr);
@@ -77,7 +77,7 @@ void *pop_front(node_t **head)
 int copy(node_t *head, node_t **new_head_ptr)
 {
 	if (!head)
-		return nullptr_err;
+		return NULLPTR_ERR;
 
 	int ec = 0;
 	node_t *new_head = node_new(head, &ec);
@@ -101,7 +101,6 @@ int copy(node_t *head, node_t **new_head_ptr)
 
 void sorted_insert(node_t **head, node_t *element, comparator_t comparator)
 {
-
 	node_t *curr = *head;
 	node_t *prev = NULL;
 	if (curr == NULL)
