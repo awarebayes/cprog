@@ -3,6 +3,7 @@
 //
 #include "cli.h"
 #include "poly.h"
+#include "util.h"
 #include <stdio.h>
 
 #define BUF_SIZE 1024
