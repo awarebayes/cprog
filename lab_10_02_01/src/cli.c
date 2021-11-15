@@ -4,6 +4,7 @@
 #include "cli.h"
 #include "poly.h"
 #include <stdio.h>
+
 #define BUF_SIZE 1024
 
 poly_t read_poly(int *ec)
@@ -32,7 +33,7 @@ void val(int *ec)
 void ddx(int *ec)
 {
 	poly_t poly = read_poly(ec);
-	poly_t result =  { 0 };
+	poly_t result = { 0 };
 	if (!*ec)
 	{
 		result = poly_derivative(&poly, ec); // todo is 0 0 bad for eval?
@@ -47,7 +48,7 @@ void sum(int *ec)
 {
 	poly_t poly1 = { 0 };
 	poly_t poly2 = { 0 };
-	poly_t result =  { 0 };
+	poly_t result = { 0 };
 	poly1 = read_poly(ec);
 	if (!*ec)
 		poly2 = read_poly(ec);

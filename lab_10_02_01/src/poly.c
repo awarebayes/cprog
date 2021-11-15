@@ -209,7 +209,7 @@ void poly_split_odd_even_power(poly_t *self, poly_t *odd, poly_t *even, int *ec)
 
 int poly_is_null(poly_t *self)
 {
-	int has_null_ptr =  (self->first == self->last && self->first == NULL);
+	int has_null_ptr = (self->first == self->last && self->first == NULL);
 	int is_zero = (self->first != 0 && term_zero(&self->first->term));
 	return has_null_ptr || is_zero;
 }

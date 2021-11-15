@@ -19,6 +19,7 @@ enum error_u
 };
 
 void read_int_array(int *out, int *size, int max_size, char *in, int *ec);
+
 int read_int(int *ec);
 
 #endif //LAB_10_02_21_UTIL_H
