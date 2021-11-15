@@ -23,6 +23,12 @@ node_t *node_new(int coef, int pow, int *ec)
 	return self;
 }
 
+
+node_t *node_from_term(term_t *term, int *ec)
+{
+	return node_new(term->coef, term->pow, ec);
+}
+
 void node_delete(node_t *self)
 {
 	free(self);

@@ -30,7 +30,19 @@ dep = $(obj3:.o=.d)
 $(OUT_DIR)/check_main.o: check_main.c $(obj)
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
-$(OUT_DIR)/mylist.o: $(SRC_DIR)/mylist.c
+$(OUT_DIR)/node.o: $(SRC_DIR)/node.c
+	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
+
+$(OUT_DIR)/poly.o: $(SRC_DIR)/poly.c
+	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
+
+$(OUT_DIR)/term.o: $(SRC_DIR)/term.c
+	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
+
+$(OUT_DIR)/util.o: $(SRC_DIR)/util.c
+	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
+
+$(OUT_DIR)/cli.o: $(SRC_DIR)/cli.c
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
 $(OUT_DIR)/%.o: %.c 
