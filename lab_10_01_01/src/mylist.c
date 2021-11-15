@@ -13,7 +13,7 @@
 
 node_t *node_new(void *value, int *ec)
 {
-	node_t *self = (node_t *)malloc(sizeof(node_t));
+	node_t *self = (node_t *) malloc(sizeof(node_t));
 	if (self == NULL && ec)
 	{
 		*ec = BAD_MALLOC;
@@ -66,7 +66,7 @@ void *pop_front(node_t **head)
 	void *result = NULL;
 	if (head != NULL && *head != NULL)
 	{
-	 	result = (*head)->data;
+		result = (*head)->data;
 		node_t *current_ptr = *head;
 		(*head) = (*head)->next;
 		free(current_ptr);
@@ -136,7 +136,7 @@ void print_as_int(node_t *head)
 {
 	while (head)
 	{
-		printf("%d -> ", *((int *)head->data));
+		printf("%d -> ", *((int *) head->data));
 		head = head->next;
 	}
 	printf("null\n");

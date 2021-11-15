@@ -9,14 +9,16 @@
 int powi(int base, int pow)
 {
 	int result = 1;
-	for (;;)
+	int flag = 1;
+	while (flag)
 	{
 		if (pow & 1)
 			result *= base;
 		pow >>= 1;
 		if (!pow)
-			break;
-		base *= base;
+			flag = 0;
+		else
+			base *= base;
 	}
 
 	return result;

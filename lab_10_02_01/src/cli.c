@@ -66,7 +66,6 @@ void sum(int *ec)
 
 void dvd(int *ec)
 {
-
 	poly_t poly = read_poly(ec);
 	poly_t even = { 0 };
 	poly_t odd = { 0 };

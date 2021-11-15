@@ -170,7 +170,6 @@ poly_t poly_sum(poly_t *self, poly_t *other, int *ec)
 			poly_add_term(&result, &node_1->term, ec);
 			node_1 = node_1->next;
 		}
-
 		else if (node_1 == NULL || node_1->term.pow < node_2->term.pow)
 		{
 			poly_add_term(&result, &node_2->term, ec);

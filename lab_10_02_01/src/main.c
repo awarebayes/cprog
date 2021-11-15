@@ -28,6 +28,7 @@ int main()
 			dvd(&ec);
 		else
 			ec = bad_command_err;
+		printf("----\n");
 	}
 	return ec;
 }
