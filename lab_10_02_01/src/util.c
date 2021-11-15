@@ -13,18 +13,6 @@ static void remove_lc(char *str)
 	str[strcspn(str, "\r\n")] = '\0';
 }
 
-static int all_digits(char *str)
-{
-	int flag = 1;
-	while (flag && *str)
-	{
-		if (!isdigit(*str))
-			flag = 0;
-		str++;
-	}
-	return flag;
-}
-
 void read_int_array(int *out, int *size, int max_size, char *in, int *ec)
 {
 	int local_ec = ok;
@@ -36,10 +24,6 @@ void read_int_array(int *out, int *size, int max_size, char *in, int *ec)
 	while (token && !local_ec)
 	{
 		remove_lc(token);
-		if (*token && !all_digits(token) && ec)
-		{
-			local_ec = input_err;
-		}
 		if (sscanf(token, "%d", &value) != 1)
 		{
 			local_ec = input_err;
@@ -65,8 +49,6 @@ int read_int(int *ec)
 		*ec = input_err;
 	if (sscanf(buffer, "%d %s", &temp_int, temp) == 2)
 		*ec = input_err;
-	if (strcmp(buffer, "\n") == 0)
-		fgets(buffer, BUFFER_SIZE, stdin);
 	return target;
 }
 

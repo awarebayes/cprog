@@ -50,7 +50,7 @@ void print(int *arr, int n)
 
 static void check_power(node_t *self, node_t *last, int *ec)
 {
-	if (self->term.pow < 0 || self->term.pow >= last->term.pow)
+	if (self->term.pow >= last->term.pow)
 		*ec = input_err;
 }
 
@@ -75,10 +75,11 @@ void poly_add(poly_t *self, int coef, int pow, int *ec)
 
 void poly_add_term(poly_t *self, term_t *term, int *ec)
 {
-	if (!term_zero(term))
-		poly_add(self, term->coef, term->pow, ec);
-	else if (ec)
-		*ec = zero_term_added_err;
+	// todo remove
+	//if (!term_zero(term))
+	poly_add(self, term->coef, term->pow, ec);
+	//else if (ec)
+	//	*ec = zero_term_added_err;
 }
 
 // @constructor
@@ -108,6 +109,8 @@ poly_t poly_from_string(char *string, int *ec)
 	int local_ec = ok;
 	poly_t self = { 0 };
 	read_int_array(buf, &n_integers, TEMP_BUF_SIZE, string, &local_ec);
+	if (n_integers % 2 != 0)
+		local_ec = input_err;
 	if (!local_ec)
 		self = poly_from_array(buf, n_integers, &local_ec);
 	if (ec)
@@ -222,5 +225,5 @@ void poly_print(poly_t *self)
 		printf("%d %d ", node->term.coef, node->term.pow);
 		node = node->next;
 	}
-	printf("L\n");
+	printf("L");
 }

@@ -13,9 +13,8 @@ int main()
 {
 	int ec = 0;
 	char command[BUFFER_SIZE];
-	printf("in>\n");
 	fgets(command, BUFFER_SIZE, stdin);
-	command[strcspn(command, "\n")] = 0;
+	command[strcspn(command, "\r\n")] = 0;
 	if (strcmp(command, "val") == 0)
 		val(&ec);
 	else if (strcmp(command, "ddx") == 0)
