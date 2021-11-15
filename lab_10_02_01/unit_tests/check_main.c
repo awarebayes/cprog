@@ -214,7 +214,7 @@ START_TEST(test_poly_derivative_3)
 	char p1str[] = "5 0";
 	poly_t p1 = poly_from_string(p1str, &ec);
 	poly_t p1d = poly_derivative(&p1, &ec);
-	ck_assert_int_eq(ec, null_poly_err);
+	ck_assert_int_eq(ec, 0);
 	poly_delete(&p1);
 	poly_delete(&p1d);
 }
