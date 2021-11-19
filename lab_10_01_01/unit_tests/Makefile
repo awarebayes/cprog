@@ -33,6 +33,15 @@ $(OUT_DIR)/check_main.o: check_main.c $(obj)
 $(OUT_DIR)/mylist.o: $(SRC_DIR)/mylist.c
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
+$(OUT_DIR)/applicant.o: $(SRC_DIR)/applicant.c
+	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
+
+$(OUT_DIR)/cli.o: $(SRC_DIR)/cli.c
+	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
+
+$(OUT_DIR)/util.o: $(SRC_DIR)/util.c
+	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
+
 $(OUT_DIR)/%.o: %.c 
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 

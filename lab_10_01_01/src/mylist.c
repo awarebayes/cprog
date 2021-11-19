@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <applicant.h>
 #include "mylist.h"
 #include "memory.h"
 
@@ -107,7 +108,7 @@ void sorted_insert(node_t **head, node_t *element, comparator_t comparator)
 		*head = element;
 	else
 	{
-		while (curr && comparator(curr->data, element->data) < 0)
+		while (curr && comparator(curr->data, element->data))
 		{
 			prev = curr;
 			curr = curr->next;
@@ -118,6 +119,17 @@ void sorted_insert(node_t **head, node_t *element, comparator_t comparator)
 			*head = element;
 		element->next = curr;
 	}
+}
+
+void print_list(node_t *head)
+{
+	while (head)
+	{
+		applicant_t app = *((applicant_t *) head->data);
+		printf("%s (%f) -> ", app.name, app.gpa);
+		head = head->next;
+	}
+	printf("null\n");
 }
 
 node_t *sort(node_t *head, comparator_t comparator)
@@ -132,12 +144,4 @@ node_t *sort(node_t *head, comparator_t comparator)
 	return new;
 }
 
-void print_as_int(node_t *head)
-{
-	while (head)
-	{
-		printf("%d -> ", *((int *) head->data));
-		head = head->next;
-	}
-	printf("null\n");
-}
+

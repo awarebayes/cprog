@@ -3,7 +3,7 @@
 
 int comparator(const void *a, const void *b)
 {
-	return *((int *) a) - *((int *) b);
+	return *((int *) a) - *((int *) b) < 0;
 }
 
 START_TEST(test_list_find)
@@ -173,7 +173,7 @@ START_TEST(test_list_insert_sorted_3)
 {
 	node_t *head = NULL;
 	int array1[] = { 9, 2, 3, 5, 4, 8, 7, 0, 6, 1 };
-	int array_target[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+	int array_target[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 	// ---
 	for (int i = 0; i < 10; i++)
 	{
@@ -199,7 +199,7 @@ START_TEST(test_list_sort)
 {
 	node_t *head = NULL;
 	int array1[] = { 9, 2, 3, 5, 4, 8, 7, 0, 6, 1 };
-	int array_target[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+	int array_target[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 	node_t *prev = NULL;
 	// ---
 	for (int i = 0; i < 10; i++)

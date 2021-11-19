@@ -34,6 +34,6 @@ void sorted_insert(node_t **head, node_t *element, comparator_t comparator);
 
 node_t *sort(node_t *head, comparator_t comparator);
 
-void print_as_int(node_t *head);
+void print_list(node_t *head);
 
 #endif //IU7_CPROG_LABS_2021_SCHERBINAMIKHAIL_LIST_H
