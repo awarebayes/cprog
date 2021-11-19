@@ -3,7 +3,7 @@
 
 int comparator(const void *a, const void *b)
 {
-	return *((int *) a) - *((int *) b) < 0;
+	return *((int *) a) - *((int *) b);
 }
 
 START_TEST(test_list_find)

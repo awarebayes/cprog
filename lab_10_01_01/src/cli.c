@@ -18,7 +18,13 @@ static int applicant_cmp_gpa(const void *a, const void *b)
 {
 	applicant_t *a_app = (applicant_t *) a;
 	applicant_t *b_app = (applicant_t *) b;
-	return a_app->gpa - b_app->gpa > DELTA;
+	float gpa_diff = a_app->gpa - b_app->gpa;
+	int result = 0;
+	if (gpa_diff > DELTA)
+		result = 1;
+	else if (gpa_diff < -DELTA)
+		result = -1;
+	return -result;
 }
 
 static applicant_t *node_to_applicant(node_t *node)
@@ -58,8 +64,6 @@ enrollment_t accept_applicants(node_t *list, int *ec)
 {
 	enrollment_t result = { 0 };
 	node_t *sorted = sort(list, applicant_cmp_gpa);
-
-	print_list(sorted);
 
 	while (node_to_applicant(sorted)->gpa > 5)
 		pop_front(&sorted);
