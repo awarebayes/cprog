@@ -44,7 +44,7 @@ unit:
 
 .PHONY: func
 func: app.exe
-	python ./func_tests/test_simple.py .
+	./func_tests/run_test.sh
 
 .PHONY: clean
 clean:

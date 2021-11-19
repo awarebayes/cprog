@@ -12,6 +12,14 @@ do
                 exit 1
             fi
         fi
+        if [[ $TEST == pos_* ]]
+        then
+            if ! ../app.exe < ./${TEST}_in.txt
+            then
+                echo "positive ${TEST}_in.txt returned $?"
+                exit 1
+            fi
+        fi
         if ! diff  --strip-trailing-cr  ./${TEST}_out.txt <(../app.exe < ./${TEST}_in.txt) > /dev/null
         then
             echo "_____________"
@@ -22,3 +30,5 @@ do
         fi
     fi
 done
+
+echo "Tests passed!"
