@@ -15,5 +15,6 @@ bin/*
 .tabignore
 /fuzz
 /**/temp/
-/**/sus_tests/
+/**/.idea/
+/**/.PVS-Studio/
 /**/vgcore.*

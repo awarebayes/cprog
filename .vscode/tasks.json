@@ -72,7 +72,7 @@
             "type": "shell",
             "command": "./scripts/make_tests.sh",
             "args": [
-                "$(labfolder ${fileDirname})",
+                "${fileDirname}",
                 "${input:n_pos_tests}",
                 "${input:n_neg_tests}",
                 "${input:create_args}"
