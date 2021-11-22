@@ -86,7 +86,7 @@ void print_movie(movie_t *m)
 }
 
 
-int get_field_type(char *str) {
+int get_field_index(char *str) {
     int flag = 0;
     for (int i = 0; i < N_FIELDS && !flag; i++)
     {

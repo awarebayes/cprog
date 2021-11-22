@@ -24,7 +24,7 @@ int main(int argc, char **argv) {
         return path_error;
 
     char *field_name = argv[2];
-    int field_type = get_field_type(field_name);
+    int field_type = get_field_index(field_name);
     if (field_type < 0)
         return field_type_error;
     int movies_len = read_all_movies(f, movies, field_type);
