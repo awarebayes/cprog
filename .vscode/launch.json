@@ -1,0 +1,54 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "gcc - Сборка и отладка папки",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/../app.exe",
+            "args": [
+                "./func_tests/neg_06_in.txt",
+                "./func_tests/temp.txt",
+                "f"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Включить автоматическое форматирование для gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Compile folder for debugging",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "gcc - Сборка и отладка тестов",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/../unit_tests.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Включить автоматическое форматирование для gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            // "preLaunchTask": "Compile folder for testing and debugging",
+            "miDebuggerPath": "/usr/bin/gdb"
+        }
+    ]
+}
