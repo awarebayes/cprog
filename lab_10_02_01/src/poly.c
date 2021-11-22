@@ -38,15 +38,6 @@ int poly_eval(poly_t *self, int x, int *ec)
 	return sum;
 }
 
-// TODO delete
-void print(int *arr, int n)
-{
-	for (int i = 0; i < n; i++)
-	{
-		printf("%d ", arr[i]);
-	}
-	printf("\n");
-}
 
 static void check_power(node_t *self, node_t *last, int *ec)
 {
@@ -75,11 +66,7 @@ void poly_add(poly_t *self, int coef, int pow, int *ec)
 
 void poly_add_term(poly_t *self, term_t *term, int *ec)
 {
-	// todo remove
-	//if (!term_zero(term))
 	poly_add(self, term->coef, term->pow, ec);
-	//else if (ec)
-	//	*ec = zero_term_added_err;
 }
 
 // @constructor
@@ -133,7 +120,6 @@ poly_t poly_derivative(poly_t *self, int *ec)
 		}
 		node = node->next;
 	}
-	// TODO: consider handler for null_poly_err
 	if (ec)
 		*ec = local_ec;
 	return result;

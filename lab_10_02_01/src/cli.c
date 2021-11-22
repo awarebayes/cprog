@@ -25,7 +25,7 @@ void val(int *ec)
 		x = read_int(ec);
 	if (!*ec)
 	{
-		result = poly_eval(&poly, x, ec); // todo is 0 0 bad for eval?
+		result = poly_eval(&poly, x, ec);
 		printf("%d", result);
 	}
 	poly_delete(&poly);
@@ -37,7 +37,7 @@ void ddx(int *ec)
 	poly_t result = { 0 };
 	if (!*ec)
 	{
-		result = poly_derivative(&poly, ec); // todo is 0 0 bad for eval?
+		result = poly_derivative(&poly, ec);
 		poly_print(&result);
 	}
 	poly_delete(&poly);
@@ -54,7 +54,7 @@ void sum(int *ec)
 		poly2 = read_poly(ec);
 	if (!*ec)
 	{
-		result = poly_sum(&poly1, &poly2, ec); // todo is 0 0 bad for eval?
+		result = poly_sum(&poly1, &poly2, ec);
 		poly_print(&result);
 	}
 	poly_delete(&poly1);
@@ -69,7 +69,7 @@ void dvd(int *ec)
 	poly_t odd = { 0 };
 	if (!*ec)
 	{
-		poly_split_odd_even_power(&poly, &odd, &even, ec); // todo is 0 0 bad for eval?
+		poly_split_odd_even_power(&poly, &odd, &even, ec);
 		poly_print(&even);
 		printf("\n");
 		poly_print(&odd);
