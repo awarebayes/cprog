@@ -4,9 +4,12 @@ import sys
 from subprocess import Popen, PIPE
 import shlex
 import difflib as dl
+from rich.console import Console
+from rich.table import Table
 
 os.chdir(sys.argv[1] + "/func_tests/")
 files = os.listdir(os.getcwd())
+console = Console()
 
 
 def match_name(index, word):

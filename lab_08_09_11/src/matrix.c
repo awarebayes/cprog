@@ -106,10 +106,10 @@ matrix_t matrix_mul(matrix_t *self, matrix_t *other, int *ec)
 {
 	matrix_t res = { 0 };
 	if (self->columns != other->rows)
+	{
 		*ec = matrix_size_err;
-	if (*ec)
 		return res;
-
+	}
 	res = matrix_new(self->rows, other->columns, ec);
 	for (int i = 0; i < self->rows; ++i)
 		for (int j = 0; j < other->columns; ++j)

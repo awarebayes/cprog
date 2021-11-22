@@ -12,9 +12,11 @@
 
 int main(int argc, char **argv)
 {
+
     int ec = OK;
     int buf_len = POS_BUF_LEN;
     int pos_buf[POS_BUF_LEN];
+    
     for (int i = 0; i < POS_BUF_LEN; i++) 
         pos_buf[i] = i;
     if (argc == 3 && strcmp(argv[1], "sb") == 0)
