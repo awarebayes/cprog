@@ -85,7 +85,7 @@ int field_cmp(field_t *self, field_t *other)
 	return res;
 }
 
-int get_field_type(char *str)
+int get_field_index(char *str)
 {
 	int flag = 0;
 	int index = 0;

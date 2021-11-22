@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 	if (!ec)
 	{
 		char *field_name = argv[2];
-		field_type = get_field_type(field_name);
+		field_type = get_field_index(field_name);
 		if (field_type < 0)
 			ec = field_type_error;
 	}

@@ -28,7 +28,6 @@ vector_t vector_realloc(vector_t *self)
 	new_vec.size = self->size;
 	for (int i = 0; i < self->size; i++)
 		new_vec.pointer[i] = self->pointer[i];
-	// vector_delete(self);
 	free(self->pointer);
 	*self = new_vec;
 	return new_vec;
