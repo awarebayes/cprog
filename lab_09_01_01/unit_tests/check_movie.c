@@ -95,9 +95,9 @@ END_TEST
 
 START_TEST(test_get_field_type)
 {
-	ck_assert_int_eq(get_field_type("name"), f_name);
-	ck_assert_int_eq(get_field_type("title"), f_title);
-	ck_assert_int_eq(get_field_type("year"), f_year);
+	ck_assert_int_eq(get_field_index("name"), f_name);
+	ck_assert_int_eq(get_field_index("title"), f_title);
+	ck_assert_int_eq(get_field_index("year"), f_year);
 }
 END_TEST
 
