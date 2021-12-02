@@ -59,7 +59,7 @@ static int print_int(char *restrict s, int n, int num)
 		}
 		while (lnum != 0)
 		{
-			int digit = (int)(lnum % 10);
+			int digit = (int) (lnum % 10);
 			(*buf_ptr++) = digit + '0';
 			if (n_printed < n)
 				n_printed++;
@@ -92,7 +92,7 @@ static int print_unsigned_int_as_octal(char *restrict s, int n, int unsigned num
 	{
 		while (num != 0)
 		{
-			int digit = (int)(num % 8);
+			int digit = (int) (num % 8);
 			(*buf_ptr++) = digit + '0';
 			if (n_printed < n)
 				n_printed++;
@@ -125,7 +125,6 @@ static int print_string(char *restrict s, int n, char *restrict source)
 	}
 	return (int) n_printed_theoretic;
 }
-
 
 
 int my_snprintf(char *restrict s, size_t n, const char *restrict fmt, ...)
@@ -161,28 +160,27 @@ int my_snprintf(char *restrict s, size_t n, const char *restrict fmt, ...)
 		{
 			switch (*fmt)
 			{
-				case 'd': // integer
-				case 'i': // also integer
-					temp_int = va_arg(ap,
-					                  int);
+				case 'd':
+				case 'i':
+					temp_int = va_arg(ap, int);
 					sub_printed = print_int(s, (int) n - printed_theoretic - 1, temp_int);
 					break;
-				case 'o': // also integer
+				case 'o':
 					temp_uint = va_arg(ap, unsigned int);
-					sub_printed = print_unsigned_int_as_octal(s, (int)n - printed_theoretic - 1, temp_uint);
+					sub_printed = print_unsigned_int_as_octal(s, (int) n - printed_theoretic - 1, temp_uint);
 					break;
 				case '%':
 					if (can_write)
 						*s = '%';
 					sub_printed = 1;
 					break;
-				case 'c': // char
+				case 'c':
 					temp_char = (char) va_arg(ap, int);
 					if (can_write)
 						*s = temp_char;
 					sub_printed = 1;
 					break;
-				case 's': // string
+				case 's':
 					temp_str = va_arg(ap, char *);
 					sub_printed = print_string(s, (int) n - printed_theoretic - 1, temp_str);
 					break;
@@ -206,7 +204,7 @@ int my_snprintf(char *restrict s, size_t n, const char *restrict fmt, ...)
 	if (can_write)
 		(*s) = '\0';
 	else
-		s_started[n-1] = '\0';
+		s_started[n - 1] = '\0';
 
 	return printed_theoretic;
 }
