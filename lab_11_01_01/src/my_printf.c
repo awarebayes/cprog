@@ -1,11 +1,9 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
-#include <limits.h>
 #include "my_printf.h"
 
 #define INT_BUF 16
-#define UINT_MAX_HEX
 
 static void str_reverse(char *s, int n)
 {
@@ -17,21 +15,6 @@ static void str_reverse(char *s, int n)
 		s[i] = temp_char;
 	}
 }
-
-int int_to_oct(int decimalnum)
-{
-	int octalnum = 0, temp = 1;
-
-	while (decimalnum != 0)
-	{
-		octalnum = octalnum + (decimalnum % 8) * temp;
-		decimalnum = decimalnum / 8;
-		temp = temp * 10;
-	}
-
-	return octalnum;
-}
-
 
 static int print_int(char *restrict s, int n, int num)
 {
@@ -81,11 +64,10 @@ static int print_unsigned_int_as_octal(char *restrict s, int n, int unsigned num
 	char *buf_ptr = buf;
 	int n_printed = 0;
 	int n_printed_theoretic = 0;
-	int neg_flag = 0;
 
 	if (num == 0)
 	{
-		*(buf_ptr++) = '0';
+		*(buf_ptr) = '0';
 		n_printed_theoretic++;
 	}
 	else
@@ -99,8 +81,6 @@ static int print_unsigned_int_as_octal(char *restrict s, int n, int unsigned num
 			n_printed_theoretic++;
 			num /= 8;
 		}
-		if (neg_flag)
-			*(buf_ptr++) = '-';
 		str_reverse(buf, (int) n_printed_theoretic);
 	}
 	strncpy(s, buf, n_printed_theoretic);
