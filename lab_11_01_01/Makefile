@@ -1,7 +1,7 @@
 CC := gcc
 
-CFLAGS := -std=gnu99 -Wall -Wpedantic -Wextra -Wfloat-conversion -Wfloat-equal -Wvla -g -DDEBUG
-LDFLAGS := -lcheck
+CFLAGS := -std=gnu99 -Wall -Wpedantic -Wextra -Wfloat-conversion -Wfloat-equal -Wvla -g  -DDEBUG -fprofile-arcs -ftest-coverage
+LDFLAGS := -lcheck --coverage -lgcov
 INC := -I inc/
 
 .PHONY: debug
@@ -51,3 +51,9 @@ clean:
 	$(RM) -f ./out/*.o
 	$(RM) -f ./**/*.exe
 	$(RM) -f ./*.exe
+
+.PHONY: coverage
+coverage:
+	lcov -t "aboba" -o aboba.info -c -d .
+	genhtml -o report aboba.info
+
