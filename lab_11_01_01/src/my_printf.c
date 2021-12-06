@@ -107,7 +107,7 @@ static int print_string(char *restrict s, int n, char *restrict source)
 }
 
 
-int my_snprintf(char *restrict s, size_t n, const char *restrict fmt, ...)
+int my_snprintf(char *restrict s, int n, const char *restrict fmt, ...)
 {
 	memset(s, 0, n);
 	va_list ap;

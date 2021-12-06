@@ -1,1 +1,1 @@
-int my_snprintf(char *restrict s, size_t n, const char *restrict fmt, ...);
+int my_snprintf(char *restrict s, int n, const char *restrict fmt, ...);
