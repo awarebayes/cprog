@@ -1,22 +1,8 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
-#include <malloc.h>
 #include <limits.h>
 #include "my_printf.h"
-
-#define INT_BUF 16
-
-static void str_reverse(char *s, int n)
-{
-	char temp_char;
-	for (int i = 0; i < n / 2; i++)
-	{
-		temp_char = s[n - i - 1];
-		s[n - i - 1] = s[i];
-		s[i] = temp_char;
-	}
-}
 
 static int number_len(unsigned int num, int base)
 {
@@ -64,9 +50,7 @@ static int print_int(char *restrict s, int n, int num, int base)
 	}
 
 	else if (num < 0 && base != 10)
-	{
 		num = (unsigned) (UINT_MAX + 1) + (unsigned) num;
-	}
 
 	unsigned unum = (unsigned) num;
 
