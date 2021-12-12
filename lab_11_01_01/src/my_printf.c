@@ -76,8 +76,6 @@ static int print_string(char *restrict s, int n, char *restrict source)
 {
 	int n_printed = 0;
 	int n_printed_theoretic = 0;
-	if (n <= 0)
-		return -1;
 
 	while (source && *source)
 	{
