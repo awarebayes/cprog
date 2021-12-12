@@ -48,7 +48,6 @@ static int print_int(char *restrict s, int n, int num, int base)
 		num = -num;
 		n_printed_theoretic++;
 	}
-
 	else if (num < 0 && base != 10)
 		num = (unsigned) (UINT_MAX + 1) + (unsigned) num;
 
