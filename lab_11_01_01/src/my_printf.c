@@ -134,13 +134,13 @@ int my_snprintf(char *restrict s, int n, const char *restrict fmt, ...)
 					sub_printed = print_int(s, (int) n - printed_theoretic - 1, temp_int, 8);
 					break;
 				case '%':
-					if (can_write)
+					if (can_write && 1 < n - printed_theoretic)
 						*s = '%';
 					sub_printed = 1;
 					break;
 				case 'c':
 					temp_char = (char) va_arg(ap, int);
-					if (can_write)
+					if (can_write && 1 < n - printed_theoretic)
 						*s = temp_char;
 					sub_printed = 1;
 					break;
