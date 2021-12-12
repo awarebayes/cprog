@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
+#include <malloc.h>
+#include <limits.h>
 #include "my_printf.h"
 
 #define INT_BUF 16
@@ -16,76 +18,75 @@ static void str_reverse(char *s, int n)
 	}
 }
 
-static int print_int(char *restrict s, int n, int num)
+static int number_len(unsigned int num, int base)
 {
-	char buf[INT_BUF] = { 0 };
-	char *buf_ptr = buf;
-	int n_printed = 0;
-	int n_printed_theoretic = 0;
-	int neg_flag = 0;
-
-	long long lnum = num;
-
-
-	if (lnum == 0)
-	{
-		*(buf_ptr++) = '0';
-		n_printed_theoretic++;
-	}
-	else
-	{
-		if (lnum < 0)
-		{
-			n_printed_theoretic++;
-			neg_flag = 1;
-			lnum *= -1;
-		}
-		while (lnum != 0)
-		{
-			int digit = (int) (lnum % 10);
-			(*buf_ptr++) = digit + '0';
-			if (n_printed < n)
-				n_printed++;
-			n_printed_theoretic++;
-			lnum /= 10;
-		}
-		if (neg_flag)
-			*(buf_ptr++) = '-';
-		str_reverse(buf, (int) n_printed_theoretic);
-	}
-	strncpy(s, buf, n_printed_theoretic);
-	return (int) n_printed_theoretic;
-}
-
-
-static int print_unsigned_int_as_octal(char *restrict s, int n, int unsigned num)
-{
-	char buf[INT_BUF] = { 0 };
-	char *buf_ptr = buf;
-	int n_printed = 0;
-	int n_printed_theoretic = 0;
-
 	if (num == 0)
+		return 1;
+
+	int len = 0;
+	while (num != 0)
 	{
-		*(buf_ptr) = '0';
+		num /= base;
+		len += 1;
+	}
+	return len;
+}
+
+int powi(int x, unsigned n)
+{
+	int p = x;
+	int r = 1;
+
+	while (n > 0)
+	{
+		if (n % 2 == 1)
+			r *= p;
+		p *= p;
+		n /= 2;
+	}
+
+	return r;
+}
+
+static int print_int(char *restrict s, int n, int num, int base)
+{
+	char digits[] = "0123456789";
+	int n_printed_theoretic = 0;
+
+	if (num < 0 && base == 10)
+	{
+		if (n_printed_theoretic < n)
+		{
+			(*s++) = '-';
+		}
+		num = -num;
 		n_printed_theoretic++;
 	}
-	else
+
+	else if (num < 0 && base != 10)
 	{
-		while (num != 0)
-		{
-			int digit = (int) (num % 8);
-			(*buf_ptr++) = digit + '0';
-			if (n_printed < n)
-				n_printed++;
-			n_printed_theoretic++;
-			num /= 8;
-		}
-		str_reverse(buf, (int) n_printed_theoretic);
+		num = (unsigned) (UINT_MAX + 1) + (unsigned) num;
 	}
-	strncpy(s, buf, n_printed_theoretic);
-	return (int) n_printed_theoretic;
+
+	unsigned unum = (unsigned) num;
+
+	int len = number_len(unum, base);
+	int powered = powi(base, len - 1);
+
+	while (powered != 0)
+	{
+		if (n_printed_theoretic < n)
+			(*s++) = digits[unum / powered];
+
+		unum = unum % powered;
+		powered /= base;
+
+		n_printed_theoretic++;
+	}
+
+	return n_printed_theoretic;
 }
+
 
 static int print_string(char *restrict s, int n, char *restrict source)
 {
@@ -113,9 +114,8 @@ int my_snprintf(char *restrict s, int n, const char *restrict fmt, ...)
 	va_list ap;
 	va_start(ap, fmt);
 
-	int temp_int = -123;
-	unsigned int temp_uint = 0;
-	char temp_char = '*';
+	int temp_int;
+	char temp_char;
 	char *temp_str = NULL;
 	char *s_started = s;
 
@@ -143,11 +143,11 @@ int my_snprintf(char *restrict s, int n, const char *restrict fmt, ...)
 				case 'd':
 				case 'i':
 					temp_int = va_arg(ap, int);
-					sub_printed = print_int(s, (int) n - printed_theoretic - 1, temp_int);
+					sub_printed = print_int(s, (int) n - printed_theoretic - 1, temp_int, 10);
 					break;
 				case 'o':
-					temp_uint = va_arg(ap, unsigned int);
-					sub_printed = print_unsigned_int_as_octal(s, (int) n - printed_theoretic - 1, temp_uint);
+					temp_int = va_arg(ap, int);
+					sub_printed = print_int(s, (int) n - printed_theoretic - 1, temp_int, 8);
 					break;
 				case '%':
 					if (can_write)
