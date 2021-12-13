@@ -582,8 +582,8 @@ START_TEST(test_printf_35)
 	char target_buf[buf_size];
 	char *fmt = "%%%% %%a";
 
-	int printed_target = snprintf(target_buf, buf_size, fmt, 1);
-	int printed_my = my_snprintf(buf, buf_size, fmt, 1);
+	int printed_target = snprintf(target_buf, buf_size, fmt);
+	int printed_my = my_snprintf(buf, buf_size, fmt);
 
 	ck_assert_int_eq(printed_target, printed_my);
 	ck_assert_str_eq(buf, target_buf);

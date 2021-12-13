@@ -2,6 +2,7 @@
 #include <stdarg.h>
 #include <string.h>
 #include <limits.h>
+#include <stdlib.h>
 #include "my_printf.h"
 
 static int number_len(unsigned int num, int base)
@@ -49,7 +50,7 @@ static int print_int(char *restrict s, int n, int num, int base)
 		n_printed_theoretic++;
 	}
 	else if (num < 0 && base != 10)
-		num = (unsigned) (UINT_MAX + 1) + (unsigned) num;
+		num = (UINT_MAX + 1) + (unsigned) num;
 
 	unsigned unum = (unsigned) num;
 
@@ -87,14 +88,15 @@ static int print_string(char *restrict s, int n, char *restrict source)
 			source++;
 		n_printed_theoretic++;
 	}
-	return (int) n_printed_theoretic;
+	return n_printed_theoretic;
 }
 
 
-int my_snprintf(char *restrict s, int n, const char *restrict fmt, ...)
+int my_snprintf(char *restrict buf, int n, const char *restrict fmt, ...)
 {
 	if (n < 0)
 		return -1;
+	char *s = malloc(n);
 	memset(s, 0, n);
 	va_list ap;
 	va_start(ap, fmt);
@@ -109,12 +111,14 @@ int my_snprintf(char *restrict s, int n, const char *restrict fmt, ...)
 	int format_started = 0;
 	int can_write = 0;
 	int can_write_single = 0;
+	int left_to_write = 0;
 	int ec = 0;
 
 	while (fmt && *fmt && !ec)
 	{
 		can_write = s < s_started + n;
-		can_write_single = can_write && (1 < n - printed_theoretic);
+		left_to_write = n - printed_theoretic - 1;
+		can_write_single = can_write && (left_to_write > 0);
 
 		if (*fmt == '%')
 		{
@@ -130,11 +134,11 @@ int my_snprintf(char *restrict s, int n, const char *restrict fmt, ...)
 				case 'd':
 				case 'i':
 					temp_int = va_arg(ap, int);
-					sub_printed = print_int(s, (int) n - printed_theoretic - 1, temp_int, 10);
+					sub_printed = print_int(s, left_to_write, temp_int, 10);
 					break;
 				case 'o':
 					temp_int = va_arg(ap, int);
-					sub_printed = print_int(s, (int) n - printed_theoretic - 1, temp_int, 8);
+					sub_printed = print_int(s, left_to_write, temp_int, 8);
 					break;
 				case '%':
 					if (can_write_single)
@@ -149,7 +153,7 @@ int my_snprintf(char *restrict s, int n, const char *restrict fmt, ...)
 					break;
 				case 's':
 					temp_str = va_arg(ap, char *);
-					sub_printed = print_string(s, (int) n - printed_theoretic - 1, temp_str);
+					sub_printed = print_string(s, left_to_write, temp_str);
 					break;
 				default:
 					ec = 1;
@@ -174,6 +178,8 @@ int my_snprintf(char *restrict s, int n, const char *restrict fmt, ...)
 		s_started[n - 1] = '\0';
 
 	int res = printed_theoretic;
+	strncpy(buf, s_started, n);
+	free(s_started);
 	if (ec)
 		res = -1;
 	return res;
