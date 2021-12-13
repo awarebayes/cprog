@@ -126,7 +126,6 @@ int my_snprintf(char *restrict buf, int n, const char *restrict fmt, ...)
 			fmt++;
 		}
 
-
 		if (format_started)
 		{
 			switch (*fmt)
@@ -178,7 +177,7 @@ int my_snprintf(char *restrict buf, int n, const char *restrict fmt, ...)
 		s_started[n - 1] = '\0';
 
 	int res = printed_theoretic;
-	strncpy(buf, s_started, n);
+	memcpy(buf, s_started, n);
 	free(s_started);
 	if (ec)
 		res = -1;
