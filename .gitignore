@@ -18,3 +18,4 @@ bin/*
 /**/.idea/
 /**/.PVS-Studio/
 /**/vgcore.*
+/**/__pycache__/*

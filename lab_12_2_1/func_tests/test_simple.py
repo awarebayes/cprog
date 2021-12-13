@@ -9,7 +9,7 @@ output_from_temp_txt = True
 os.chdir(sys.argv[1] + "/func_tests/")
 files = os.listdir(os.getcwd())
 
-os.environ["LD_LIBRARY_PATH"] = f'{os.environ["LD_LIBRARY_PATH"]}:../out'
+os.environ["LD_LIBRARY_PATH"] = f'../out'
 
 def match_name(index, word):
     return lambda name: name.split("_")[index] == word
