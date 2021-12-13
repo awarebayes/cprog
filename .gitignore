@@ -1,6 +1,8 @@
 *.exe
 *.out
 *.o
+*.a
+*.so
 *.pch
 *.gcda
 *.gcno
