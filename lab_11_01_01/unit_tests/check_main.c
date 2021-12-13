@@ -575,6 +575,23 @@ START_TEST(test_printf_34)
 
 END_TEST
 
+START_TEST(test_printf_35)
+{
+	int buf_size = 5;
+	char buf[buf_size];
+	char target_buf[buf_size];
+	char *fmt = "%%%% %%a";
+
+	int printed_target = snprintf(target_buf, buf_size, fmt, 1);
+	int printed_my = my_snprintf(buf, buf_size, fmt, 1);
+
+	ck_assert_int_eq(printed_target, printed_my);
+	ck_assert_str_eq(buf, target_buf);
+
+}
+
+END_TEST
+
 Suite *printf_suite(void)
 {
 	Suite *s;
@@ -617,6 +634,7 @@ Suite *printf_suite(void)
 	tcase_add_test(tc_core, test_printf_32);
 	tcase_add_test(tc_core, test_printf_33);
 	tcase_add_test(tc_core, test_printf_34);
+	tcase_add_test(tc_core, test_printf_35);
 	suite_add_tcase(s, tc_core);
 
 	return s;

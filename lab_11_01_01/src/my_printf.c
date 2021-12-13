@@ -93,6 +93,8 @@ static int print_string(char *restrict s, int n, char *restrict source)
 
 int my_snprintf(char *restrict s, int n, const char *restrict fmt, ...)
 {
+	if (n < 0)
+		return -1;
 	memset(s, 0, n);
 	va_list ap;
 	va_start(ap, fmt);
@@ -106,11 +108,13 @@ int my_snprintf(char *restrict s, int n, const char *restrict fmt, ...)
 	int sub_printed = 0;
 	int format_started = 0;
 	int can_write = 0;
+	int can_write_single = 0;
 	int ec = 0;
 
 	while (fmt && *fmt && !ec)
 	{
 		can_write = s < s_started + n;
+		can_write_single = can_write && (1 < n - printed_theoretic);
 
 		if (*fmt == '%')
 		{
@@ -133,13 +137,13 @@ int my_snprintf(char *restrict s, int n, const char *restrict fmt, ...)
 					sub_printed = print_int(s, (int) n - printed_theoretic - 1, temp_int, 8);
 					break;
 				case '%':
-					if (can_write && 1 < n - printed_theoretic)
+					if (can_write_single)
 						*s = '%';
 					sub_printed = 1;
 					break;
 				case 'c':
 					temp_char = (char) va_arg(ap, int);
-					if (can_write && 1 < n - printed_theoretic)
+					if (can_write_single)
 						*s = temp_char;
 					sub_printed = 1;
 					break;
@@ -154,7 +158,7 @@ int my_snprintf(char *restrict s, int n, const char *restrict fmt, ...)
 		}
 		else
 		{
-			if (can_write)
+			if (can_write_single)
 				*s = *fmt;
 			sub_printed = 1;
 		}
@@ -169,5 +173,8 @@ int my_snprintf(char *restrict s, int n, const char *restrict fmt, ...)
 	else
 		s_started[n - 1] = '\0';
 
-	return printed_theoretic;
+	int res = printed_theoretic;
+	if (ec)
+		res = -1;
+	return res;
 }
