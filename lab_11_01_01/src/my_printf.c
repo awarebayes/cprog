@@ -172,7 +172,7 @@ int my_snprintf(char *restrict buf, int n, const char *restrict fmt, ...)
 		s += sub_printed;
 		sub_printed = 0;
 	}
-	if (can_write)
+	if (can_write_single)
 		(*s) = '\0';
 	else
 		s_started[n - 1] = '\0';
