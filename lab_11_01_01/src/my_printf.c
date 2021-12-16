@@ -94,8 +94,9 @@ static int print_string(char *restrict s, int n, char *restrict source)
 
 int my_snprintf(char *restrict s, int n, const char *restrict fmt, ...)
 {
-	memset(s, 0, n);
-	if (n < 0 || s == NULL || fmt == NULL)
+	if (s != NULL)
+		memset(s, 0, n);
+	if (n < 0 || fmt == NULL)
 		return -1;
 	va_list ap;
 	va_start(ap, fmt);
@@ -115,9 +116,9 @@ int my_snprintf(char *restrict s, int n, const char *restrict fmt, ...)
 
 	while (fmt && *fmt && !ec)
 	{
-		can_write = s < s_started + n;
+		can_write = (s < s_started + n) && (s_started != NULL);
 		left_to_write = n - printed_theoretic - 1;
-		can_write_single = can_write && (left_to_write > 0);
+		can_write_single = can_write && (left_to_write > 0) && (s_started != NULL);
 
 		if (*fmt == '%')
 		{
@@ -172,7 +173,7 @@ int my_snprintf(char *restrict s, int n, const char *restrict fmt, ...)
 	}
 	if (can_write_single)
 		(*s) = '\0';
-	else
+	else if (s_started != NULL)
 		s_started[n - 1] = '\0';
 
 	int res = printed_theoretic;
