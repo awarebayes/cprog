@@ -670,10 +670,8 @@ START_TEST(test_printf_40)
 {
 	int buf_size = 10;
 	char *buf = NULL;
-	char *target_buf = NULL;
 	char *fmt = "aboba";
 
-	//int printed_target = snprintf(target_buf, buf_size, fmt);
 	int printed_target = 5;
 	int printed_my = my_snprintf(buf, buf_size, fmt);
 
