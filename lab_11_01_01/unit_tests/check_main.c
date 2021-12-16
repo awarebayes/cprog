@@ -592,6 +592,96 @@ START_TEST(test_printf_35)
 
 END_TEST
 
+
+START_TEST(test_printf_36)
+{
+	int buf_size = 5;
+	char buf[buf_size];
+	char target_buf[buf_size];
+	char *fmt = "";
+
+	int printed_target = snprintf(target_buf, buf_size, fmt);
+	int printed_my = my_snprintf(buf, buf_size, fmt);
+
+	ck_assert_int_eq(printed_target, printed_my);
+	ck_assert_str_eq(buf, target_buf);
+
+}
+
+END_TEST
+
+
+START_TEST(test_printf_37)
+{
+	int buf_size = 5;
+	char buf[buf_size];
+	char target_buf[buf_size];
+	char *fmt = "%";
+
+	int printed_target = snprintf(target_buf, buf_size, fmt);
+	int printed_my = my_snprintf(buf, buf_size, fmt);
+
+	ck_assert_int_eq(printed_target, printed_my);
+	ck_assert_str_eq(buf, target_buf);
+
+}
+
+END_TEST
+
+
+
+START_TEST(test_printf_38)
+{
+	int buf_size = 5;
+	char buf[buf_size];
+	char target_buf[buf_size];
+	char *fmt = "asdasd %";
+
+	int printed_target = snprintf(target_buf, buf_size, fmt);
+	int printed_my = my_snprintf(buf, buf_size, fmt);
+
+	ck_assert_int_eq(printed_target, printed_my);
+	ck_assert_str_eq(buf, target_buf);
+
+}
+
+END_TEST
+
+START_TEST(test_printf_39)
+{
+	int buf_size = 5;
+	char buf[buf_size];
+	char target_buf[buf_size];
+	char *fmt = NULL;
+
+	int printed_target = snprintf(target_buf, buf_size, fmt);
+	int printed_my = my_snprintf(buf, buf_size, fmt);
+
+	ck_assert_int_eq(printed_target, printed_my);
+	ck_assert_str_eq(buf, target_buf);
+
+}
+
+END_TEST
+
+
+START_TEST(test_printf_40)
+{
+	int buf_size = 5;
+	char buf[buf_size];
+	char target_buf[buf_size];
+	char *fmt = NULL;
+
+	int printed_target = snprintf(target_buf, buf_size, fmt);
+	int printed_my = my_snprintf(buf, buf_size, fmt);
+
+	ck_assert_int_eq(printed_target, printed_my);
+	ck_assert_str_eq(buf, target_buf);
+
+}
+END_TEST
+
+
 Suite *printf_suite(void)
 {
 	Suite *s;
@@ -635,6 +725,10 @@ Suite *printf_suite(void)
 	tcase_add_test(tc_core, test_printf_33);
 	tcase_add_test(tc_core, test_printf_34);
 	tcase_add_test(tc_core, test_printf_35);
+	tcase_add_test(tc_core, test_printf_36);
+	tcase_add_test(tc_core, test_printf_37);
+	tcase_add_test(tc_core, test_printf_38);
+	tcase_add_test(tc_core, test_printf_39);
 	suite_add_tcase(s, tc_core);
 
 	return s;
