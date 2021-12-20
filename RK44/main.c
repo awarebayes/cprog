@@ -39,13 +39,13 @@ struct student student_read(FILE *f, int *ec)
 
 void student_print(struct student *self)
 {
-	printf("%s %d", self->lastname, self->age);
+	printf("%s %d ", self->lastname, self->age);
 	struct list grades = self->grades;
 	int grade = 0;
 	do
 	{
 		list_head(&grades, &grade);
-		printf("%d", grade);
+		printf("%d ", grade);
 	}
 	while (list_next(&grades)); // iterates as well
 	printf("\n");

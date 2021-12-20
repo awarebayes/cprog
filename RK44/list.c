@@ -5,7 +5,8 @@
 struct node *node_new(void *value, int el_size)
 {
 	struct node *self = malloc(sizeof(struct node) + el_size);
-	self->value = self + sizeof(struct node);
+	self->value = (char* )self + sizeof(struct node);
+	memcpy(self->value, value, el_size);
 	return self;
 }
 
