@@ -1,6 +1,8 @@
 *.exe
 *.out
 *.o
+*.so
+*.dll
 *.a
 *.so
 *.pch
