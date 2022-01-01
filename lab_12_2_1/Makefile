@@ -1,7 +1,7 @@
 CC := gcc
 
-CFLAGS := -std=gnu99 -Wall -Wpedantic -Wextra -Wfloat-conversion -Wfloat-equal -Wvla -g  -DDEBUG -fprofile-arcs -ftest-coverage
-LDFLAGS := -lcheck --coverage -lgcov
+CFLAGS := -std=c99 -Wall -Wpedantic -Wextra -Wfloat-conversion -Wfloat-equal -Wvla
+LDFLAGS := -lcheck
 INC := -I inc/
 
 .PHONY: debug
@@ -38,22 +38,40 @@ unit_tests.exe:
 out/%.o: src/%.c
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
+out/libio.a: out/io.o
+	ar cr out/libio.a out/io.o
+	ranlib out/libio.a
+
+out/libutil.a: out/util.o
+	ar cr out/libutil.a out/util.o
+	ranlib out/libutil.a
+
+out/libio.so: ./src/io.c ./inc/io.h
+	$(CC) $(CFLAGS) -fPIC -shared -o $@ ./src/io.c -lc $(INC)
+
+out/libutil.so: ./src/util.c ./inc/util.h
+	$(CC) $(CFLAGS) -fPIC -shared -o $@ ./src/util.c -lc $(INC)
+
 .PHONY: unit
 unit:
 	cd ./unit_tests && $(MAKE) unit
 
+.PHONY: compile_static
+compile_static: out/main.o out/libio.a out/libutil.a
+	$(CC) -o app.exe ./out/main.o -L ./out/ -lio -lutil
+
+.PHONY: compile_dynamic
+compile_dynamic: out/main.o out/libio.so out/libutil.so
+	$(CC) -o app.exe ./out/main.o -L ./out/ -lio -lutil
+
 .PHONY: func
-func: app.exe
-	./func_tests/run_test.sh
+func: 
+	python ./func_tests/test_simple.py .
 
 .PHONY: clean
 clean:
 	$(RM) -f ./out/*.o
+	$(RM) -f ./out/*.a
+	$(RM) -f ./out/*.so
 	$(RM) -f ./**/*.exe
 	$(RM) -f ./*.exe
-
-.PHONY: coverage
-coverage:
-	lcov -t "aboba" -o aboba.info -c -d .
-	genhtml -o report aboba.info
-

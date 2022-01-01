@@ -1,6 +1,10 @@
 *.exe
 *.out
 *.o
+*.so
+*.dll
+*.a
+*.so
 *.pch
 *.gcda
 *.gcno
@@ -18,3 +22,4 @@ bin/*
 /**/.idea/
 /**/.PVS-Studio/
 /**/vgcore.*
+/**/__pycache__/*
